@@ -1,28 +1,26 @@
 DCVtestkit Output Examples
 ================
-Jeremy Selva
-Invalid Date
 
-## Quarto
+# Introduction
 
-Quarto enables you to weave together content and executable code into a
-finished document. To learn more about Quarto see <https://quarto.org>.
+Here is where I store some output example of the R package
+[`DCVtestkit`](https://github.com/SLINGhub/DCVtestkit)
 
-## Running Code
+## Excel Output Example
 
-When you click the **Render** button a document will be generated that
-includes both content and the output of embedded code. You can embed
-code like this:
+\[`dilution_summary.xlsx`\] is the output in Excel.
 
-``` r
-1 + 1
-```
+## Pdf Output Example
 
-    [1] 2
+\[`dilution_plot.xlsx`\] is the output in pdf.
 
-You can add options to executable code like this
+## Trellis Output Example
 
-    [1] 4
+https://dcvtestkit-interactive-example.netlify.app is the output as an
+interactive trellis plot from the `Dilution_Plot_Folder` when the
+`index.html` file is clicked.
 
-The `echo: false` option disables the printing of code (only output is
-displayed).
+## Quarto Output Example
+
+https://dcvtestkit-quarto-example.netlify.app is the output of a html
+file generated using [Quarto](https://quarto.org/)
