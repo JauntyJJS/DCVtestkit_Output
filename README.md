@@ -8,11 +8,13 @@ Here is where I store some output example of the R package
 
 ## Excel Output Example
 
-\[`dilution_summary.xlsx`\] is the output in Excel.
+[`dilution_summary.xlsx`](https://raw.githubusercontent.com/JauntyJJS/DCVtestkit_Output/main/dilution_summary.xlsx)
+is the output in Excel.
 
 ## Pdf Output Example
 
-\[`dilution_plot.xlsx`\] is the output in pdf.
+[`dilution_plot.pdf`](https://raw.githubusercontent.com/JauntyJJS/DCVtestkit_Output/main/dilution_plot.pdf)
+is the output in pdf.
 
 ## Trellis Output Example
 
