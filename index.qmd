@@ -18,6 +18,7 @@ format:
     self-contained: false
     smooth-scroll: true
 execute: 
+  freeze: auto
   cache: true
 ---
 
