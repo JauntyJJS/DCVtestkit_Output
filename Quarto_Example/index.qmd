@@ -18,8 +18,7 @@ format:
     self-contained: false
     smooth-scroll: true
 execute: 
-  freeze: auto
-  cache: true
+  freeze: true
 ---
 
 ```{r setup}
@@ -51,7 +50,6 @@ library(patchwork)
 library(sessioninfo)
 
 sessioninfo::session_info()
-print(fs::dir_ls())
 ```
 
 # Data creation
@@ -105,15 +103,17 @@ lipid4_area_nonlinear <- c(
   197417, 322846, 478398, 423174, 418577,
   426089, 413292, 450190, 415309, 457618)
 
-dilution_annot <- tibble::tibble(Sample_Name = sample_name,
-                                 Dilution_Batch_Name = dilution_batch_name,
-                                 Dilution_Percent = dilution_percent)
+dilution_annot <- tibble::tibble(
+  Sample_Name = sample_name,
+  Dilution_Batch_Name = dilution_batch_name,
+  Dilution_Percent = dilution_percent)
 
-lipid_data <- tibble::tibble(Sample_Name = sample_name,
-                             Lipid1 = lipid1_area_saturated,
-                             Lipid2 = lipid2_area_linear,
-                             Lipid3 = lipid3_area_lod,
-                             Lipid4 = lipid4_area_nonlinear)
+lipid_data <- tibble::tibble(
+  Sample_Name = sample_name,
+  Lipid1 = lipid1_area_saturated,
+  Lipid2 = lipid2_area_linear,
+  Lipid3 = lipid3_area_lod,
+  Lipid4 = lipid4_area_nonlinear)
 ```
 
 ```{r View dilution_annot}
