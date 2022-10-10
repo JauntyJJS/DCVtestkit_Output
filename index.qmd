@@ -17,6 +17,8 @@ format:
     code-link: true
     self-contained: false
     smooth-scroll: true
+execute: 
+  cache: true
 ---
 
 ```{r setup}
