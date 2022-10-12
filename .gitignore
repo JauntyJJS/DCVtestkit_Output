@@ -5,4 +5,5 @@
 .Renviron
 /.quarto/
 index_cache
-Quarto_Simulation
+Quarto_Simulation/Dilution_LOD_Folder
+Quarto_Simulation/Dilution_Saturated_Folder

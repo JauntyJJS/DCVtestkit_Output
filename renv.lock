@@ -18,8 +18,8 @@
       "RemoteRepo": "DCVtestkit",
       "RemoteUsername": "SLINGhub",
       "RemoteRef": "HEAD",
-      "RemoteSha": "8654c89c87b970b6976412a48938278ff4feb72c",
-      "Hash": "cb87a098f0f0a16ed625b992f0fe0607",
+      "RemoteSha": "77b865f221245545b559c59e884e1b49fe9db979",
+      "Hash": "813bd4d994c316dad1a5955e0a15adc6",
       "Requirements": [
         "assertable",
         "broom",
@@ -1029,16 +1029,17 @@
     },
     "tidyselect": {
       "Package": "tidyselect",
-      "Version": "1.1.2",
+      "Version": "1.2.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "17f6da8cfd7002760a859915ce7eef8f",
+      "Hash": "79540e5fcd9e0435af547d885f184fd5",
       "Requirements": [
-        "ellipsis",
+        "cli",
         "glue",
-        "purrr",
+        "lifecycle",
         "rlang",
-        "vctrs"
+        "vctrs",
+        "withr"
       ]
     },
     "tinytex": {

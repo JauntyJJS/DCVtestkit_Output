@@ -1,0 +1,301 @@
+---
+title: "Simulation"
+author: "Jeremy Selva"
+format: html
+---
+
+# R Libaries used
+```{r R packages}
+#| message: false
+
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(tibble)
+library(purrr)
+library(ggplot2)
+library(epifitter)
+library(DCVtestkit)
+
+set.seed(123)
+```
+
+```{r Saturation Many Data}
+
+simulate_saturation <- function(id) {
+  
+  mono_model <- sim_monomolecular(
+  N = 200,     # total time units 
+  y0 = 0.01,   # initial inoculum
+  dt = 30,     #  interval between assessments in time units
+  r = 0.0175,  #  apparent infection rate
+  alpha = 0.15,# level of noise
+  n = 1        # number of replicates
+  )
+
+  saturation_simulation <- tibble::tibble(
+    x = mono_model$time,
+    y = mono_model$random_y * sample(1:1000000, 1),
+    `Sample Name` = as.character(mono_model$time))
+  
+  return(saturation_simulation)
+  
+}
+
+saturation_simulated_database <-
+  tibble::tibble(
+    ID = paste("Saturation", 
+               stringr::str_pad(1:200, width = 3, pad = "0")),
+    `Dilution Batch Name` = "Saturation"
+    
+  ) |> 
+  dplyr::mutate(
+    dilution_data = purrr::map(
+      .x = .data$ID,
+      .f = simulate_saturation
+      )
+    ) |> 
+  tidyr::unnest("dilution_data")
+
+
+
+```
+
+```{r}
+# exp_model <- sim_exponential(
+#     N = 200,    # total time units 
+#     y0 = 1,  # initial inoculum
+#     dt = 30,    #  interval between assessments in time units
+#     r = 0.02,  #  apparent infection rate
+#     #alpha = 0.01,# level of noise
+#     alpha = 0.2, # level of noise
+#     n = 1       # number of replicates
+#     )
+# 
+# exp_plot = exp_model %>%
+#   ggplot(aes(time, y)) +
+#   geom_jitter(aes(time, random_y), size = 3, width = .1) +
+#   geom_line(size = 1) +
+#   labs(
+#     title = "Exponential",
+#     y = "Disease intensity",
+#     x = "Time"
+#   )
+# exp_plot
+```
+
+
+```{r LOD Many Data}
+
+simulate_lod <- function(id) {
+  
+  exp_model <- sim_exponential(
+    N = 200,    # total time units 
+    y0 = 1,  # initial inoculum
+    dt = 30,    #  interval between assessments in time units
+    r = 0.02,  #  apparent infection rate
+    #alpha = 0.1, # level of noise
+    alpha = 0.15, # level of noise
+    n = 1       # number of replicates
+    )
+
+  lod_simulation <- tibble::tibble(
+    x = exp_model$time,
+    y = exp_model$random_y * sample(1:1000000, 1),
+    `Sample Name` = as.character(exp_model$time))
+  
+  return(lod_simulation)
+  
+}
+
+lod_simulated_database <-
+  tibble::tibble(
+    ID = paste("Limit Of Detection", 
+               stringr::str_pad(1:200, width = 3, pad = "0")),
+    `Dilution Batch Name` = "Limit Of Detection"
+    
+  ) |> 
+  dplyr::mutate(
+    dilution_data = purrr::map(
+      .x = .data$ID,
+      .f = simulate_lod
+      )
+    ) |> 
+  tidyr::unnest("dilution_data")
+
+
+
+```
+
+```{r Linear Many Data}
+
+simulate_lod <- function(id) {
+  
+  exp_model <- sim_exponential(
+    N = 200,    # total time units 
+    y0 = 1,  # initial inoculum
+    dt = 30,    #  interval between assessments in time units
+    r = 0.02,  #  apparent infection rate
+    #alpha = 0.1, # level of noise
+    alpha = 0.15, # level of noise
+    n = 1       # number of replicates
+    )
+
+  lod_simulation <- tibble::tibble(
+    x = exp_model$time,
+    y = exp_model$random_y * sample(1:1000000, 1),
+    `Sample Name` = as.character(exp_model$time))
+  
+  return(lod_simulation)
+  
+}
+
+lod_simulated_database <-
+  tibble::tibble(
+    ID = paste("Limit Of Detection", 
+               stringr::str_pad(1:200, width = 3, pad = "0")),
+    `Dilution Batch Name` = "Limit Of Detection"
+    
+  ) |> 
+  dplyr::mutate(
+    dilution_data = purrr::map(
+      .x = .data$ID,
+      .f = simulate_lod
+      )
+    ) |> 
+  tidyr::unnest("dilution_data")
+
+
+
+```
+
+
+```{r}
+
+# Create dilution statistical summary
+saturation_dilution_summary <- summarise_dilution_table(
+  saturation_simulated_database,
+  grouping_variable = c("ID"),
+  conc_var = "x",
+  signal_var = "y")
+```
+
+```{r}
+
+lod_dilution_summary <- summarise_dilution_table(
+  lod_simulated_database,
+  grouping_variable = c("ID"),
+  conc_var = "x",
+  signal_var = "y")
+
+```
+
+
+```{r}
+saturation_ggplot_table <- add_ggplot_panel(
+  dilution_table = saturation_simulated_database,
+  dilution_summary = saturation_dilution_summary,
+  grouping_variable = c("ID"),
+  dil_batch_var = "Dilution Batch Name",
+  conc_var = "x",
+  signal_var = "y",
+  conc_var_units = ""
+  )
+
+saturation_ggplot_list <- saturation_ggplot_table$panel
+
+view_ggplot_pdf(saturation_ggplot_list,
+                filename = "dilution_plot_saturated.pdf",
+                ncol_per_page = 2,
+                nrow_per_page = 2)
+
+```
+
+```{r}
+lod_ggplot_table <- add_ggplot_panel(
+  dilution_table = lod_simulated_database,
+  dilution_summary = lod_dilution_summary,
+  grouping_variable = c("ID"),
+  dil_batch_var = "Dilution Batch Name",
+  conc_var = "x",
+  signal_var = "y",
+  conc_var_units = ""
+  )
+
+lod_ggplot_list <- lod_ggplot_table$panel
+
+view_ggplot_pdf(lod_ggplot_list,
+                filename = "dilution_plot_lod.pdf",
+                ncol_per_page = 2,
+                nrow_per_page = 2)
+
+```
+
+
+```{r}
+# Create a trellis table
+saturation_trellis_table <- add_plotly_panel(
+  dilution_table = saturation_simulated_database,
+  dilution_summary = saturation_dilution_summary,
+  grouping_variable = c("ID"),
+  sample_name_var = "Sample Name",
+  dil_batch_var = "Dilution Batch Name",
+  dil_batch_col = c(
+    "#377eb8"),
+  conc_var = "x",
+  conc_var_units = "",
+  conc_var_interval = 50,
+  signal_var = "y",
+  have_plot_title = FALSE
+) |> 
+  convert_to_cog(
+    grouping_variable = "ID",
+    panel_variable = "panel",
+    col_name_vec = "col_name_vec",
+    desc_vec = "desc_vec",
+    type_vec = "type_vec"
+  )
+
+view_trellis_html(
+  trellis_table = saturation_trellis_table,
+  grouping_variable = c("ID"),
+  trellis_report_name = "Dilution_Plot_Saturated",
+  trellis_report_folder = "Dilution_Saturated_Folder",
+  panel_variable = "panel"
+)
+```
+
+
+```{r}
+# Create a trellis table
+lod_trellis_table <- add_plotly_panel(
+  dilution_table = lod_simulated_database,
+  dilution_summary = lod_dilution_summary,
+  grouping_variable = c("ID"),
+  sample_name_var = "Sample Name",
+  dil_batch_var = "Dilution Batch Name",
+  dil_batch_col = c(
+    "#377eb8"),
+  conc_var = "x",
+  conc_var_units = "",
+  conc_var_interval = 50,
+  signal_var = "y",
+  have_plot_title = FALSE
+) |> 
+  convert_to_cog(
+    grouping_variable = "ID",
+    panel_variable = "panel",
+    col_name_vec = "col_name_vec",
+    desc_vec = "desc_vec",
+    type_vec = "type_vec"
+  )
+
+view_trellis_html(
+  trellis_table = lod_trellis_table,
+  grouping_variable = c("ID"),
+  trellis_report_name = "Dilution_Plot_LOD",
+  trellis_report_folder = "Dilution_LOD_Folder",
+  panel_variable = "panel"
+)
+```
+
