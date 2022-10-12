@@ -15,16 +15,25 @@ library(tibble)
 library(purrr)
 library(ggplot2)
 library(epifitter)
+library(deSolve)
 library(DCVtestkit)
 
 set.seed(123)
 ```
 
+# Simulation Functions
+
+Here are the functions to simulate the different types of curves.
+
+::: {.panel-tabset}
+
+## Saturated Curve
+
 ```{r Saturation Many Data}
 
 simulate_saturation <- function(id) {
   
-  mono_model <- sim_monomolecular(
+  mono_model <- epifitter::sim_monomolecular(
   N = 200,     # total time units 
   y0 = 0.01,   # initial inoculum
   dt = 30,     #  interval between assessments in time units
@@ -42,6 +51,128 @@ simulate_saturation <- function(id) {
   
 }
 
+```
+
+## Limit of Detection Curve
+
+```{r LOD Many Data}
+
+simulate_lod <- function(id) {
+  
+  exp_model <- epifitter::sim_exponential(
+    N = 200,    # total time units 
+    y0 = 1,  # initial inoculum
+    dt = 30,    #  interval between assessments in time units
+    r = 0.02,  #  apparent infection rate
+    alpha = 0.15, # level of noise
+    n = 1       # number of replicates
+    )
+
+  lod_simulation <- tibble::tibble(
+    x = exp_model$time,
+    y = exp_model$random_y * sample(1:1000000, 1),
+    `Sample Name` = as.character(exp_model$time))
+  
+  return(lod_simulation)
+  
+}
+
+```
+
+## Linear Curve
+
+```{r Linear Many Data}
+
+#diffeq model as function
+model.constant = function(times, y, parms) {
+  ## times = current times
+  ## y = current state vector: in this case the 0th derivative, c(x)
+  ## parms = vector of model parameters.
+  with(as.list(c(y,parms)),{
+  derivs = c( 
+    dx = a
+    )
+  ## Return
+  list(derivs)
+})
+}
+
+sim_linear <- function(
+    N,    # total time units
+    y0,  # initial inoculum
+    dt,    #  interval between assessments in time units
+    r,  #  apparent infection rate
+    alpha, # level of noise
+    n       # number of replicates
+) {
+  
+  time <- seq(0, N, by = dt)
+  random_y <- numeric(length(time))
+  y <- numeric(length(time))
+  y[1] <- y0
+  
+  for (k in 1:(length(time) - 1)) {
+    r[k + 1] <- r[k]
+    InitCond <- c(y[k])
+    steps <- seq(time[k], time[k + 1], by = dt)
+    parms <- c(a = r[k])
+    ode_logi <- deSolve::ode(InitCond, steps, model.constant, parms)
+    y[k + 1] <- ode_logi[length(ode_logi[, 2]), 2]
+  }
+  
+  data_uni <- matrix(0, ncol = 4, nrow = length(y))
+  data_all <- matrix(0, ncol = 4, nrow = 0)
+  
+  for (j in 1:n) {
+    for (i in 1:length(time)) {
+      random_y[i] <- stats::rnorm(1, y[i], sd = alpha * y[i])
+      }
+    data_uni[, 1] <- rep(j, length(y))
+    data_uni[, 2] <- time
+    data_uni[, 3] <- y
+    data_uni[, 4] <- random_y
+    data_all <- rbind(data_all, data_uni)
+    colnames(data_all) <-
+      c("replicates", "time", "y", "random_y")
+  }
+  
+  data_all = data.frame(data_all)
+  return(data_all)
+
+}
+
+simulate_linear <- function(id) {
+
+  linear_model <- sim_linear(
+    N = 200,    # total time units 
+    y0 = 1,  # initial inoculum
+    dt = 30,    #  interval between assessments in time units
+    r = 0.02,  #  apparent infection rate
+    alpha = 0.1, # level of noise
+    n = 1       # number of replicates
+  )
+
+  linear_simulation <- tibble::tibble(
+    x = linear_model$time,
+    y = linear_model$random_y * sample(1:1000000, 1),
+    `Sample Name` = as.character(linear_model$time))
+  
+  return(linear_simulation)
+  
+}
+
+```
+
+:::
+
+# Create Simulation Curve Data
+
+::: {.panel-tabset}
+
+## Saturated Curve
+
+```{r Create Simulated Data Saturated}
+
 saturation_simulated_database <-
   tibble::tibble(
     ID = paste("Saturation", 
@@ -56,57 +187,11 @@ saturation_simulated_database <-
       )
     ) |> 
   tidyr::unnest("dilution_data")
-
-
-
 ```
 
-```{r}
-# exp_model <- sim_exponential(
-#     N = 200,    # total time units 
-#     y0 = 1,  # initial inoculum
-#     dt = 30,    #  interval between assessments in time units
-#     r = 0.02,  #  apparent infection rate
-#     #alpha = 0.01,# level of noise
-#     alpha = 0.2, # level of noise
-#     n = 1       # number of replicates
-#     )
-# 
-# exp_plot = exp_model %>%
-#   ggplot(aes(time, y)) +
-#   geom_jitter(aes(time, random_y), size = 3, width = .1) +
-#   geom_line(size = 1) +
-#   labs(
-#     title = "Exponential",
-#     y = "Disease intensity",
-#     x = "Time"
-#   )
-# exp_plot
-```
+## Limit of Detection Curve
 
-
-```{r LOD Many Data}
-
-simulate_lod <- function(id) {
-  
-  exp_model <- sim_exponential(
-    N = 200,    # total time units 
-    y0 = 1,  # initial inoculum
-    dt = 30,    #  interval between assessments in time units
-    r = 0.02,  #  apparent infection rate
-    #alpha = 0.1, # level of noise
-    alpha = 0.15, # level of noise
-    n = 1       # number of replicates
-    )
-
-  lod_simulation <- tibble::tibble(
-    x = exp_model$time,
-    y = exp_model$random_y * sample(1:1000000, 1),
-    `Sample Name` = as.character(exp_model$time))
-  
-  return(lod_simulation)
-  
-}
+```{r Create Simulated Data LOD}
 
 lod_simulated_database <-
   tibble::tibble(
@@ -122,77 +207,76 @@ lod_simulated_database <-
       )
     ) |> 
   tidyr::unnest("dilution_data")
-
-
-
 ```
 
-```{r Linear Many Data}
+## Linear Curve
 
-simulate_lod <- function(id) {
-  
-  exp_model <- sim_exponential(
-    N = 200,    # total time units 
-    y0 = 1,  # initial inoculum
-    dt = 30,    #  interval between assessments in time units
-    r = 0.02,  #  apparent infection rate
-    #alpha = 0.1, # level of noise
-    alpha = 0.15, # level of noise
-    n = 1       # number of replicates
-    )
+```{r Create Simulated Data Linear}
 
-  lod_simulation <- tibble::tibble(
-    x = exp_model$time,
-    y = exp_model$random_y * sample(1:1000000, 1),
-    `Sample Name` = as.character(exp_model$time))
-  
-  return(lod_simulation)
-  
-}
-
-lod_simulated_database <-
+linear_simulated_database <-
   tibble::tibble(
-    ID = paste("Limit Of Detection", 
+    ID = paste("Linear", 
                stringr::str_pad(1:200, width = 3, pad = "0")),
-    `Dilution Batch Name` = "Limit Of Detection"
+    `Dilution Batch Name` = "Linear"
     
   ) |> 
   dplyr::mutate(
     dilution_data = purrr::map(
       .x = .data$ID,
-      .f = simulate_lod
+      .f = simulate_linear
       )
     ) |> 
   tidyr::unnest("dilution_data")
-
-
-
 ```
 
+:::
 
-```{r}
+# Create Statistical Summary
 
-# Create dilution statistical summary
-saturation_dilution_summary <- summarise_dilution_table(
-  saturation_simulated_database,
+::: {.panel-tabset}
+
+## Saturated Curve
+
+```{r dilution statistical summary saturated}
+saturation_dilution_summary <- DCVtestkit::summarise_dilution_table(
+  dilution_table = saturation_simulated_database,
   grouping_variable = c("ID"),
   conc_var = "x",
   signal_var = "y")
 ```
 
-```{r}
+## Limit of Detection Curve
 
-lod_dilution_summary <- summarise_dilution_table(
-  lod_simulated_database,
+```{r dilution statistical summary lod}
+lod_dilution_summary <- DCVtestkit::summarise_dilution_table(
+  dilution_table = lod_simulated_database,
   grouping_variable = c("ID"),
   conc_var = "x",
   signal_var = "y")
 
 ```
 
+## Linear Curve
 
-```{r}
-saturation_ggplot_table <- add_ggplot_panel(
+```{r dilution statistical summary linear}
+linear_dilution_summary <- DCVtestkit::summarise_dilution_table(
+  dilution_table = linear_simulated_database,
+  grouping_variable = c("ID"),
+  conc_var = "x",
+  signal_var = "y")
+
+```
+
+:::
+
+# Report plots as pdf files
+
+::: {.panel-tabset}
+
+## Saturated Curve
+
+```{r plots as pdf saturated}
+saturation_ggplot_table <- DCVtestkit::add_ggplot_panel(
   dilution_table = saturation_simulated_database,
   dilution_summary = saturation_dilution_summary,
   grouping_variable = c("ID"),
@@ -204,15 +288,18 @@ saturation_ggplot_table <- add_ggplot_panel(
 
 saturation_ggplot_list <- saturation_ggplot_table$panel
 
-view_ggplot_pdf(saturation_ggplot_list,
-                filename = "dilution_plot_saturated.pdf",
-                ncol_per_page = 2,
-                nrow_per_page = 2)
+DCVtestkit::view_ggplot_pdf(
+  ggplot_list = saturation_ggplot_list,
+  filename = "dilution_plot_saturated.pdf",
+  ncol_per_page = 2,
+  nrow_per_page = 2)
 
 ```
 
-```{r}
-lod_ggplot_table <- add_ggplot_panel(
+## Limit of Detection Curve
+
+```{r plots as pdf lod}
+lod_ggplot_table <- DCVtestkit::add_ggplot_panel(
   dilution_table = lod_simulated_database,
   dilution_summary = lod_dilution_summary,
   grouping_variable = c("ID"),
@@ -224,17 +311,45 @@ lod_ggplot_table <- add_ggplot_panel(
 
 lod_ggplot_list <- lod_ggplot_table$panel
 
-view_ggplot_pdf(lod_ggplot_list,
-                filename = "dilution_plot_lod.pdf",
-                ncol_per_page = 2,
-                nrow_per_page = 2)
+DCVtestkit::view_ggplot_pdf(
+  ggplot_list = lod_ggplot_list,
+  filename = "dilution_plot_lod.pdf",
+  ncol_per_page = 2,
+  nrow_per_page = 2)
 
 ```
 
+## Linear Curve
 
-```{r}
-# Create a trellis table
-saturation_trellis_table <- add_plotly_panel(
+```{r plots as pdf linear}
+linear_ggplot_table <- DCVtestkit::add_ggplot_panel(
+  dilution_table = linear_simulated_database,
+  dilution_summary = linear_dilution_summary,
+  grouping_variable = c("ID"),
+  dil_batch_var = "Dilution Batch Name",
+  conc_var = "x",
+  signal_var = "y",
+  conc_var_units = ""
+  )
+
+linear_ggplot_list <- linear_ggplot_table$panel
+
+DCVtestkit::view_ggplot_pdf(
+  ggplot_list = linear_ggplot_list,
+  filename = "dilution_plot_linear.pdf",
+  ncol_per_page = 2,
+  nrow_per_page = 2)
+
+```
+
+:::
+
+# Report plots as trellis
+
+## Saturated Curve
+
+```{r plots as trellis saturated}
+saturation_trellis_table <- DCVtestkit::add_plotly_panel(
   dilution_table = saturation_simulated_database,
   dilution_summary = saturation_dilution_summary,
   grouping_variable = c("ID"),
@@ -248,7 +363,7 @@ saturation_trellis_table <- add_plotly_panel(
   signal_var = "y",
   have_plot_title = FALSE
 ) |> 
-  convert_to_cog(
+  DCVtestkit::convert_to_cog(
     grouping_variable = "ID",
     panel_variable = "panel",
     col_name_vec = "col_name_vec",
@@ -256,7 +371,7 @@ saturation_trellis_table <- add_plotly_panel(
     type_vec = "type_vec"
   )
 
-view_trellis_html(
+DCVtestkit::view_trellis_html(
   trellis_table = saturation_trellis_table,
   grouping_variable = c("ID"),
   trellis_report_name = "Dilution_Plot_Saturated",
@@ -265,10 +380,10 @@ view_trellis_html(
 )
 ```
 
+## Limit of Detection Curve
 
-```{r}
-# Create a trellis table
-lod_trellis_table <- add_plotly_panel(
+```{r plots as trellis lod}
+lod_trellis_table <- DCVtestkit::add_plotly_panel(
   dilution_table = lod_simulated_database,
   dilution_summary = lod_dilution_summary,
   grouping_variable = c("ID"),
@@ -282,7 +397,7 @@ lod_trellis_table <- add_plotly_panel(
   signal_var = "y",
   have_plot_title = FALSE
 ) |> 
-  convert_to_cog(
+  DCVtestkit::convert_to_cog(
     grouping_variable = "ID",
     panel_variable = "panel",
     col_name_vec = "col_name_vec",
@@ -290,7 +405,7 @@ lod_trellis_table <- add_plotly_panel(
     type_vec = "type_vec"
   )
 
-view_trellis_html(
+DCVtestkit::view_trellis_html(
   trellis_table = lod_trellis_table,
   grouping_variable = c("ID"),
   trellis_report_name = "Dilution_Plot_LOD",
@@ -299,3 +414,36 @@ view_trellis_html(
 )
 ```
 
+## Linear Curve
+
+```{r plots as trellis linear}
+linear_trellis_table <- DCVtestkit::add_plotly_panel(
+  dilution_table = linear_simulated_database,
+  dilution_summary = linear_dilution_summary,
+  grouping_variable = c("ID"),
+  sample_name_var = "Sample Name",
+  dil_batch_var = "Dilution Batch Name",
+  dil_batch_col = c(
+    "#377eb8"),
+  conc_var = "x",
+  conc_var_units = "",
+  conc_var_interval = 50,
+  signal_var = "y",
+  have_plot_title = FALSE
+) |> 
+  DCVtestkit::convert_to_cog(
+    grouping_variable = "ID",
+    panel_variable = "panel",
+    col_name_vec = "col_name_vec",
+    desc_vec = "desc_vec",
+    type_vec = "type_vec"
+  )
+
+DCVtestkit::view_trellis_html(
+  trellis_table = linear_trellis_table,
+  grouping_variable = c("ID"),
+  trellis_report_name = "Dilution_Plot_Linear",
+  trellis_report_folder = "Dilution_Linear_Folder",
+  panel_variable = "panel"
+)
+```
