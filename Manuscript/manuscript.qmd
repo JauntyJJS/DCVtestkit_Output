@@ -343,14 +343,13 @@ The following rules should be followed:
 
 -   The sentence should begin: 'This work was supported by ...' -
 -   The full official funding agency name should be given, i.e. 'National Institutes of Health', not 'NIH' (full RIN-approved list of UK funding agencies)
--   Grant numbers should be given in brackets as follows: '[grant number xxxx]'
--   Multiple grant numbers should be separated by a comma as follows: '[grant numbers xxxx, yyyy]'
+-   Grant numbers should be given in brackets as follows: '\[grant number xxxx\]'
+-   Multiple grant numbers should be separated by a comma as follows: '\[grant numbers xxxx, yyyy\]'
 -   Agencies should be separated by a semi-colon (plus 'and' before the last funding agency)
--   Where individuals need to be specified for certain sources of funding the following text should be added after the relevant agency or grant number 'to [author initials]'.
+-   Where individuals need to be specified for certain sources of funding the following text should be added after the relevant agency or grant number 'to \[author initials\]'.
 
-An example is given here: 'This work was supported by the National Institutes of Health [AA123456 to C.S., BB765432 to M.H.]; and the Alcohol & Education Research Council [hfygr667789].'
+An example is given here: 'This work was supported by the National Institutes of Health \[AA123456 to C.S., BB765432 to M.H.\]; and the Alcohol & Education Research Council \[hfygr667789\].'
 
 Oxford Journals will deposit all NIH-funded articles in PubMed Central. See Depositing articles in repositories -- information for authors for details. Authors must ensure that manuscripts are clearly indicated as NIH-funded using the guidelines above.
 
 # References
-
