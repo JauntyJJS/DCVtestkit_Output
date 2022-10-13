@@ -2,6 +2,15 @@
 
 ## TODO
 
+## Completed
+
+### Manuscript
+
+* Correct some sentence structure issue.
+* Change `DCVtestkit` to *DCVtestkit*.
+* Make section Statistical Summary for Dilution Curves more clear.
+* Add figure labels in the image caption.
+
 # DCVtestkit 0.0.1
 
 * Added a `NEWS.md` file to track changes to the package.
