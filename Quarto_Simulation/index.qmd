@@ -15,6 +15,7 @@ library(tibble)
 library(purrr)
 library(ggplot2)
 library(epifitter)
+library(reactable)
 library(deSolve)
 library(DCVtestkit)
 
@@ -189,6 +190,11 @@ saturation_simulated_database <-
   tidyr::unnest("dilution_data")
 ```
 
+```{r Save Simulated Data Saturated}
+saveRDS(saturation_simulated_database, 
+        file = "saturated_simulated_database.rds")
+```
+
 ## Limit of Detection Curve
 
 ```{r Create Simulated Data LOD}
@@ -207,6 +213,11 @@ lod_simulated_database <-
       )
     ) |> 
   tidyr::unnest("dilution_data")
+```
+
+```{r Save Simulated Data LOD}
+saveRDS(lod_simulated_database, 
+        file = "lod_simulated_database.rds")
 ```
 
 ## Linear Curve
@@ -229,6 +240,11 @@ linear_simulated_database <-
   tidyr::unnest("dilution_data")
 ```
 
+```{r Save Simulated Data Linear}
+saveRDS(linear_simulated_database, 
+        file = "linear_simulated_database.rds")
+```
+
 :::
 
 # Create Statistical Summary
@@ -238,33 +254,63 @@ linear_simulated_database <-
 ## Saturated Curve
 
 ```{r dilution statistical summary saturated}
-saturation_dilution_summary <- DCVtestkit::summarise_dilution_table(
-  dilution_table = saturation_simulated_database,
-  grouping_variable = c("ID"),
-  conc_var = "x",
-  signal_var = "y")
+#| message: false
+saturation_dilution_summary <- 
+  DCVtestkit::summarise_dilution_table(
+    dilution_table = saturation_simulated_database,
+    grouping_variable = c("ID"),
+    conc_var = "x",
+    signal_var = "y") |> 
+  DCVtestkit::evaluate_linearity(
+    grouping_variable = c("ID")
+  )
+```
+
+```{r save dilution statistical summary saturated}
+saveRDS(saturation_dilution_summary, 
+        file = "saturation_dilution_summary.rds")
 ```
 
 ## Limit of Detection Curve
 
 ```{r dilution statistical summary lod}
-lod_dilution_summary <- DCVtestkit::summarise_dilution_table(
-  dilution_table = lod_simulated_database,
-  grouping_variable = c("ID"),
-  conc_var = "x",
-  signal_var = "y")
+#| message: false
+lod_dilution_summary <- 
+  DCVtestkit::summarise_dilution_table(
+    dilution_table = lod_simulated_database,
+    grouping_variable = c("ID"),
+    conc_var = "x",
+    signal_var = "y") |> 
+  DCVtestkit::evaluate_linearity(
+    grouping_variable = c("ID")
+  )
 
+```
+
+```{r save dilution statistical summary lod}
+saveRDS(lod_dilution_summary, 
+        file = "lod_dilution_summary.rds")
 ```
 
 ## Linear Curve
 
 ```{r dilution statistical summary linear}
-linear_dilution_summary <- DCVtestkit::summarise_dilution_table(
-  dilution_table = linear_simulated_database,
-  grouping_variable = c("ID"),
-  conc_var = "x",
-  signal_var = "y")
+#| message: false
+linear_dilution_summary <-
+  DCVtestkit::summarise_dilution_table(
+    dilution_table = linear_simulated_database,
+    grouping_variable = c("ID"),
+    conc_var = "x",
+    signal_var = "y") |> 
+  DCVtestkit::evaluate_linearity(
+    grouping_variable = c("ID")
+  )
 
+```
+
+```{r save dilution statistical summary linear}
+saveRDS(linear_dilution_summary, 
+        file = "linear_dilution_summary.rds")
 ```
 
 :::

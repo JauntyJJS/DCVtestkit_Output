@@ -5,6 +5,23 @@ csl: bioinfo.csl
 format: docx
 ---
 
+```{r R packages}
+#| echo: false
+#| message: false
+
+library(dplyr)
+library(stringr)
+library(here)
+library(tibble)
+library(ggplot2)
+library(gridExtra)
+library(patchwork)
+library(labelled)
+library(gtsummary)
+library(flextable)
+library(DCVtestkit)
+```
+
 ## Manuscript Type
 
 Application Note
@@ -334,7 +351,7 @@ patchwork::wrap_plots(
 
 # Dilution Curve Grouping
 
-*DCVtestkit* uses the function `evaluate_linearity` to group the dilution curves. At this moment, two workflows are proposed.
+*DCVtestkit* uses the function `evaluate_linearity` to group the dilution curves. At this moment, two workflows are proposed. Workflow $1$ uses both the Pearson Correlation Coefficient and Percent Residual Accuracy to determine if the dilution curve is linear (labelled as Good Linearity) or not (labelled as Poor Linearity). Workflow $2$ goes one step further by using the Mandel’s Fitting Test and the concavity of the fitted quadratic model to check if the non-linear dilution curve plateaus at low concentrations (labelling them as limit of detection) or high concentrations (labelling them as saturation). Non-linear dilution curves that do not follow these trends are then labelled as Poor Linearity.
 
 ::: {#fig-Dilution-Grouping-Workflow layout-ncol=1}
 
@@ -342,6 +359,106 @@ patchwork::wrap_plots(
 
 Dilution Curve Grouping Workflows
 :::
+
+```{r Load Simulated Data Results}
+#| echo: false
+saturation_dilution_summary <-
+  readRDS(file = here::here(
+    "Quarto_Simulation",
+    "saturation_dilution_summary.rds")
+)
+
+lod_dilution_summary <-
+  readRDS(file = here::here(
+    "Quarto_Simulation",
+    "lod_dilution_summary.rds")
+)
+
+linear_dilution_summary <-
+  readRDS(file = here::here(
+    "Quarto_Simulation",
+    "linear_dilution_summary.rds")
+)
+```
+
+```{r Combine Simulated Data Results}
+#| echo: false
+saturation_dilution_summary <- saturation_dilution_summary |> 
+  dplyr::mutate(curve_group = "Saturated")
+
+lod_dilution_summary <- lod_dilution_summary |> 
+  dplyr::mutate(curve_group = "Limit of Detection")
+
+linear_dilution_summary <- linear_dilution_summary |> 
+  dplyr::mutate(curve_group = "Linear")
+
+combined_dilution_summary <-
+  dplyr::bind_rows(
+    saturation_dilution_summary,
+    lod_dilution_summary,
+    linear_dilution_summary
+  ) 
+```
+
+```{r Data Wrangling for Simulation Results}
+#| echo: false
+combined_dilution_summary <- 
+  combined_dilution_summary |> 
+  dplyr::mutate(
+    curve_group = factor(.data$curve_group,
+                         levels = c("Linear",
+                                    "Saturated",
+                                    "Limit of Detection")),
+    wf2_group = stringr::str_replace(
+      string = .data$wf2_group,
+      pattern = "LOD",
+      replacement = "Limit of Detection"
+    ),
+    wf2_group = factor(.data$wf2_group,
+                         levels = c("Good Linearity",
+                                    "Saturation",
+                                    "Limit of Detection",
+                                    "Poor Linearity"))
+  ) |> 
+  labelled::set_variable_labels(
+    ID = "Unique Curve Identifier",
+    curve_group = "Simulated Curve Group",
+    wf1_group = "Workflow 1 Result",
+    wf2_group = "Workflow 2 Result",
+    r_corr = "Pearson Correlation Coefficient",
+    pra_linear = "Percent Residual Accuracy",
+    mandel_p_val = "Mandel's Test p Value",
+    concavity = "Concavity Of Fitted Quadratic Model",
+    r2_linear = "Coefficient Of Determination",
+    r2_adj_linear = "Adjusted Coefficient Of Determination",
+    mandel_stats = "Test statistics from Mandel's Test"
+  )
+
+```
+
+The workflow was tested on `r nrow(linear_dilution_summary)` simulated linear curves, `r nrow(lod_dilution_summary)` curves that plateau at low concentrations (labelled as LOD curves) and `r nrow(saturation_dilution_summary)` curves that plateau at high concentrations (labelled as Saturated curves)
+
+```{r}
+#| echo: false
+#| label: tbl-simulation-result
+#| tbl-cap-location: bottom
+#| tbl-cap: "Simulation Results"
+combined_dilution_summary |> 
+  dplyr::select(c("curve_group", "wf2_group", 
+                  "r_corr", "pra_linear")) |> 
+  gtsummary::tbl_summary(
+    by = "curve_group",
+    statistic = list(
+      wf2_group ~ "{n}/{N} ({p}%)"
+    ) 
+  ) |> 
+  modify_header(all_stat_cols() ~ "**{level}**\nN = {n}") |> 
+  gtsummary::modify_spanning_header(all_stat_cols() ~ "**Simulated Curve Types**") |>  
+  gtsummary::as_flex_table() |> 
+  flextable::set_table_properties(width = 1, layout = "autofit")
+
+```
+
 
 While the threshold values given for Pearson Correlation Coefficient and Percent Residual Accuracy are based on the interpretation given by @y.h.chan2003 and @logue2018, respectively, it remains subjective and arbitrary. Moreover, it is also possible for the dilution curve to exhibit a sigmoidal relationship, or non-linear, at both low and high concentrations, which the proposed workflow would be unable to identify.
 
