@@ -436,7 +436,7 @@ combined_dilution_summary <-
 
 ```
 
-The workflow was tested on `r nrow(linear_dilution_summary)` simulated linear curves, `r nrow(lod_dilution_summary)` curves that plateau at low concentrations (labelled as LOD curves) and `r nrow(saturation_dilution_summary)` curves that plateau at high concentrations (labelled as Saturated curves)
+Workflow $2$ was tested on `r nrow(linear_dilution_summary)` simulated linear curves, `r nrow(lod_dilution_summary)` curves that plateau at low concentrations (labelled as Limit of Detection curves) and `r nrow(saturation_dilution_summary)` curves that plateau at high concentrations (labelled as Saturated curves)
 
 ```{r}
 #| echo: false
@@ -450,10 +450,13 @@ combined_dilution_summary |>
     by = "curve_group",
     statistic = list(
       wf2_group ~ "{n}/{N} ({p}%)"
-    ) 
+    ),
+    digits = list(wf2_group ~ c(0, 0, 1),
+                  r_corr ~ c(2),
+                  pra_linear ~ c(0))
   ) |> 
   modify_header(all_stat_cols() ~ "**{level}**\nN = {n}") |> 
-  gtsummary::modify_spanning_header(all_stat_cols() ~ "**Simulated Curve Types**") |>  
+  gtsummary::modify_spanning_header(all_stat_cols() ~ "**Simulated Curve Type**") |>  
   gtsummary::as_flex_table() |> 
   flextable::set_table_properties(width = 1, layout = "autofit")
 
