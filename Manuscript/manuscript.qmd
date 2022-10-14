@@ -19,6 +19,7 @@ library(patchwork)
 library(labelled)
 library(gtsummary)
 library(flextable)
+library(webshot2)
 library(DCVtestkit)
 ```
 
@@ -409,6 +410,10 @@ combined_dilution_summary <-
                          levels = c("Linear",
                                     "Saturated",
                                     "Limit of Detection")),
+    pearson_group = dplyr::case_when(
+      .data$r_corr >= 0.8 ~ "more than or\nequal to 0.8",
+      .data$r_corr < 0.8 ~ "less than 0.8",
+    ),
     wf2_group = stringr::str_replace(
       string = .data$wf2_group,
       pattern = "LOD",
@@ -423,10 +428,11 @@ combined_dilution_summary <-
   labelled::set_variable_labels(
     ID = "Unique Curve Identifier",
     curve_group = "Simulated Curve Group",
-    wf1_group = "Workflow 1 Result",
-    wf2_group = "Workflow 2 Result",
-    r_corr = "Pearson Correlation Coefficient",
-    pra_linear = "Percent Residual Accuracy",
+    wf1_group = "Workflow 1 Grouping",
+    wf2_group = "Workflow 2 Grouping",
+    pearson_group = "Pearson Correlation\nCoefficient Grouping",
+    r_corr = "Pearson Correlation\nCoefficient",
+    pra_linear = "Percent Residual\nAccuracy",
     mandel_p_val = "Mandel's Test p Value",
     concavity = "Concavity Of Fitted Quadratic Model",
     r2_linear = "Coefficient Of Determination",
@@ -436,34 +442,59 @@ combined_dilution_summary <-
 
 ```
 
-Workflow $2$ was tested on `r nrow(linear_dilution_summary)` simulated linear curves, `r nrow(lod_dilution_summary)` curves that plateau at low concentrations (labelled as Limit of Detection curves) and `r nrow(saturation_dilution_summary)` curves that plateau at high concentrations (labelled as Saturated curves)
+Workflow $2$ was tested on `r nrow(linear_dilution_summary)` simulated linear curves (labelled as Linear), `r nrow(lod_dilution_summary)` curves that plateau at low concentrations (labelled as Limit of Detection) and `r nrow(saturation_dilution_summary)` curves that plateau at high concentrations (labelled as Saturated). A benchmark workflow using only Pearson Correlation Coefficient with a cut off value of $0.8$ is used to compare with Workflow $2$.
 
 ```{r}
 #| echo: false
-#| label: tbl-simulation-result
-#| tbl-cap-location: bottom
-#| tbl-cap: "Simulation Results"
-combined_dilution_summary |> 
+#| output: false
+simulation_results <- combined_dilution_summary |> 
   dplyr::select(c("curve_group", "wf2_group", 
-                  "r_corr", "pra_linear")) |> 
+                  "pearson_group"
+                  # "r_corr", "pra_linear"
+                  )
+                ) |> 
+  dplyr::relocate(c("pearson_group")) |> 
   gtsummary::tbl_summary(
     by = "curve_group",
     statistic = list(
+      pearson_group ~ "{n}/{N} ({p}%)",
       wf2_group ~ "{n}/{N} ({p}%)"
     ),
-    digits = list(wf2_group ~ c(0, 0, 1),
-                  r_corr ~ c(2),
-                  pra_linear ~ c(0))
+    digits = list(
+      wf2_group ~ c(0, 0, 1),
+      pearson_group ~ c(0, 0, 1)
+      #r_corr ~ c(2),
+      #pra_linear ~ c(0)
+      )
   ) |> 
-  modify_header(all_stat_cols() ~ "**{level}**\nN = {n}") |> 
-  gtsummary::modify_spanning_header(all_stat_cols() ~ "**Simulated Curve Type**") |>  
-  gtsummary::as_flex_table() |> 
-  flextable::set_table_properties(width = 1, layout = "autofit")
+  modify_header(
+    all_stat_cols() ~ "**{level}**\nN = {n}"
+    ) |> 
+  gtsummary::modify_spanning_header(
+    all_stat_cols() ~ "**Simulated Curve Type**"
+    )
 
+
+simulation_results |> 
+  gtsummary::as_flex_table() |> 
+  flextable::set_table_properties(width = 1, layout = "autofit") |>
+  flextable::save_as_image(
+    path = here::here("Manuscript",
+                      "images",
+                      "simulation_results.png"), 
+    webshot = "webshot2")
 ```
 
+::: {#fig-Simulation-Result layout-ncol=1}
 
-While the threshold values given for Pearson Correlation Coefficient and Percent Residual Accuracy are based on the interpretation given by @y.h.chan2003 and @logue2018, respectively, it remains subjective and arbitrary. Moreover, it is also possible for the dilution curve to exhibit a sigmoidal relationship, or non-linear, at both low and high concentrations, which the proposed workflow would be unable to identify.
+![](images/simulation_results.png)
+
+Simulation Results
+:::
+
+@fig-Simulation-Result showed that Workflow $2$ is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow $2$ is able to identify less linear curves than the benchmark workflow, the results are comparable score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Linear")` 
+
+While the proposed workflows' threshold values of Pearson Correlation Coefficient and Percent Residual Accuracy are based on the interpretation given by @y.h.chan2003 and @logue2018, respectively, these cut off values remain subjective and arbitrary. Moreover, it is also possible for the dilution curve to exhibit a sigmoidal relationship, or non-linear, at both low and high concentrations, which the proposed workflow would be unable to identify.
 
 Nevertheless, while the proposed workflow is not a perfect solution, *DCVtestkit* allows the analyst to change and optimise the threshold values, to adjust the determinants of linearity and saturation of dilution curves according to the user’s needs. More information on how to perform such customisation can be found in the program documentation titled: ["Customise Linearity Evaluation Workflow"](https://slinghub.github.io/DCVtestkit/articles/lineval-customization.html). Furthermore, it is also possible to output these statistical summaries in Excel without the classification results.
 
