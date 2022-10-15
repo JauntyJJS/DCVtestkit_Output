@@ -21,7 +21,8 @@ execute:
   cache: false
 ---
 
-# R Libaries used
+# R Packages used
+
 ```{r R packages}
 #| message: false
 
@@ -35,8 +36,58 @@ library(epifitter)
 library(reactable)
 library(deSolve)
 library(DCVtestkit)
+library(labelled)
+library(gtsummary)
+library(sessioninfo)
+library(report)
 
 set.seed(123)
+```
+
+```{r See packages info}
+#| code-fold: true
+r_package_table <- sessioninfo::package_info()
+rownames(r_package_table) <- NULL
+
+r_package_table |>
+  dplyr::mutate(
+    version = ifelse(is.na(r_package_table$loadedversion), 
+                     r_package_table$ondiskversion, 
+                     r_package_table$loadedversion)
+  ) |> 
+  dplyr::filter(.data$attached == TRUE) |> 
+  dplyr::select(c("package", "version", 
+                  "date", "source"
+    )
+  ) |> 
+  reactable::reactable(
+    columns = list(
+      package = reactable::colDef(
+        # Freeze first column
+        sticky = "left",
+        style = list(borderRight = "1px solid #eee"),
+        headerStyle = list(borderRight = "1px solid #eee"))
+  )
+  )
+```
+
+# R Platform Information
+
+```{r See session info}
+#| code-fold: true
+r_platform_table <- sessioninfo::platform_info()
+
+r_platform_table <- data.frame(
+    setting = names(r_platform_table),
+    value = unlist(r_platform_table,
+                   use.names = FALSE),
+    stringsAsFactors = FALSE
+  )
+
+r_platform_table |>
+  reactable::reactable(
+    defaultPageSize = 5
+  )
 ```
 
 # Simulation Functions
@@ -545,6 +596,106 @@ linear_dilution_summary |>
 )
 ```
 
+# Report Workflow $2$ Results
+
+We combined the three summary results together
+
+```{r Combine Simulated Data Results}
+
+saturation_dilution_summary <- saturation_dilution_summary |> 
+  dplyr::mutate(curve_group = "Saturated")
+
+lod_dilution_summary <- lod_dilution_summary |> 
+  dplyr::mutate(curve_group = "Limit of Detection")
+
+linear_dilution_summary <- linear_dilution_summary |> 
+  dplyr::mutate(curve_group = "Linear")
+
+combined_dilution_summary <-
+  dplyr::bind_rows(
+    saturation_dilution_summary,
+    lod_dilution_summary,
+    linear_dilution_summary
+  ) 
+```
+
+Perform some data wrangling to summarise the results later. A benchmark workflow using only Pearson Correlation Coefficient with a cut off value of $0.8$ is used to compare with Workflow $2$.
+
+```{r Data Wrangling for Simulation Results}
+
+combined_dilution_summary <- 
+  combined_dilution_summary |> 
+  dplyr::mutate(
+    curve_group = factor(.data$curve_group,
+                         levels = c("Linear",
+                                    "Saturated",
+                                    "Limit of Detection")),
+    pearson_group = dplyr::case_when(
+      .data$r_corr >= 0.8 ~ "more than or\nequal to 0.8",
+      .data$r_corr < 0.8 ~ "less than 0.8",
+    ),
+    wf2_group = stringr::str_replace(
+      string = .data$wf2_group,
+      pattern = "LOD",
+      replacement = "Limit of Detection"
+    ),
+    wf2_group = factor(.data$wf2_group,
+                         levels = c("Good Linearity",
+                                    "Saturation",
+                                    "Limit of Detection",
+                                    "Poor Linearity"))
+  ) |> 
+  labelled::set_variable_labels(
+    ID = "Unique Curve Identifier",
+    curve_group = "Simulated Curve Group",
+    wf1_group = "Workflow 1 Grouping",
+    wf2_group = "Workflow 2 Grouping",
+    pearson_group = "Pearson Correlation\nCoefficient Grouping",
+    r_corr = "Pearson Correlation\nCoefficient",
+    pra_linear = "Percent Residual\nAccuracy",
+    mandel_p_val = "Mandel's Test p Value",
+    concavity = "Concavity Of Fitted Quadratic Model",
+    r2_linear = "Coefficient Of Determination",
+    r2_adj_linear = "Adjusted Coefficient Of Determination",
+    mandel_stats = "Test statistics from Mandel's Test"
+  )
+
+```
+
+```{r Worflow 2 vs Benchmark results}
+#| column: screen-inset-right
+simulation_results <- combined_dilution_summary |> 
+  dplyr::select(c("curve_group", "wf2_group", 
+                  "pearson_group"
+                  # "r_corr", "pra_linear"
+                  )
+                ) |> 
+  dplyr::relocate(c("pearson_group")) |> 
+  gtsummary::tbl_summary(
+    by = "curve_group",
+    statistic = list(
+      pearson_group ~ "{n}/{N} ({p}%)",
+      wf2_group ~ "{n}/{N} ({p}%)"
+    ),
+    digits = list(
+      wf2_group ~ c(0, 0, 1),
+      pearson_group ~ c(0, 0, 1)
+      #r_corr ~ c(2),
+      #pra_linear ~ c(0)
+      )
+  ) |> 
+  modify_header(
+    all_stat_cols() ~ "**{level}**\nN = {n}"
+    ) |> 
+  gtsummary::modify_spanning_header(
+    all_stat_cols() ~ "**Simulated Curve Type**"
+    )
+
+simulation_results
+```
+
+Results showed that Workflow $2$ is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow $2$ is able to identify less linear curves than the benchmark workflow, it gives a comparable score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Linear")`
+
 # Report Plots As pdf Files
 
 ::: {.panel-tabset}
@@ -728,4 +879,14 @@ DCVtestkit::view_trellis_html(
   trellis_report_folder = "Dilution_Linear_Folder",
   panel_variable = "panel"
 )
+```
+
+# R Package Reference
+
+```{r package references}
+#| code-fold: true
+#| output: asis
+
+report::cite_packages() |> 
+  suppressWarnings()
 ```

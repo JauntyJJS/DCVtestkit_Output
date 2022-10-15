@@ -16,10 +16,13 @@
 
 * Add interactive tables to view the simulated data and results.
 * Found a way to fill up the trellis plot.
+* Add R session info and R package citations
 
 ### Quarto_Example
 
 * Found a way to fill up the trellis plot.
+* Add R session info and R package citations
+
 # DCVtestkit 0.0.1
 
 

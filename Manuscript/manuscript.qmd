@@ -442,7 +442,7 @@ combined_dilution_summary <-
 
 ```
 
-Workflow $2$ was tested on `r nrow(linear_dilution_summary)` simulated linear curves (labelled as Linear), `r nrow(lod_dilution_summary)` curves that plateau at low concentrations (labelled as Limit of Detection) and `r nrow(saturation_dilution_summary)` curves that plateau at high concentrations (labelled as Saturated). A benchmark workflow using only Pearson Correlation Coefficient with a cut off value of $0.8$ is used to compare with Workflow $2$.
+Workflow $2$ was tested on simulated data sets of `r nrow(linear_dilution_summary)` linear curves (labelled as Linear), `r nrow(lod_dilution_summary)` curves that plateau at low concentrations (labelled as Limit of Detection) and `r nrow(saturation_dilution_summary)` curves that plateau at high concentrations (labelled as Saturated). A benchmark workflow using only Pearson Correlation Coefficient with a cut off value of $0.8$, a threshold used in @croixmarie2009, is created to compare with Workflow $2$.
 
 ```{r}
 #| echo: false
@@ -492,7 +492,7 @@ simulation_results |>
 Simulation Results
 :::
 
-@fig-Simulation-Result showed that Workflow $2$ is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow $2$ is able to identify less linear curves than the benchmark workflow, the results are comparable score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Linear")` 
+@fig-Simulation-Result showed that Workflow $2$ is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow $2$ is able to identify less linear curves than the benchmark workflow, it gives a comparable score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Linear")`
 
 While the proposed workflows' threshold values of Pearson Correlation Coefficient and Percent Residual Accuracy are based on the interpretation given by @y.h.chan2003 and @logue2018, respectively, these cut off values remain subjective and arbitrary. Moreover, it is also possible for the dilution curve to exhibit a sigmoidal relationship, or non-linear, at both low and high concentrations, which the proposed workflow would be unable to identify.
 
