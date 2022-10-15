@@ -185,13 +185,15 @@ simulate_linear <- function(id) {
 
 # Create Simulation Curve Data
 
+We simulate $200$ curves (saturated, limit of detection and linear) using $7$ points from $0$ to $200$ on the x-axis. A unique id is added for each simulated data.
+
 ::: {.panel-tabset}
 
 ## Saturated Curve
 
 ```{r Create Simulated Data Saturated}
 
-saturation_simulated_database <-
+nested_saturation_simulated_database <-
   tibble::tibble(
     ID = paste("Saturation", 
                stringr::str_pad(1:200, width = 3, pad = "0")),
@@ -203,20 +205,14 @@ saturation_simulated_database <-
       .x = .data$ID,
       .f = simulate_saturation
       )
-    ) |> 
-  tidyr::unnest("dilution_data")
-```
-
-```{r Save Simulated Data Saturated}
-saveRDS(saturation_simulated_database, 
-        file = "saturation_simulated_database.rds")
+  )
 ```
 
 ## Limit of Detection Curve
 
 ```{r Create Simulated Data LOD}
 
-lod_simulated_database <-
+nested_lod_simulated_database <-
   tibble::tibble(
     ID = paste("Limit Of Detection", 
                stringr::str_pad(1:200, width = 3, pad = "0")),
@@ -228,20 +224,14 @@ lod_simulated_database <-
       .x = .data$ID,
       .f = simulate_lod
       )
-    ) |> 
-  tidyr::unnest("dilution_data")
-```
-
-```{r Save Simulated Data LOD}
-saveRDS(lod_simulated_database, 
-        file = "lod_simulated_database.rds")
+  )
 ```
 
 ## Linear Curve
 
 ```{r Create Simulated Data Linear}
 
-linear_simulated_database <-
+nested_linear_simulated_database <-
   tibble::tibble(
     ID = paste("Linear", 
                stringr::str_pad(1:200, width = 3, pad = "0")),
@@ -253,18 +243,79 @@ linear_simulated_database <-
       .x = .data$ID,
       .f = simulate_linear
       )
-    ) |> 
-  tidyr::unnest("dilution_data")
-```
-
-```{r Save Simulated Data Linear}
-saveRDS(linear_simulated_database, 
-        file = "linear_simulated_database.rds")
+  )
 ```
 
 :::
 
-# Create Statistical Summary
+# Unnest Simulated Data
+
+While nested dilution (having a column of data frames) is easier to view with a human eye, it can be hard to be read and processed by a computer. We need flattened the data frames back into columns. To do this, we use [`tidyr::unnest`](https://tidyr.tidyverse.org/reference/nest.html)  
+
+## Saturated Curve
+
+```{r Nest Simulated Data Saturated}
+saturation_simulated_database <-
+  nested_saturation_simulated_database |> 
+  tidyr::unnest("dilution_data")
+```
+
+## Limit of Detection Curve
+
+```{r Nest Simulated Data LOD}
+lod_simulated_database <-
+  nested_lod_simulated_database |> 
+  tidyr::unnest("dilution_data")
+```
+
+## Linear Curve
+
+```{r Nest Simulated Data Linear}
+linear_simulated_database <-
+  nested_linear_simulated_database |> 
+  tidyr::unnest("dilution_data")
+```
+
+# Save Simulated Data
+
+We can now save the data as a csv and rds files.
+
+## Saturated Curve
+
+```{r Save Simulated Data Saturated}
+saveRDS(saturation_simulated_database, 
+        file = "saturation_simulated_database.rds")
+
+write.csv(x = saturation_simulated_database,
+          file = "saturation_simulated_database.csv", 
+          row.names = FALSE)
+```
+
+## Limit of Detection Curve
+
+```{r Save Simulated Data LOD}
+saveRDS(lod_simulated_database, 
+        file = "lod_simulated_database.rds")
+
+write.csv(x = saturation_simulated_database,
+          file = "lod_simulated_database.csv", 
+          row.names = FALSE)
+```
+
+## Linear Curve
+
+```{r Save Simulated Data Linear}
+saveRDS(linear_simulated_database, 
+        file = "linear_simulated_database.rds")
+
+write.csv(x = linear_simulated_database,
+          file = "linear_simulated_database.csv", 
+          row.names = FALSE)
+```
+
+# Calculate Statistical Summary
+
+We now calculate the statistical summary for each dilution curve. In addition, we export statistical summary as a csv and rds files.
 
 ::: {.panel-tabset}
 
@@ -286,6 +337,10 @@ saturation_dilution_summary <-
 ```{r save dilution statistical summary saturated}
 saveRDS(saturation_dilution_summary, 
         file = "saturation_dilution_summary.rds")
+
+write.csv(x = saturation_dilution_summary,
+          file = "saturation_dilution_summary.csv", 
+          row.names = FALSE)
 ```
 
 ## Limit of Detection Curve
@@ -307,6 +362,10 @@ lod_dilution_summary <-
 ```{r save dilution statistical summary lod}
 saveRDS(lod_dilution_summary, 
         file = "lod_dilution_summary.rds")
+
+write.csv(x = lod_dilution_summary,
+          file = "lod_dilution_summary.csv", 
+          row.names = FALSE)
 ```
 
 ## Linear Curve
@@ -328,11 +387,165 @@ linear_dilution_summary <-
 ```{r save dilution statistical summary linear}
 saveRDS(linear_dilution_summary, 
         file = "linear_dilution_summary.rds")
+
+write.csv(x = linear_dilution_summary,
+          file = "linear_dilution_summary.csv", 
+          row.names = FALSE)
 ```
 
 :::
 
-# Report plots as pdf files
+# View Simulation Curve Data and Statistical Summary
+
+We use [`reactable::reactable`](https://glin.github.io/reactable/reference/reactable.html) to print the simulated data and statistical summary.
+
+## Saturated Curve
+
+```{r Print Simulated Data Saturated}
+#| layout-ncol: 1
+
+nested_saturation_simulated_database |> 
+  reactable::reactable(
+    defaultColDef = reactable::colDef(minWidth = 200),
+    defaultPageSize = 5,
+    columns = list(
+      ID = reactable::colDef(
+        # Freeze first column
+        sticky = "left",
+        style = list(borderRight = "1px solid #eee"),
+        headerStyle = list(borderRight = "1px solid #eee"),
+        minWidth = 200),
+      dilution_data = reactable::colDef(
+        details = function(index) {
+          filtered_data <- nested_saturation_simulated_database[["dilution_data"]][index][[1]]
+          htmltools::div(style = "padding: 1rem",
+                         reactable::reactable(
+                           data = filtered_data,
+                           defaultPageSize = 10,
+                           defaultColDef = reactable::colDef(minWidth = 200),
+                           columns = list(Sample_Name = reactable::colDef(minWidth = 200)),
+                           outlined = TRUE,
+                           highlight = TRUE)
+                       )
+      }
+    )
+  )
+)
+
+saturation_dilution_summary |> 
+  reactable::reactable(
+    defaultColDef = reactable::colDef(minWidth = 200),
+    defaultPageSize = 5,
+    columns = list(
+      ID = reactable::colDef(
+      # Freeze first column
+      sticky = "left",
+      style = list(borderRight = "1px solid #eee"),
+      headerStyle = list(borderRight = "1px solid #eee"),
+      minWidth = 200)
+    )
+)
+```
+
+## Limit of Detection Curve
+
+```{r Print Simulated Data LOD}
+#| layout-ncol: 1
+
+nested_lod_simulated_database |> 
+  reactable::reactable(
+    defaultColDef = reactable::colDef(minWidth = 200),
+    defaultPageSize = 5,
+    columns = list(
+      ID = reactable::colDef(
+        # Freeze first column
+        sticky = "left",
+        style = list(borderRight = "1px solid #eee"),
+        headerStyle = list(borderRight = "1px solid #eee"),
+        minWidth = 200),
+      dilution_data = reactable::colDef(
+        details = function(index) {
+          filtered_data <- nested_lod_simulated_database[["dilution_data"]][index][[1]]
+          htmltools::div(style = "padding: 1rem",
+                         reactable::reactable(
+                           data = filtered_data,
+                           defaultPageSize = 10,
+                           defaultColDef = reactable::colDef(minWidth = 200),
+                           columns = list(Sample_Name = reactable::colDef(minWidth = 200)),
+                           outlined = TRUE,
+                           highlight = TRUE)
+                       )
+      }
+    )
+  )
+
+)
+
+lod_dilution_summary |> 
+  reactable::reactable(
+    defaultColDef = reactable::colDef(minWidth = 200),
+    defaultPageSize = 5,
+    columns = list(
+      ID = reactable::colDef(
+      # Freeze first column
+      sticky = "left",
+      style = list(borderRight = "1px solid #eee"),
+      headerStyle = list(borderRight = "1px solid #eee"),
+      minWidth = 200)
+    )
+)
+```
+
+## Linear Curve
+
+```{r Print Simulated Data Linear}
+#| layout-ncol: 1
+
+nested_linear_simulated_database |>
+  reactable::reactable(
+    defaultColDef = reactable::colDef(minWidth = 200),
+    defaultPageSize = 5,
+    columns = list(
+      ID = reactable::colDef(
+        # Freeze first column
+        sticky = "left",
+        style = list(borderRight = "1px solid #eee"),
+        headerStyle = list(borderRight = "1px solid #eee"),
+        minWidth = 200),  
+      dilution_data = reactable::colDef(
+        details = function(index) {
+          filtered_data <- nested_linear_simulated_database[["dilution_data"]][index][[1]]
+          htmltools::div(style = "padding: 1rem",
+                         reactable::reactable(
+                           data = filtered_data,
+                           defaultPageSize = 10,
+                           defaultColDef = reactable::colDef(minWidth = 200),
+                           columns = list(Sample_Name = reactable::colDef(minWidth = 200)),
+                           outlined = TRUE,
+                           highlight = TRUE)
+                       )
+      }
+    )
+  )
+
+)
+
+linear_dilution_summary |> 
+  reactable::reactable(
+    defaultColDef = reactable::colDef(minWidth = 200),
+    defaultPageSize = 5,
+    columns = list(
+      ID = reactable::colDef(
+      # Freeze first column
+      sticky = "left",
+      style = list(borderRight = "1px solid #eee"),
+      headerStyle = list(borderRight = "1px solid #eee"),
+      minWidth = 200)
+    )
+)
+```
+
+# Report Plots As pdf Files
 
 ::: {.panel-tabset}
 
