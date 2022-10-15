@@ -12,7 +12,16 @@
 * Add figure labels in the image caption.
 * Add Simulation Results to test proposed workflow.
 
+### Quarto_Simulation
+
+* Add interactive tables to view the simulated data and results.
+* Found a way to fill up the trellis plot.
+
+### Quarto_Example
+
+* Found a way to fill up the trellis plot.
 # DCVtestkit 0.0.1
+
 
 * Added a `NEWS.md` file to track changes to the package.
 * Create a folder `Quarto_Example` that contains some output from [`DCVtestkit`](https://github.com/SLINGhub/DCVtestkit) and scripts that generate the results.

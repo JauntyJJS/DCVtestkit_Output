@@ -235,6 +235,7 @@ DCVtestkit::view_ggplot_pdf(
 #| fig-width: 15
 #| fig-height: 20
 #| fig-alt: "A display of dilution curves with summary statistics in ggplot."
+#| column: screen-inset-right
 
 patchwork::wrap_plots(
   ggplot_list,
@@ -246,7 +247,7 @@ patchwork::wrap_plots(
 # Export results as trellis table
 
 ```{r Export results as trellis table}
-#| page-layout: article
+#| column: screen-inset-right
 
 trellis_table <- DCVtestkit::add_plotly_panel(
   dilution_table,
