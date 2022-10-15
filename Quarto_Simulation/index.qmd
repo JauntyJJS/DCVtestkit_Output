@@ -1,7 +1,24 @@
 ---
 title: "Simulation"
 author: "Jeremy Selva"
-format: html
+format:
+  html:
+    theme: 
+      light: cerulean 
+      dark: cyborg
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    number-sections: false
+    code-fold: show
+    code-overflow: scroll
+    code-copy: true
+    code-tools: true
+    code-link: true
+    self-contained: false
+    smooth-scroll: true
+execute: 
+  cache: true
 ---
 
 # R Libaries used
