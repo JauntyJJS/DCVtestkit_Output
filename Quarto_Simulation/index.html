@@ -145,7 +145,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
 </div>
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">Simulation</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
@@ -166,7 +166,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
 
 </header><section id="r-libaries-used" class="level1"><h1>R Libaries used</h1>
-<div class="cell" data-hash="index_cache/html/R packages_eeef70502ed666561f4892c64494b8e6">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org">stringr</a></span><span class="op">)</span></span>
@@ -191,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="cell" data-hash="index_cache/html/Saturation Many Data_ca7e4f2084809b06d4145db326df7ad7">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">simulate_saturation</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">mono_model</span> <span class="op">&lt;-</span> <span class="fu">epifitter</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/epifitter/man/sim_monomolecular.html">sim_monomolecular</a></span><span class="op">(</span></span>
@@ -215,7 +215,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="cell" data-hash="index_cache/html/LOD Many Data_68e4e9a3ca0d64151bfcdb16e846bbfa">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">simulate_lod</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">exp_model</span> <span class="op">&lt;-</span> <span class="fu">epifitter</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/epifitter/man/sim_exponential.html">sim_exponential</a></span><span class="op">(</span></span>
@@ -239,7 +239,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<div class="cell" data-hash="index_cache/html/Linear Many Data_905bb27fd1957fd2896326d3998aaff9">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#diffeq model as function</span></span>
 <span><span class="va">model.constant</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">times</span>, <span class="va">y</span>, <span class="va">parms</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co">## times = current times</span></span>
@@ -332,7 +332,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="cell" data-hash="index_cache/html/Create Simulated Data Saturated_65696501344783baf331e9cf88369621">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nested_saturation_simulated_database</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>    ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Saturation"</span>, </span>
@@ -350,7 +350,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="cell" data-hash="index_cache/html/Create Simulated Data LOD_e458dd023b8b4c0933c0b579ae526670">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nested_lod_simulated_database</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>    ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Limit Of Detection"</span>, </span>
@@ -368,7 +368,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
-<div class="cell" data-hash="index_cache/html/Create Simulated Data Linear_4fa4057da2d382fba397f24ee66abc27">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nested_linear_simulated_database</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>    ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Linear"</span>, </span>
@@ -390,21 +390,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section><section id="unnest-simulated-data" class="level1"><h1>Unnest Simulated Data</h1>
 <p>While nested dilution (having a column of data frames) is easier to view with a human eye, it can be hard to be read and processed by a computer. We need flattened the data frames back into columns. To do this, we use <a href="https://tidyr.tidyverse.org/reference/nest.html"><code>tidyr::unnest</code></a></p>
 <section id="saturated-curve-2" class="level2"><h2 class="anchored" data-anchor-id="saturated-curve-2">Saturated Curve</h2>
-<div class="cell" data-hash="index_cache/html/Nest Simulated Data Saturated_a48a7319ff5559137aa67793329c21c0">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">saturation_simulated_database</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">nested_saturation_simulated_database</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="st">"dilution_data"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section><section id="limit-of-detection-curve-2" class="level2"><h2 class="anchored" data-anchor-id="limit-of-detection-curve-2">Limit of Detection Curve</h2>
-<div class="cell" data-hash="index_cache/html/Nest Simulated Data LOD_0ad1f2f0b0f3ff9b7cebb6b83b7329e3">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lod_simulated_database</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">nested_lod_simulated_database</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="st">"dilution_data"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section><section id="linear-curve-2" class="level2"><h2 class="anchored" data-anchor-id="linear-curve-2">Linear Curve</h2>
-<div class="cell" data-hash="index_cache/html/Nest Simulated Data Linear_91a2f360a096526473fed6ef64c23841">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">linear_simulated_database</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">nested_linear_simulated_database</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="st">"dilution_data"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -413,7 +413,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section></section><section id="save-simulated-data" class="level1"><h1>Save Simulated Data</h1>
 <p>We can now save the data as a csv and rds files.</p>
 <section id="saturated-curve-3" class="level2"><h2 class="anchored" data-anchor-id="saturated-curve-3">Saturated Curve</h2>
-<div class="cell" data-hash="index_cache/html/Save Simulated Data Saturated_a656f5160c8d525a7d9e9587457c821d">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">saturation_simulated_database</span>, </span>
 <span>        file <span class="op">=</span> <span class="st">"saturation_simulated_database.rds"</span><span class="op">)</span></span>
 <span></span>
@@ -423,7 +423,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 </div>
 </section><section id="limit-of-detection-curve-3" class="level2"><h2 class="anchored" data-anchor-id="limit-of-detection-curve-3">Limit of Detection Curve</h2>
-<div class="cell" data-hash="index_cache/html/Save Simulated Data LOD_5aa135aca9e23a76f62e868786db6fd2">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">lod_simulated_database</span>, </span>
 <span>        file <span class="op">=</span> <span class="st">"lod_simulated_database.rds"</span><span class="op">)</span></span>
 <span></span>
@@ -433,7 +433,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 </div>
 </section><section id="linear-curve-3" class="level2"><h2 class="anchored" data-anchor-id="linear-curve-3">Linear Curve</h2>
-<div class="cell" data-hash="index_cache/html/Save Simulated Data Linear_b25b7d648747e64559eb0846ee7d635e">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">linear_simulated_database</span>, </span>
 <span>        file <span class="op">=</span> <span class="st">"linear_simulated_database.rds"</span><span class="op">)</span></span>
 <span></span>
@@ -452,7 +452,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div class="cell" data-hash="index_cache/html/dilution statistical summary saturated_96d98492028c7e192c44414b0d653db5">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">saturation_dilution_summary</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu">DCVtestkit</span><span class="fu">::</span><span class="fu"><a href="https://slinghub.github.io/DCVtestkit/reference/summarise_dilution_table.html">summarise_dilution_table</a></span><span class="op">(</span></span>
 <span>    dilution_table <span class="op">=</span> <span class="va">saturation_simulated_database</span>,</span>
@@ -464,7 +464,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-hash="index_cache/html/save dilution statistical summary saturated_9fbc3ccf54c3ed9921f4e717e046bc5c">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">saturation_dilution_summary</span>, </span>
 <span>        file <span class="op">=</span> <span class="st">"saturation_dilution_summary.rds"</span><span class="op">)</span></span>
 <span></span>
@@ -475,7 +475,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<div class="cell" data-hash="index_cache/html/dilution statistical summary lod_33c5472b191d3c22b059db63d8aae8e6">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lod_dilution_summary</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu">DCVtestkit</span><span class="fu">::</span><span class="fu"><a href="https://slinghub.github.io/DCVtestkit/reference/summarise_dilution_table.html">summarise_dilution_table</a></span><span class="op">(</span></span>
 <span>    dilution_table <span class="op">=</span> <span class="va">lod_simulated_database</span>,</span>
@@ -487,7 +487,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-hash="index_cache/html/save dilution statistical summary lod_12e45cf348368a795388486902ce6e2c">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">lod_dilution_summary</span>, </span>
 <span>        file <span class="op">=</span> <span class="st">"lod_dilution_summary.rds"</span><span class="op">)</span></span>
 <span></span>
@@ -498,7 +498,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
-<div class="cell" data-hash="index_cache/html/dilution statistical summary linear_77cf034c8b1e5d8865f7d77947a350e6">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">linear_dilution_summary</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">DCVtestkit</span><span class="fu">::</span><span class="fu"><a href="https://slinghub.github.io/DCVtestkit/reference/summarise_dilution_table.html">summarise_dilution_table</a></span><span class="op">(</span></span>
 <span>    dilution_table <span class="op">=</span> <span class="va">linear_simulated_database</span>,</span>
@@ -510,7 +510,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-hash="index_cache/html/save dilution statistical summary linear_b13aa85f69efb466a579a6c42c04375e">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">linear_dilution_summary</span>, </span>
 <span>        file <span class="op">=</span> <span class="st">"linear_dilution_summary.rds"</span><span class="op">)</span></span>
 <span></span>
@@ -566,7 +566,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>      minWidth <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell quarto-layout-panel" data-hash="index_cache/html/Print Simulated Data Saturated_dbf14354bdf067d05a6f51fa7af77659">
+</details><div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
 
@@ -626,7 +626,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>      minWidth <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell quarto-layout-panel" data-hash="index_cache/html/Print Simulated Data LOD_e960a48196c6287ab7fb0c29a226c43a">
+</details><div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
 
@@ -686,7 +686,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>      minWidth <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell quarto-layout-panel" data-hash="index_cache/html/Print Simulated Data Linear_3935fcd215550764dcd44bb405281e5b">
+</details><div class="cell quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
 
@@ -712,7 +712,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div class="cell" data-hash="index_cache/html/plots as pdf saturated_75388cfcaf716df69f3a643c8bfa6aba">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">saturation_ggplot_table</span> <span class="op">&lt;-</span> <span class="fu">DCVtestkit</span><span class="fu">::</span><span class="fu"><a href="https://slinghub.github.io/DCVtestkit/reference/add_ggplot_panel.html">add_ggplot_panel</a></span><span class="op">(</span></span>
 <span>  dilution_table <span class="op">=</span> <span class="va">saturation_simulated_database</span>,</span>
 <span>  dilution_summary <span class="op">=</span> <span class="va">saturation_dilution_summary</span>,</span>
@@ -734,7 +734,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<div class="cell" data-hash="index_cache/html/plots as pdf lod_2f7a5b314c5f819703abc4fde3eb200d">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lod_ggplot_table</span> <span class="op">&lt;-</span> <span class="fu">DCVtestkit</span><span class="fu">::</span><span class="fu"><a href="https://slinghub.github.io/DCVtestkit/reference/add_ggplot_panel.html">add_ggplot_panel</a></span><span class="op">(</span></span>
 <span>  dilution_table <span class="op">=</span> <span class="va">lod_simulated_database</span>,</span>
 <span>  dilution_summary <span class="op">=</span> <span class="va">lod_dilution_summary</span>,</span>
@@ -756,7 +756,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
-<div class="cell" data-hash="index_cache/html/plots as pdf linear_fe3c9fd63c27764bd6d61dd3eb0e73ba">
+<div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">linear_ggplot_table</span> <span class="op">&lt;-</span> <span class="fu">DCVtestkit</span><span class="fu">::</span><span class="fu"><a href="https://slinghub.github.io/DCVtestkit/reference/add_ggplot_panel.html">add_ggplot_panel</a></span><span class="op">(</span></span>
 <span>  dilution_table <span class="op">=</span> <span class="va">linear_simulated_database</span>,</span>
 <span>  dilution_summary <span class="op">=</span> <span class="va">linear_dilution_summary</span>,</span>
@@ -779,9 +779,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-</section><section id="report-plots-as-trellis" class="level1"><h1>Report plots as trellis</h1>
-<section id="saturated-curve-7" class="level2"><h2 class="anchored" data-anchor-id="saturated-curve-7">Saturated Curve</h2>
-<div class="cell" data-hash="index_cache/html/plots as trellis saturated_61a54099b720714a41e1a4dad68e6d90">
+</section><section id="report-plots-as-trellis" class="level1 page-columns page-full"><h1>Report plots as trellis</h1>
+<section id="saturated-curve-7" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="saturated-curve-7">Saturated Curve</h2>
+<div class="cell page-columns page-full">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">saturation_trellis_table</span> <span class="op">&lt;-</span> <span class="fu">DCVtestkit</span><span class="fu">::</span><span class="fu"><a href="https://slinghub.github.io/DCVtestkit/reference/add_plotly_panel.html">add_plotly_panel</a></span><span class="op">(</span></span>
 <span>  dilution_table <span class="op">=</span> <span class="va">saturation_simulated_database</span>,</span>
 <span>  dilution_summary <span class="op">=</span> <span class="va">saturation_dilution_summary</span>,</span>
@@ -811,13 +811,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>  trellis_report_folder <span class="op">=</span> <span class="st">"Dilution_Saturated_Folder"</span>,</span>
 <span>  panel_variable <span class="op">=</span> <span class="st">"panel"</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
+</details><div class="cell-output-display column-screen-inset-right">
 <div id="htmlwidget-512770a747bb60fce5e8" style="width:900px;height:550px;" class="trelliscopejs_widget html-widget"></div>
 <script type="application/json" data-for="htmlwidget-512770a747bb60fce5e8">{"x":{"id":"68e2bdf0","config_info":"'Dilution_Saturated_Folder/appfiles/config.jsonp'","self_contained":false,"latest_display":{"name":"Dilution_Plot_Saturated","group":"common"},"spa":false,"in_knitr":true,"in_shiny":false,"in_notebook":false},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-</section><section id="limit-of-detection-curve-7" class="level2"><h2 class="anchored" data-anchor-id="limit-of-detection-curve-7">Limit of Detection Curve</h2>
-<div class="cell" data-hash="index_cache/html/plots as trellis lod_d2c1ea0b6710345a893c8e0a418c697d">
+</section><section id="limit-of-detection-curve-7" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="limit-of-detection-curve-7">Limit of Detection Curve</h2>
+<div class="cell page-columns page-full">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lod_trellis_table</span> <span class="op">&lt;-</span> <span class="fu">DCVtestkit</span><span class="fu">::</span><span class="fu"><a href="https://slinghub.github.io/DCVtestkit/reference/add_plotly_panel.html">add_plotly_panel</a></span><span class="op">(</span></span>
 <span>  dilution_table <span class="op">=</span> <span class="va">lod_simulated_database</span>,</span>
 <span>  dilution_summary <span class="op">=</span> <span class="va">lod_dilution_summary</span>,</span>
@@ -847,13 +847,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>  trellis_report_folder <span class="op">=</span> <span class="st">"Dilution_LOD_Folder"</span>,</span>
 <span>  panel_variable <span class="op">=</span> <span class="st">"panel"</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
+</details><div class="cell-output-display column-screen-inset-right">
 <div id="htmlwidget-9db2b12073f410169584" style="width:900px;height:550px;" class="trelliscopejs_widget html-widget"></div>
 <script type="application/json" data-for="htmlwidget-9db2b12073f410169584">{"x":{"id":"00ed74cc","config_info":"'Dilution_LOD_Folder/appfiles/config.jsonp'","self_contained":false,"latest_display":{"name":"Dilution_Plot_LOD","group":"common"},"spa":false,"in_knitr":true,"in_shiny":false,"in_notebook":false},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-</section><section id="linear-curve-7" class="level2"><h2 class="anchored" data-anchor-id="linear-curve-7">Linear Curve</h2>
-<div class="cell" data-hash="index_cache/html/plots as trellis linear_621079dec6d1ca9079288cacffc5c359">
+</section><section id="linear-curve-7" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="linear-curve-7">Linear Curve</h2>
+<div class="cell page-columns page-full">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">linear_trellis_table</span> <span class="op">&lt;-</span> <span class="fu">DCVtestkit</span><span class="fu">::</span><span class="fu"><a href="https://slinghub.github.io/DCVtestkit/reference/add_plotly_panel.html">add_plotly_panel</a></span><span class="op">(</span></span>
 <span>  dilution_table <span class="op">=</span> <span class="va">linear_simulated_database</span>,</span>
 <span>  dilution_summary <span class="op">=</span> <span class="va">linear_dilution_summary</span>,</span>
@@ -883,7 +883,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>  trellis_report_folder <span class="op">=</span> <span class="st">"Dilution_Linear_Folder"</span>,</span>
 <span>  panel_variable <span class="op">=</span> <span class="st">"panel"</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
+</details><div class="cell-output-display column-screen-inset-right">
 <div id="htmlwidget-f100f0fc31d44eb86f79" style="width:900px;height:550px;" class="trelliscopejs_widget html-widget"></div>
 <script type="application/json" data-for="htmlwidget-f100f0fc31d44eb86f79">{"x":{"id":"d1f3b667","config_info":"'Dilution_Linear_Folder/appfiles/config.jsonp'","self_contained":false,"latest_display":{"name":"Dilution_Plot_Linear","group":"common"},"spa":false,"in_knitr":true,"in_shiny":false,"in_notebook":false},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -1209,7 +1209,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="co">    self-contained: false</span></span>
 <span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="co">    smooth-scroll: true</span></span>
 <span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="co">  cache: true</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="co">  cache: false</span></span>
 <span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a><span class="fu"># R Libaries used</span></span>
@@ -1816,104 +1816,110 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb29-625"><a href="#cb29-625" aria-hidden="true" tabindex="-1"></a><span class="fu">## Saturated Curve</span></span>
 <span id="cb29-626"><a href="#cb29-626" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-627"><a href="#cb29-627" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plots as trellis saturated}</span></span>
-<span id="cb29-628"><a href="#cb29-628" aria-hidden="true" tabindex="-1"></a>saturation_trellis_table <span class="ot">&lt;-</span> DCVtestkit<span class="sc">::</span><span class="fu">add_plotly_panel</span>(</span>
-<span id="cb29-629"><a href="#cb29-629" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_table =</span> saturation_simulated_database,</span>
-<span id="cb29-630"><a href="#cb29-630" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_summary =</span> saturation_dilution_summary,</span>
-<span id="cb29-631"><a href="#cb29-631" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"ID"</span>),</span>
-<span id="cb29-632"><a href="#cb29-632" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_name_var =</span> <span class="st">"Sample Name"</span>,</span>
-<span id="cb29-633"><a href="#cb29-633" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_var =</span> <span class="st">"Dilution Batch Name"</span>,</span>
-<span id="cb29-634"><a href="#cb29-634" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_col =</span> <span class="fu">c</span>(</span>
-<span id="cb29-635"><a href="#cb29-635" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#377eb8"</span>),</span>
-<span id="cb29-636"><a href="#cb29-636" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var =</span> <span class="st">"x"</span>,</span>
-<span id="cb29-637"><a href="#cb29-637" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_units =</span> <span class="st">""</span>,</span>
-<span id="cb29-638"><a href="#cb29-638" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_interval =</span> <span class="dv">50</span>,</span>
-<span id="cb29-639"><a href="#cb29-639" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"y"</span>,</span>
-<span id="cb29-640"><a href="#cb29-640" aria-hidden="true" tabindex="-1"></a>  <span class="at">have_plot_title =</span> <span class="cn">FALSE</span></span>
-<span id="cb29-641"><a href="#cb29-641" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb29-642"><a href="#cb29-642" aria-hidden="true" tabindex="-1"></a>  DCVtestkit<span class="sc">::</span><span class="fu">convert_to_cog</span>(</span>
-<span id="cb29-643"><a href="#cb29-643" aria-hidden="true" tabindex="-1"></a>    <span class="at">grouping_variable =</span> <span class="st">"ID"</span>,</span>
-<span id="cb29-644"><a href="#cb29-644" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel_variable =</span> <span class="st">"panel"</span>,</span>
-<span id="cb29-645"><a href="#cb29-645" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_name_vec =</span> <span class="st">"col_name_vec"</span>,</span>
-<span id="cb29-646"><a href="#cb29-646" aria-hidden="true" tabindex="-1"></a>    <span class="at">desc_vec =</span> <span class="st">"desc_vec"</span>,</span>
-<span id="cb29-647"><a href="#cb29-647" aria-hidden="true" tabindex="-1"></a>    <span class="at">type_vec =</span> <span class="st">"type_vec"</span></span>
-<span id="cb29-648"><a href="#cb29-648" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb29-649"><a href="#cb29-649" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-650"><a href="#cb29-650" aria-hidden="true" tabindex="-1"></a>DCVtestkit<span class="sc">::</span><span class="fu">view_trellis_html</span>(</span>
-<span id="cb29-651"><a href="#cb29-651" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_table =</span> saturation_trellis_table,</span>
-<span id="cb29-652"><a href="#cb29-652" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"ID"</span>),</span>
-<span id="cb29-653"><a href="#cb29-653" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_name =</span> <span class="st">"Dilution_Plot_Saturated"</span>,</span>
-<span id="cb29-654"><a href="#cb29-654" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_folder =</span> <span class="st">"Dilution_Saturated_Folder"</span>,</span>
-<span id="cb29-655"><a href="#cb29-655" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel_variable =</span> <span class="st">"panel"</span></span>
-<span id="cb29-656"><a href="#cb29-656" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb29-657"><a href="#cb29-657" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-658"><a href="#cb29-658" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-659"><a href="#cb29-659" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limit of Detection Curve</span></span>
+<span id="cb29-628"><a href="#cb29-628" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: screen-inset-right</span></span>
+<span id="cb29-629"><a href="#cb29-629" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-630"><a href="#cb29-630" aria-hidden="true" tabindex="-1"></a>saturation_trellis_table <span class="ot">&lt;-</span> DCVtestkit<span class="sc">::</span><span class="fu">add_plotly_panel</span>(</span>
+<span id="cb29-631"><a href="#cb29-631" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_table =</span> saturation_simulated_database,</span>
+<span id="cb29-632"><a href="#cb29-632" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_summary =</span> saturation_dilution_summary,</span>
+<span id="cb29-633"><a href="#cb29-633" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"ID"</span>),</span>
+<span id="cb29-634"><a href="#cb29-634" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_name_var =</span> <span class="st">"Sample Name"</span>,</span>
+<span id="cb29-635"><a href="#cb29-635" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_var =</span> <span class="st">"Dilution Batch Name"</span>,</span>
+<span id="cb29-636"><a href="#cb29-636" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_col =</span> <span class="fu">c</span>(</span>
+<span id="cb29-637"><a href="#cb29-637" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#377eb8"</span>),</span>
+<span id="cb29-638"><a href="#cb29-638" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var =</span> <span class="st">"x"</span>,</span>
+<span id="cb29-639"><a href="#cb29-639" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_units =</span> <span class="st">""</span>,</span>
+<span id="cb29-640"><a href="#cb29-640" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_interval =</span> <span class="dv">50</span>,</span>
+<span id="cb29-641"><a href="#cb29-641" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"y"</span>,</span>
+<span id="cb29-642"><a href="#cb29-642" aria-hidden="true" tabindex="-1"></a>  <span class="at">have_plot_title =</span> <span class="cn">FALSE</span></span>
+<span id="cb29-643"><a href="#cb29-643" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb29-644"><a href="#cb29-644" aria-hidden="true" tabindex="-1"></a>  DCVtestkit<span class="sc">::</span><span class="fu">convert_to_cog</span>(</span>
+<span id="cb29-645"><a href="#cb29-645" aria-hidden="true" tabindex="-1"></a>    <span class="at">grouping_variable =</span> <span class="st">"ID"</span>,</span>
+<span id="cb29-646"><a href="#cb29-646" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel_variable =</span> <span class="st">"panel"</span>,</span>
+<span id="cb29-647"><a href="#cb29-647" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_name_vec =</span> <span class="st">"col_name_vec"</span>,</span>
+<span id="cb29-648"><a href="#cb29-648" aria-hidden="true" tabindex="-1"></a>    <span class="at">desc_vec =</span> <span class="st">"desc_vec"</span>,</span>
+<span id="cb29-649"><a href="#cb29-649" aria-hidden="true" tabindex="-1"></a>    <span class="at">type_vec =</span> <span class="st">"type_vec"</span></span>
+<span id="cb29-650"><a href="#cb29-650" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-651"><a href="#cb29-651" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-652"><a href="#cb29-652" aria-hidden="true" tabindex="-1"></a>DCVtestkit<span class="sc">::</span><span class="fu">view_trellis_html</span>(</span>
+<span id="cb29-653"><a href="#cb29-653" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_table =</span> saturation_trellis_table,</span>
+<span id="cb29-654"><a href="#cb29-654" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"ID"</span>),</span>
+<span id="cb29-655"><a href="#cb29-655" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_name =</span> <span class="st">"Dilution_Plot_Saturated"</span>,</span>
+<span id="cb29-656"><a href="#cb29-656" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_folder =</span> <span class="st">"Dilution_Saturated_Folder"</span>,</span>
+<span id="cb29-657"><a href="#cb29-657" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel_variable =</span> <span class="st">"panel"</span></span>
+<span id="cb29-658"><a href="#cb29-658" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-659"><a href="#cb29-659" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb29-660"><a href="#cb29-660" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-661"><a href="#cb29-661" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plots as trellis lod}</span></span>
-<span id="cb29-662"><a href="#cb29-662" aria-hidden="true" tabindex="-1"></a>lod_trellis_table <span class="ot">&lt;-</span> DCVtestkit<span class="sc">::</span><span class="fu">add_plotly_panel</span>(</span>
-<span id="cb29-663"><a href="#cb29-663" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_table =</span> lod_simulated_database,</span>
-<span id="cb29-664"><a href="#cb29-664" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_summary =</span> lod_dilution_summary,</span>
-<span id="cb29-665"><a href="#cb29-665" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"ID"</span>),</span>
-<span id="cb29-666"><a href="#cb29-666" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_name_var =</span> <span class="st">"Sample Name"</span>,</span>
-<span id="cb29-667"><a href="#cb29-667" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_var =</span> <span class="st">"Dilution Batch Name"</span>,</span>
-<span id="cb29-668"><a href="#cb29-668" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_col =</span> <span class="fu">c</span>(</span>
-<span id="cb29-669"><a href="#cb29-669" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#377eb8"</span>),</span>
-<span id="cb29-670"><a href="#cb29-670" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var =</span> <span class="st">"x"</span>,</span>
-<span id="cb29-671"><a href="#cb29-671" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_units =</span> <span class="st">""</span>,</span>
-<span id="cb29-672"><a href="#cb29-672" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_interval =</span> <span class="dv">50</span>,</span>
-<span id="cb29-673"><a href="#cb29-673" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"y"</span>,</span>
-<span id="cb29-674"><a href="#cb29-674" aria-hidden="true" tabindex="-1"></a>  <span class="at">have_plot_title =</span> <span class="cn">FALSE</span></span>
-<span id="cb29-675"><a href="#cb29-675" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb29-676"><a href="#cb29-676" aria-hidden="true" tabindex="-1"></a>  DCVtestkit<span class="sc">::</span><span class="fu">convert_to_cog</span>(</span>
-<span id="cb29-677"><a href="#cb29-677" aria-hidden="true" tabindex="-1"></a>    <span class="at">grouping_variable =</span> <span class="st">"ID"</span>,</span>
-<span id="cb29-678"><a href="#cb29-678" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel_variable =</span> <span class="st">"panel"</span>,</span>
-<span id="cb29-679"><a href="#cb29-679" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_name_vec =</span> <span class="st">"col_name_vec"</span>,</span>
-<span id="cb29-680"><a href="#cb29-680" aria-hidden="true" tabindex="-1"></a>    <span class="at">desc_vec =</span> <span class="st">"desc_vec"</span>,</span>
-<span id="cb29-681"><a href="#cb29-681" aria-hidden="true" tabindex="-1"></a>    <span class="at">type_vec =</span> <span class="st">"type_vec"</span></span>
-<span id="cb29-682"><a href="#cb29-682" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb29-683"><a href="#cb29-683" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-684"><a href="#cb29-684" aria-hidden="true" tabindex="-1"></a>DCVtestkit<span class="sc">::</span><span class="fu">view_trellis_html</span>(</span>
-<span id="cb29-685"><a href="#cb29-685" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_table =</span> lod_trellis_table,</span>
-<span id="cb29-686"><a href="#cb29-686" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"ID"</span>),</span>
-<span id="cb29-687"><a href="#cb29-687" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_name =</span> <span class="st">"Dilution_Plot_LOD"</span>,</span>
-<span id="cb29-688"><a href="#cb29-688" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_folder =</span> <span class="st">"Dilution_LOD_Folder"</span>,</span>
-<span id="cb29-689"><a href="#cb29-689" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel_variable =</span> <span class="st">"panel"</span></span>
-<span id="cb29-690"><a href="#cb29-690" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb29-691"><a href="#cb29-691" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb29-692"><a href="#cb29-692" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-693"><a href="#cb29-693" aria-hidden="true" tabindex="-1"></a><span class="fu">## Linear Curve</span></span>
-<span id="cb29-694"><a href="#cb29-694" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-695"><a href="#cb29-695" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plots as trellis linear}</span></span>
-<span id="cb29-696"><a href="#cb29-696" aria-hidden="true" tabindex="-1"></a>linear_trellis_table <span class="ot">&lt;-</span> DCVtestkit<span class="sc">::</span><span class="fu">add_plotly_panel</span>(</span>
-<span id="cb29-697"><a href="#cb29-697" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_table =</span> linear_simulated_database,</span>
-<span id="cb29-698"><a href="#cb29-698" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_summary =</span> linear_dilution_summary,</span>
-<span id="cb29-699"><a href="#cb29-699" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"ID"</span>),</span>
-<span id="cb29-700"><a href="#cb29-700" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_name_var =</span> <span class="st">"Sample Name"</span>,</span>
-<span id="cb29-701"><a href="#cb29-701" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_var =</span> <span class="st">"Dilution Batch Name"</span>,</span>
-<span id="cb29-702"><a href="#cb29-702" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_col =</span> <span class="fu">c</span>(</span>
-<span id="cb29-703"><a href="#cb29-703" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#377eb8"</span>),</span>
-<span id="cb29-704"><a href="#cb29-704" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var =</span> <span class="st">"x"</span>,</span>
-<span id="cb29-705"><a href="#cb29-705" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_units =</span> <span class="st">""</span>,</span>
-<span id="cb29-706"><a href="#cb29-706" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_interval =</span> <span class="dv">50</span>,</span>
-<span id="cb29-707"><a href="#cb29-707" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"y"</span>,</span>
-<span id="cb29-708"><a href="#cb29-708" aria-hidden="true" tabindex="-1"></a>  <span class="at">have_plot_title =</span> <span class="cn">FALSE</span></span>
-<span id="cb29-709"><a href="#cb29-709" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb29-710"><a href="#cb29-710" aria-hidden="true" tabindex="-1"></a>  DCVtestkit<span class="sc">::</span><span class="fu">convert_to_cog</span>(</span>
-<span id="cb29-711"><a href="#cb29-711" aria-hidden="true" tabindex="-1"></a>    <span class="at">grouping_variable =</span> <span class="st">"ID"</span>,</span>
-<span id="cb29-712"><a href="#cb29-712" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel_variable =</span> <span class="st">"panel"</span>,</span>
-<span id="cb29-713"><a href="#cb29-713" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_name_vec =</span> <span class="st">"col_name_vec"</span>,</span>
-<span id="cb29-714"><a href="#cb29-714" aria-hidden="true" tabindex="-1"></a>    <span class="at">desc_vec =</span> <span class="st">"desc_vec"</span>,</span>
-<span id="cb29-715"><a href="#cb29-715" aria-hidden="true" tabindex="-1"></a>    <span class="at">type_vec =</span> <span class="st">"type_vec"</span></span>
-<span id="cb29-716"><a href="#cb29-716" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb29-717"><a href="#cb29-717" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-718"><a href="#cb29-718" aria-hidden="true" tabindex="-1"></a>DCVtestkit<span class="sc">::</span><span class="fu">view_trellis_html</span>(</span>
-<span id="cb29-719"><a href="#cb29-719" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_table =</span> linear_trellis_table,</span>
-<span id="cb29-720"><a href="#cb29-720" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"ID"</span>),</span>
-<span id="cb29-721"><a href="#cb29-721" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_name =</span> <span class="st">"Dilution_Plot_Linear"</span>,</span>
-<span id="cb29-722"><a href="#cb29-722" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_folder =</span> <span class="st">"Dilution_Linear_Folder"</span>,</span>
-<span id="cb29-723"><a href="#cb29-723" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel_variable =</span> <span class="st">"panel"</span></span>
-<span id="cb29-724"><a href="#cb29-724" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb29-725"><a href="#cb29-725" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-661"><a href="#cb29-661" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limit of Detection Curve</span></span>
+<span id="cb29-662"><a href="#cb29-662" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-663"><a href="#cb29-663" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plots as trellis lod}</span></span>
+<span id="cb29-664"><a href="#cb29-664" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: screen-inset-right</span></span>
+<span id="cb29-665"><a href="#cb29-665" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-666"><a href="#cb29-666" aria-hidden="true" tabindex="-1"></a>lod_trellis_table <span class="ot">&lt;-</span> DCVtestkit<span class="sc">::</span><span class="fu">add_plotly_panel</span>(</span>
+<span id="cb29-667"><a href="#cb29-667" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_table =</span> lod_simulated_database,</span>
+<span id="cb29-668"><a href="#cb29-668" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_summary =</span> lod_dilution_summary,</span>
+<span id="cb29-669"><a href="#cb29-669" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"ID"</span>),</span>
+<span id="cb29-670"><a href="#cb29-670" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_name_var =</span> <span class="st">"Sample Name"</span>,</span>
+<span id="cb29-671"><a href="#cb29-671" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_var =</span> <span class="st">"Dilution Batch Name"</span>,</span>
+<span id="cb29-672"><a href="#cb29-672" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_col =</span> <span class="fu">c</span>(</span>
+<span id="cb29-673"><a href="#cb29-673" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#377eb8"</span>),</span>
+<span id="cb29-674"><a href="#cb29-674" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var =</span> <span class="st">"x"</span>,</span>
+<span id="cb29-675"><a href="#cb29-675" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_units =</span> <span class="st">""</span>,</span>
+<span id="cb29-676"><a href="#cb29-676" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_interval =</span> <span class="dv">50</span>,</span>
+<span id="cb29-677"><a href="#cb29-677" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"y"</span>,</span>
+<span id="cb29-678"><a href="#cb29-678" aria-hidden="true" tabindex="-1"></a>  <span class="at">have_plot_title =</span> <span class="cn">FALSE</span></span>
+<span id="cb29-679"><a href="#cb29-679" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb29-680"><a href="#cb29-680" aria-hidden="true" tabindex="-1"></a>  DCVtestkit<span class="sc">::</span><span class="fu">convert_to_cog</span>(</span>
+<span id="cb29-681"><a href="#cb29-681" aria-hidden="true" tabindex="-1"></a>    <span class="at">grouping_variable =</span> <span class="st">"ID"</span>,</span>
+<span id="cb29-682"><a href="#cb29-682" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel_variable =</span> <span class="st">"panel"</span>,</span>
+<span id="cb29-683"><a href="#cb29-683" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_name_vec =</span> <span class="st">"col_name_vec"</span>,</span>
+<span id="cb29-684"><a href="#cb29-684" aria-hidden="true" tabindex="-1"></a>    <span class="at">desc_vec =</span> <span class="st">"desc_vec"</span>,</span>
+<span id="cb29-685"><a href="#cb29-685" aria-hidden="true" tabindex="-1"></a>    <span class="at">type_vec =</span> <span class="st">"type_vec"</span></span>
+<span id="cb29-686"><a href="#cb29-686" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-687"><a href="#cb29-687" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-688"><a href="#cb29-688" aria-hidden="true" tabindex="-1"></a>DCVtestkit<span class="sc">::</span><span class="fu">view_trellis_html</span>(</span>
+<span id="cb29-689"><a href="#cb29-689" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_table =</span> lod_trellis_table,</span>
+<span id="cb29-690"><a href="#cb29-690" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"ID"</span>),</span>
+<span id="cb29-691"><a href="#cb29-691" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_name =</span> <span class="st">"Dilution_Plot_LOD"</span>,</span>
+<span id="cb29-692"><a href="#cb29-692" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_folder =</span> <span class="st">"Dilution_LOD_Folder"</span>,</span>
+<span id="cb29-693"><a href="#cb29-693" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel_variable =</span> <span class="st">"panel"</span></span>
+<span id="cb29-694"><a href="#cb29-694" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-695"><a href="#cb29-695" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-696"><a href="#cb29-696" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-697"><a href="#cb29-697" aria-hidden="true" tabindex="-1"></a><span class="fu">## Linear Curve</span></span>
+<span id="cb29-698"><a href="#cb29-698" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-699"><a href="#cb29-699" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plots as trellis linear}</span></span>
+<span id="cb29-700"><a href="#cb29-700" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: screen-inset-right</span></span>
+<span id="cb29-701"><a href="#cb29-701" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb29-702"><a href="#cb29-702" aria-hidden="true" tabindex="-1"></a>linear_trellis_table <span class="ot">&lt;-</span> DCVtestkit<span class="sc">::</span><span class="fu">add_plotly_panel</span>(</span>
+<span id="cb29-703"><a href="#cb29-703" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_table =</span> linear_simulated_database,</span>
+<span id="cb29-704"><a href="#cb29-704" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_summary =</span> linear_dilution_summary,</span>
+<span id="cb29-705"><a href="#cb29-705" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"ID"</span>),</span>
+<span id="cb29-706"><a href="#cb29-706" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_name_var =</span> <span class="st">"Sample Name"</span>,</span>
+<span id="cb29-707"><a href="#cb29-707" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_var =</span> <span class="st">"Dilution Batch Name"</span>,</span>
+<span id="cb29-708"><a href="#cb29-708" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_col =</span> <span class="fu">c</span>(</span>
+<span id="cb29-709"><a href="#cb29-709" aria-hidden="true" tabindex="-1"></a>    <span class="st">"#377eb8"</span>),</span>
+<span id="cb29-710"><a href="#cb29-710" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var =</span> <span class="st">"x"</span>,</span>
+<span id="cb29-711"><a href="#cb29-711" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_units =</span> <span class="st">""</span>,</span>
+<span id="cb29-712"><a href="#cb29-712" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_interval =</span> <span class="dv">50</span>,</span>
+<span id="cb29-713"><a href="#cb29-713" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"y"</span>,</span>
+<span id="cb29-714"><a href="#cb29-714" aria-hidden="true" tabindex="-1"></a>  <span class="at">have_plot_title =</span> <span class="cn">FALSE</span></span>
+<span id="cb29-715"><a href="#cb29-715" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb29-716"><a href="#cb29-716" aria-hidden="true" tabindex="-1"></a>  DCVtestkit<span class="sc">::</span><span class="fu">convert_to_cog</span>(</span>
+<span id="cb29-717"><a href="#cb29-717" aria-hidden="true" tabindex="-1"></a>    <span class="at">grouping_variable =</span> <span class="st">"ID"</span>,</span>
+<span id="cb29-718"><a href="#cb29-718" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel_variable =</span> <span class="st">"panel"</span>,</span>
+<span id="cb29-719"><a href="#cb29-719" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_name_vec =</span> <span class="st">"col_name_vec"</span>,</span>
+<span id="cb29-720"><a href="#cb29-720" aria-hidden="true" tabindex="-1"></a>    <span class="at">desc_vec =</span> <span class="st">"desc_vec"</span>,</span>
+<span id="cb29-721"><a href="#cb29-721" aria-hidden="true" tabindex="-1"></a>    <span class="at">type_vec =</span> <span class="st">"type_vec"</span></span>
+<span id="cb29-722"><a href="#cb29-722" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-723"><a href="#cb29-723" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-724"><a href="#cb29-724" aria-hidden="true" tabindex="-1"></a>DCVtestkit<span class="sc">::</span><span class="fu">view_trellis_html</span>(</span>
+<span id="cb29-725"><a href="#cb29-725" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_table =</span> linear_trellis_table,</span>
+<span id="cb29-726"><a href="#cb29-726" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"ID"</span>),</span>
+<span id="cb29-727"><a href="#cb29-727" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_name =</span> <span class="st">"Dilution_Plot_Linear"</span>,</span>
+<span id="cb29-728"><a href="#cb29-728" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_folder =</span> <span class="st">"Dilution_Linear_Folder"</span>,</span>
+<span id="cb29-729"><a href="#cb29-729" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel_variable =</span> <span class="st">"panel"</span></span>
+<span id="cb29-730"><a href="#cb29-730" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-731"><a href="#cb29-731" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

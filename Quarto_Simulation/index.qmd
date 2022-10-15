@@ -18,7 +18,7 @@ format:
     self-contained: false
     smooth-scroll: true
 execute: 
-  cache: true
+  cache: false
 ---
 
 # R Libaries used
@@ -625,6 +625,8 @@ DCVtestkit::view_ggplot_pdf(
 ## Saturated Curve
 
 ```{r plots as trellis saturated}
+#| column: screen-inset-right
+
 saturation_trellis_table <- DCVtestkit::add_plotly_panel(
   dilution_table = saturation_simulated_database,
   dilution_summary = saturation_dilution_summary,
@@ -659,6 +661,8 @@ DCVtestkit::view_trellis_html(
 ## Limit of Detection Curve
 
 ```{r plots as trellis lod}
+#| column: screen-inset-right
+
 lod_trellis_table <- DCVtestkit::add_plotly_panel(
   dilution_table = lod_simulated_database,
   dilution_summary = lod_dilution_summary,
@@ -693,6 +697,8 @@ DCVtestkit::view_trellis_html(
 ## Linear Curve
 
 ```{r plots as trellis linear}
+#| column: screen-inset-right
+ 
 linear_trellis_table <- DCVtestkit::add_plotly_panel(
   dilution_table = linear_simulated_database,
   dilution_summary = linear_dilution_summary,
