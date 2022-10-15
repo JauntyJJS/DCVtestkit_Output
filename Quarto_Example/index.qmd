@@ -17,40 +17,66 @@ format:
     code-link: true
     self-contained: false
     smooth-scroll: true
-execute: 
-  freeze: true
 ---
-
-```{r setup}
-#| echo: false
-
-hook_output <- knitr::knit_hooks$get('output')
-knitr::knit_hooks$set(
-  output = function(x, options) {
-    if (!is.null(options$max.height)) {
-      options$attr.output <- c(
-        options$attr.output,
-        sprintf('style="max-height: %s;"', 
-                options$max.height))
-    }
-    hook_output(x, options)
-    }
-  )
-```
 
 # R Packages used
 
 ```{r R Packages used}
-#| max.height: '300px'
-
 library(DCVtestkit)
 library(tibble)
 library(reactable)
 library(patchwork)
 library(sessioninfo)
+library(report)
 
-sessioninfo::session_info()
 ```
+
+```{r See packages info}
+#| code-fold: true
+r_package_table <- sessioninfo::package_info()
+rownames(r_package_table) <- NULL
+
+r_package_table |>
+  dplyr::mutate(
+    version = ifelse(is.na(r_package_table$loadedversion), 
+                     r_package_table$ondiskversion, 
+                     r_package_table$loadedversion)
+  ) |> 
+  dplyr::filter(.data$attached == TRUE) |> 
+  dplyr::select(c("package", "version", 
+                  "date", "source"
+    )
+  ) |> 
+  reactable::reactable(
+    columns = list(
+      package = reactable::colDef(
+        # Freeze first column
+        sticky = "left",
+        style = list(borderRight = "1px solid #eee"),
+        headerStyle = list(borderRight = "1px solid #eee"))
+  )
+  )
+```
+
+# R Platform Information
+
+```{r See session info}
+#| code-fold: true
+r_platform_table <- sessioninfo::platform_info()
+
+r_platform_table <- data.frame(
+    setting = names(r_platform_table),
+    value = unlist(r_platform_table,
+                   use.names = FALSE),
+    stringsAsFactors = FALSE
+  )
+
+r_platform_table |>
+  reactable::reactable(
+    defaultPageSize = 5
+  )
+```
+
 
 # Data creation
 
@@ -283,5 +309,15 @@ DCVtestkit::view_trellis_html(
                         "Dilution_Batch_Name"),
   trellis_report_name = "Dilution_Plot",
   trellis_report_folder = "Dilution_Plot_Folder")
+```
+
+# R Package Reference
+
+```{r package references}
+#| code-fold: true
+#| output: asis
+
+report::cite_packages() |> 
+  suppressWarnings()
 ```
 
