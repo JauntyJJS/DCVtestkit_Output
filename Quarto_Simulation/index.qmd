@@ -1,10 +1,28 @@
 ---
 title: "Simulation"
 author: "Jeremy Selva"
-format: html
+format:
+  html:
+    theme: 
+      light: cerulean 
+      dark: cyborg
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    number-sections: false
+    code-fold: show
+    code-overflow: scroll
+    code-copy: true
+    code-tools: true
+    code-link: true
+    self-contained: false
+    smooth-scroll: true
+execute: 
+  cache: true
 ---
 
-# R Libaries used
+# R Packages used
+
 ```{r R packages}
 #| message: false
 
@@ -15,10 +33,61 @@ library(tibble)
 library(purrr)
 library(ggplot2)
 library(epifitter)
+library(reactable)
 library(deSolve)
 library(DCVtestkit)
+library(labelled)
+library(gtsummary)
+library(sessioninfo)
+library(report)
 
 set.seed(123)
+```
+
+```{r See packages info}
+#| code-fold: true
+r_package_table <- sessioninfo::package_info()
+rownames(r_package_table) <- NULL
+
+r_package_table |>
+  dplyr::mutate(
+    version = ifelse(is.na(r_package_table$loadedversion), 
+                     r_package_table$ondiskversion, 
+                     r_package_table$loadedversion)
+  ) |> 
+  dplyr::filter(.data$attached == TRUE) |> 
+  dplyr::select(c("package", "version", 
+                  "date", "source"
+    )
+  ) |> 
+  reactable::reactable(
+    columns = list(
+      package = reactable::colDef(
+        # Freeze first column
+        sticky = "left",
+        style = list(borderRight = "1px solid #eee"),
+        headerStyle = list(borderRight = "1px solid #eee"))
+  )
+  )
+```
+
+# R Platform Information
+
+```{r See session info}
+#| code-fold: true
+r_platform_table <- sessioninfo::platform_info()
+
+r_platform_table <- data.frame(
+    setting = names(r_platform_table),
+    value = unlist(r_platform_table,
+                   use.names = FALSE),
+    stringsAsFactors = FALSE
+  )
+
+r_platform_table |>
+  reactable::reactable(
+    defaultPageSize = 5
+  )
 ```
 
 # Simulation Functions
@@ -167,13 +236,15 @@ simulate_linear <- function(id) {
 
 # Create Simulation Curve Data
 
+We simulate $200$ curves (saturated, limit of detection and linear) using $7$ points from $0$ to $200$ on the x-axis. A unique id is added for each simulated data.
+
 ::: {.panel-tabset}
 
 ## Saturated Curve
 
 ```{r Create Simulated Data Saturated}
 
-saturation_simulated_database <-
+nested_saturation_simulated_database <-
   tibble::tibble(
     ID = paste("Saturation", 
                stringr::str_pad(1:200, width = 3, pad = "0")),
@@ -185,15 +256,14 @@ saturation_simulated_database <-
       .x = .data$ID,
       .f = simulate_saturation
       )
-    ) |> 
-  tidyr::unnest("dilution_data")
+  )
 ```
 
 ## Limit of Detection Curve
 
 ```{r Create Simulated Data LOD}
 
-lod_simulated_database <-
+nested_lod_simulated_database <-
   tibble::tibble(
     ID = paste("Limit Of Detection", 
                stringr::str_pad(1:200, width = 3, pad = "0")),
@@ -205,15 +275,14 @@ lod_simulated_database <-
       .x = .data$ID,
       .f = simulate_lod
       )
-    ) |> 
-  tidyr::unnest("dilution_data")
+  )
 ```
 
 ## Linear Curve
 
 ```{r Create Simulated Data Linear}
 
-linear_simulated_database <-
+nested_linear_simulated_database <-
   tibble::tibble(
     ID = paste("Linear", 
                stringr::str_pad(1:200, width = 3, pad = "0")),
@@ -225,51 +294,409 @@ linear_simulated_database <-
       .x = .data$ID,
       .f = simulate_linear
       )
-    ) |> 
-  tidyr::unnest("dilution_data")
+  )
 ```
 
 :::
 
-# Create Statistical Summary
+# Unnest Simulated Data
+
+While nested dilution (having a column of data frames) is easier to view with a human eye, it can be hard to be read and processed by a computer. We need flattened the data frames back into columns. To do this, we use [`tidyr::unnest`](https://tidyr.tidyverse.org/reference/nest.html)  
+
+## Saturated Curve
+
+```{r Nest Simulated Data Saturated}
+saturation_simulated_database <-
+  nested_saturation_simulated_database |> 
+  tidyr::unnest("dilution_data")
+```
+
+## Limit of Detection Curve
+
+```{r Nest Simulated Data LOD}
+lod_simulated_database <-
+  nested_lod_simulated_database |> 
+  tidyr::unnest("dilution_data")
+```
+
+## Linear Curve
+
+```{r Nest Simulated Data Linear}
+linear_simulated_database <-
+  nested_linear_simulated_database |> 
+  tidyr::unnest("dilution_data")
+```
+
+# Save Simulated Data
+
+We can now save the data as a csv and rds files.
+
+## Saturated Curve
+
+```{r Save Simulated Data Saturated}
+saveRDS(saturation_simulated_database, 
+        file = "saturation_simulated_database.rds")
+
+write.csv(x = saturation_simulated_database,
+          file = "saturation_simulated_database.csv", 
+          row.names = FALSE)
+```
+
+## Limit of Detection Curve
+
+```{r Save Simulated Data LOD}
+saveRDS(lod_simulated_database, 
+        file = "lod_simulated_database.rds")
+
+write.csv(x = saturation_simulated_database,
+          file = "lod_simulated_database.csv", 
+          row.names = FALSE)
+```
+
+## Linear Curve
+
+```{r Save Simulated Data Linear}
+saveRDS(linear_simulated_database, 
+        file = "linear_simulated_database.rds")
+
+write.csv(x = linear_simulated_database,
+          file = "linear_simulated_database.csv", 
+          row.names = FALSE)
+```
+
+# Calculate Statistical Summary
+
+We now calculate the statistical summary for each dilution curve. In addition, we export statistical summary as a csv and rds files.
 
 ::: {.panel-tabset}
 
 ## Saturated Curve
 
 ```{r dilution statistical summary saturated}
-saturation_dilution_summary <- DCVtestkit::summarise_dilution_table(
-  dilution_table = saturation_simulated_database,
-  grouping_variable = c("ID"),
-  conc_var = "x",
-  signal_var = "y")
+#| message: false
+saturation_dilution_summary <- 
+  DCVtestkit::summarise_dilution_table(
+    dilution_table = saturation_simulated_database,
+    grouping_variable = c("ID"),
+    conc_var = "x",
+    signal_var = "y") |> 
+  DCVtestkit::evaluate_linearity(
+    grouping_variable = c("ID")
+  )
+```
+
+```{r save dilution statistical summary saturated}
+saveRDS(saturation_dilution_summary, 
+        file = "saturation_dilution_summary.rds")
+
+write.csv(x = saturation_dilution_summary,
+          file = "saturation_dilution_summary.csv", 
+          row.names = FALSE)
 ```
 
 ## Limit of Detection Curve
 
 ```{r dilution statistical summary lod}
-lod_dilution_summary <- DCVtestkit::summarise_dilution_table(
-  dilution_table = lod_simulated_database,
-  grouping_variable = c("ID"),
-  conc_var = "x",
-  signal_var = "y")
+#| message: false
+lod_dilution_summary <- 
+  DCVtestkit::summarise_dilution_table(
+    dilution_table = lod_simulated_database,
+    grouping_variable = c("ID"),
+    conc_var = "x",
+    signal_var = "y") |> 
+  DCVtestkit::evaluate_linearity(
+    grouping_variable = c("ID")
+  )
 
+```
+
+```{r save dilution statistical summary lod}
+saveRDS(lod_dilution_summary, 
+        file = "lod_dilution_summary.rds")
+
+write.csv(x = lod_dilution_summary,
+          file = "lod_dilution_summary.csv", 
+          row.names = FALSE)
 ```
 
 ## Linear Curve
 
 ```{r dilution statistical summary linear}
-linear_dilution_summary <- DCVtestkit::summarise_dilution_table(
-  dilution_table = linear_simulated_database,
-  grouping_variable = c("ID"),
-  conc_var = "x",
-  signal_var = "y")
+#| message: false
+linear_dilution_summary <-
+  DCVtestkit::summarise_dilution_table(
+    dilution_table = linear_simulated_database,
+    grouping_variable = c("ID"),
+    conc_var = "x",
+    signal_var = "y") |> 
+  DCVtestkit::evaluate_linearity(
+    grouping_variable = c("ID")
+  )
 
+```
+
+```{r save dilution statistical summary linear}
+saveRDS(linear_dilution_summary, 
+        file = "linear_dilution_summary.rds")
+
+write.csv(x = linear_dilution_summary,
+          file = "linear_dilution_summary.csv", 
+          row.names = FALSE)
 ```
 
 :::
 
-# Report plots as pdf files
+# View Simulation Curve Data and Statistical Summary
+
+We use [`reactable::reactable`](https://glin.github.io/reactable/reference/reactable.html) to print the simulated data and statistical summary.
+
+## Saturated Curve
+
+```{r Print Simulated Data Saturated}
+#| layout-ncol: 1
+
+nested_saturation_simulated_database |> 
+  reactable::reactable(
+    defaultColDef = reactable::colDef(minWidth = 200),
+    defaultPageSize = 5,
+    columns = list(
+      ID = reactable::colDef(
+        # Freeze first column
+        sticky = "left",
+        style = list(borderRight = "1px solid #eee"),
+        headerStyle = list(borderRight = "1px solid #eee"),
+        minWidth = 200),
+      dilution_data = reactable::colDef(
+        details = function(index) {
+          filtered_data <- nested_saturation_simulated_database[["dilution_data"]][index][[1]]
+          htmltools::div(style = "padding: 1rem",
+                         reactable::reactable(
+                           data = filtered_data,
+                           defaultPageSize = 10,
+                           defaultColDef = reactable::colDef(minWidth = 200),
+                           columns = list(Sample_Name = reactable::colDef(minWidth = 200)),
+                           outlined = TRUE,
+                           highlight = TRUE)
+                       )
+      }
+    )
+  )
+)
+
+saturation_dilution_summary |> 
+  reactable::reactable(
+    defaultColDef = reactable::colDef(minWidth = 200),
+    defaultPageSize = 5,
+    columns = list(
+      ID = reactable::colDef(
+      # Freeze first column
+      sticky = "left",
+      style = list(borderRight = "1px solid #eee"),
+      headerStyle = list(borderRight = "1px solid #eee"),
+      minWidth = 200)
+    )
+)
+```
+
+## Limit of Detection Curve
+
+```{r Print Simulated Data LOD}
+#| layout-ncol: 1
+
+nested_lod_simulated_database |> 
+  reactable::reactable(
+    defaultColDef = reactable::colDef(minWidth = 200),
+    defaultPageSize = 5,
+    columns = list(
+      ID = reactable::colDef(
+        # Freeze first column
+        sticky = "left",
+        style = list(borderRight = "1px solid #eee"),
+        headerStyle = list(borderRight = "1px solid #eee"),
+        minWidth = 200),
+      dilution_data = reactable::colDef(
+        details = function(index) {
+          filtered_data <- nested_lod_simulated_database[["dilution_data"]][index][[1]]
+          htmltools::div(style = "padding: 1rem",
+                         reactable::reactable(
+                           data = filtered_data,
+                           defaultPageSize = 10,
+                           defaultColDef = reactable::colDef(minWidth = 200),
+                           columns = list(Sample_Name = reactable::colDef(minWidth = 200)),
+                           outlined = TRUE,
+                           highlight = TRUE)
+                       )
+      }
+    )
+  )
+
+)
+
+lod_dilution_summary |> 
+  reactable::reactable(
+    defaultColDef = reactable::colDef(minWidth = 200),
+    defaultPageSize = 5,
+    columns = list(
+      ID = reactable::colDef(
+      # Freeze first column
+      sticky = "left",
+      style = list(borderRight = "1px solid #eee"),
+      headerStyle = list(borderRight = "1px solid #eee"),
+      minWidth = 200)
+    )
+)
+```
+
+## Linear Curve
+
+```{r Print Simulated Data Linear}
+#| layout-ncol: 1
+
+nested_linear_simulated_database |>
+  reactable::reactable(
+    defaultColDef = reactable::colDef(minWidth = 200),
+    defaultPageSize = 5,
+    columns = list(
+      ID = reactable::colDef(
+        # Freeze first column
+        sticky = "left",
+        style = list(borderRight = "1px solid #eee"),
+        headerStyle = list(borderRight = "1px solid #eee"),
+        minWidth = 200),  
+      dilution_data = reactable::colDef(
+        details = function(index) {
+          filtered_data <- nested_linear_simulated_database[["dilution_data"]][index][[1]]
+          htmltools::div(style = "padding: 1rem",
+                         reactable::reactable(
+                           data = filtered_data,
+                           defaultPageSize = 10,
+                           defaultColDef = reactable::colDef(minWidth = 200),
+                           columns = list(Sample_Name = reactable::colDef(minWidth = 200)),
+                           outlined = TRUE,
+                           highlight = TRUE)
+                       )
+      }
+    )
+  )
+
+)
+
+linear_dilution_summary |> 
+  reactable::reactable(
+    defaultColDef = reactable::colDef(minWidth = 200),
+    defaultPageSize = 5,
+    columns = list(
+      ID = reactable::colDef(
+      # Freeze first column
+      sticky = "left",
+      style = list(borderRight = "1px solid #eee"),
+      headerStyle = list(borderRight = "1px solid #eee"),
+      minWidth = 200)
+    )
+)
+```
+
+# Report Workflow $2$ Results
+
+We combined the three summary results together
+
+```{r Combine Simulated Data Results}
+
+saturation_dilution_summary <- saturation_dilution_summary |> 
+  dplyr::mutate(curve_group = "Saturated")
+
+lod_dilution_summary <- lod_dilution_summary |> 
+  dplyr::mutate(curve_group = "Limit of Detection")
+
+linear_dilution_summary <- linear_dilution_summary |> 
+  dplyr::mutate(curve_group = "Linear")
+
+combined_dilution_summary <-
+  dplyr::bind_rows(
+    saturation_dilution_summary,
+    lod_dilution_summary,
+    linear_dilution_summary
+  ) 
+```
+
+Perform some data wrangling to summarise the results later. A benchmark workflow using only Pearson Correlation Coefficient with a cut off value of $0.8$ is used to compare with Workflow $2$.
+
+```{r Data Wrangling for Simulation Results}
+
+combined_dilution_summary <- 
+  combined_dilution_summary |> 
+  dplyr::mutate(
+    curve_group = factor(.data$curve_group,
+                         levels = c("Linear",
+                                    "Saturated",
+                                    "Limit of Detection")),
+    pearson_group = dplyr::case_when(
+      .data$r_corr >= 0.8 ~ "more than or\nequal to 0.8",
+      .data$r_corr < 0.8 ~ "less than 0.8",
+    ),
+    wf2_group = stringr::str_replace(
+      string = .data$wf2_group,
+      pattern = "LOD",
+      replacement = "Limit of Detection"
+    ),
+    wf2_group = factor(.data$wf2_group,
+                         levels = c("Good Linearity",
+                                    "Saturation",
+                                    "Limit of Detection",
+                                    "Poor Linearity"))
+  ) |> 
+  labelled::set_variable_labels(
+    ID = "Unique Curve Identifier",
+    curve_group = "Simulated Curve Group",
+    wf1_group = "Workflow 1 Grouping",
+    wf2_group = "Workflow 2 Grouping",
+    pearson_group = "Pearson Correlation\nCoefficient Grouping",
+    r_corr = "Pearson Correlation\nCoefficient",
+    pra_linear = "Percent Residual\nAccuracy",
+    mandel_p_val = "Mandel's Test p Value",
+    concavity = "Concavity Of Fitted Quadratic Model",
+    r2_linear = "Coefficient Of Determination",
+    r2_adj_linear = "Adjusted Coefficient Of Determination",
+    mandel_stats = "Test statistics from Mandel's Test"
+  )
+
+```
+
+```{r Worflow 2 vs Benchmark results}
+#| column: screen-inset-right
+simulation_results <- combined_dilution_summary |> 
+  dplyr::select(c("curve_group", "wf2_group", 
+                  "pearson_group"
+                  # "r_corr", "pra_linear"
+                  )
+                ) |> 
+  dplyr::relocate(c("pearson_group")) |> 
+  gtsummary::tbl_summary(
+    by = "curve_group",
+    statistic = list(
+      pearson_group ~ "{n}/{N} ({p}%)",
+      wf2_group ~ "{n}/{N} ({p}%)"
+    ),
+    digits = list(
+      wf2_group ~ c(0, 0, 1),
+      pearson_group ~ c(0, 0, 1)
+      #r_corr ~ c(2),
+      #pra_linear ~ c(0)
+      )
+  ) |> 
+  modify_header(
+    all_stat_cols() ~ "**{level}**\nN = {n}"
+    ) |> 
+  gtsummary::modify_spanning_header(
+    all_stat_cols() ~ "**Simulated Curve Type**"
+    )
+
+simulation_results
+```
+
+Results showed that Workflow $2$ is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow $2$ is able to identify less linear curves than the benchmark workflow, it gives a comparable score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Linear")`
+
+# Report Plots As pdf Files
 
 ::: {.panel-tabset}
 
@@ -349,6 +776,8 @@ DCVtestkit::view_ggplot_pdf(
 ## Saturated Curve
 
 ```{r plots as trellis saturated}
+#| column: screen-inset-right
+
 saturation_trellis_table <- DCVtestkit::add_plotly_panel(
   dilution_table = saturation_simulated_database,
   dilution_summary = saturation_dilution_summary,
@@ -383,6 +812,8 @@ DCVtestkit::view_trellis_html(
 ## Limit of Detection Curve
 
 ```{r plots as trellis lod}
+#| column: screen-inset-right
+
 lod_trellis_table <- DCVtestkit::add_plotly_panel(
   dilution_table = lod_simulated_database,
   dilution_summary = lod_dilution_summary,
@@ -417,6 +848,8 @@ DCVtestkit::view_trellis_html(
 ## Linear Curve
 
 ```{r plots as trellis linear}
+#| column: screen-inset-right
+ 
 linear_trellis_table <- DCVtestkit::add_plotly_panel(
   dilution_table = linear_simulated_database,
   dilution_summary = linear_dilution_summary,
@@ -446,4 +879,14 @@ DCVtestkit::view_trellis_html(
   trellis_report_folder = "Dilution_Linear_Folder",
   panel_variable = "panel"
 )
+```
+
+# R Package Reference
+
+```{r package references}
+#| code-fold: true
+#| output: asis
+
+report::cite_packages() |> 
+  suppressWarnings()
 ```

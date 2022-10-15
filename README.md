@@ -26,3 +26,8 @@ interactive trellis plot from the `Dilution_Plot_Folder` when the
 
 https://dcvtestkit-quarto-example.netlify.app is the output of a html
 file generated using [Quarto](https://quarto.org/)
+
+## Simulation Report
+
+https://dcvtestkit-simulation.netlify.app is the report of a simulation
+experiment done in the paper.
