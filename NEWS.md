@@ -10,6 +10,7 @@
 * Change `DCVtestkit` to *DCVtestkit*.
 * Make section Statistical Summary for Dilution Curves more clear.
 * Add figure labels in the image caption.
+* Add Simulation Results to test proposed workflow.
 
 # DCVtestkit 0.0.1
 
