@@ -1,8 +1,10 @@
-# DCVtestkit Output 0.0.1.9000 (development version)
+# DCVtestkit Output 0.0.2.9000 (development version)
 
 ## TODO
 
 ## Completed
+
+# DCVtestkit 0.0.2
 
 ### Manuscript
 
@@ -25,7 +27,6 @@
 * Add R session info and R package citations
 
 # DCVtestkit 0.0.1
-
 
 * Added a `NEWS.md` file to track changes to the package.
 * Create a folder `Quarto_Example` that contains some output from [`DCVtestkit`](https://github.com/SLINGhub/DCVtestkit) and scripts that generate the results.
