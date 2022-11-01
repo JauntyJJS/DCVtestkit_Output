@@ -1,10 +1,19 @@
-# DCVtestkit Output 0.0.2.9000 (development version)
+# DCVtestkit Output 0.0.3.9000 (development version)
 
 ## TODO
 
-## Completed
+# DCVtestkit Output 0.0.3
 
-# DCVtestkit 0.0.2
+Version first send to teams on 1 Nov 2022.
+
+### Manuscript
+
+* Reduce the number of words in the manuscript to less than a thousand words and one figure.
+* Add a Word file for supplementary figures.
+
+# DCVtestkit Output 0.0.2
+
+Version first send to teams on 18 Oct 2022.
 
 ### Manuscript
 
@@ -26,7 +35,9 @@
 * Found a way to fill up the trellis plot.
 * Add R session info and R package citations
 
-# DCVtestkit 0.0.1
+# DCVtestkit Output 0.0.1
+
+Version first send to via email on 8 Oct 2022.
 
 * Added a `NEWS.md` file to track changes to the package.
 * Create a folder `Quarto_Example` that contains some output from [`DCVtestkit`](https://github.com/SLINGhub/DCVtestkit) and scripts that generate the results.
