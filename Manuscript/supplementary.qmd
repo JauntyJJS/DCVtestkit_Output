@@ -1,0 +1,438 @@
+---
+title: "Supplementary for *DCVtestkit*: a R package for linearity assessment and analysis of quality control dilution curves"
+format: docx
+---
+
+```{r R packages}
+#| echo: false
+#| message: false
+
+library(dplyr)
+library(stringr)
+library(here)
+library(tibble)
+library(ggplot2)
+library(gridExtra)
+library(patchwork)
+library(labelled)
+library(gtsummary)
+library(flextable)
+library(webshot2)
+library(DCVtestkit)
+```
+
+```{r Motivation, echo = FALSE}
+#| echo: false
+
+linear_data <- data.frame(
+  conc_var = c(10, 25, 40, 50, 60,
+               75, 80, 100, 125, 150),
+  signal_var = c(25463, 63387, 90624, 131274, 138069,
+                 205353, 202407, 260205, 292257, 367924)
+)
+
+saturated_data <- data.frame(
+  conc_var = c(10, 25, 40, 50, 60,
+               75, 80, 100, 125, 150),
+  signal_var = c(5192648, 16594991, 32507833, 46499896,
+                 55388856, 62505210, 62778078, 72158161,
+                 78044338, 86158414)
+)
+
+lod_data <- data.frame(
+  conc_var = c(10, 25, 40, 50, 60,
+               75, 80, 100, 125, 150),
+  signal_var = c(500, 903, 1267, 2031, 2100,
+                 3563, 4500, 5300, 8500, 10430)
+)
+
+tabular_display <- tibble::tibble(
+  Concentration = c(10, 25, 40, 50, 60,
+                    75, 80, 100, 125, 150), 
+  `Linear signal` = c(25463, 63387, 90624, 131274, 138069,
+                    205353, 202407, 260205, 292257, 367924),
+  `Saturated signal` = c(5192648, 16594991, 32507833, 46499896,
+                       55388856, 62505210, 62778078, 72158161,
+                       78044338, 86158414),
+  `LOD signal` = c(500, 903, 1267, 2031, 2100,
+                 3563, 4500, 5300, 8500, 10430)
+)
+
+concentration_table <- gridExtra::tableGrob(
+  d = tabular_display, 
+  rows = NULL,
+  theme = gridExtra::ttheme_default(
+    core=list(fg_params=list(hjust=1, x=0.9))
+    )
+  ) 
+```
+
+```{r create linear plot}
+#| echo: false
+
+# Get dilution summary
+statistical_summary <- DCVtestkit::summarise_dilution_data(
+  linear_data, 
+  "conc_var", 
+  "signal_var")
+
+table <- DCVtestkit::plot_summary_table(statistical_summary)
+
+# Model the data
+linear_model <- DCVtestkit::create_linear_model(linear_data, 
+                                                "conc_var", "signal_var")
+quad_model <- DCVtestkit::create_quad_model(linear_data, 
+                                            "conc_var", "signal_var")
+
+dilution <- seq(min(linear_data$conc_var, na.rm = TRUE),
+                max(linear_data$conc_var, na.rm = TRUE),
+                length.out = 15)
+
+# Create the y values for the line
+y_lin_predict <- stats::predict(linear_model,
+                                tibble::tibble("conc_var" := dilution))
+y_quad_predict <- stats::predict(quad_model,
+                                 tibble::tibble("conc_var" := dilution))
+reg_data <- data.frame(
+  dilution = dilution,
+  y_lin_predict = y_lin_predict,
+  y_quad_predict = y_quad_predict
+)
+
+reg_col_vec <- c("Lin" = "black", "Quad" = "red")
+
+linear_plot <- ggplot2::ggplot(linear_data) +
+  ggplot2::aes(x = .data$conc_var,
+               y = .data$signal_var
+               ) +
+    ggplot2::geom_point(size = 5, colour = "#746ab0") +
+  ggplot2::geom_line(data = reg_data,
+                           mapping = ggplot2::aes(x = dilution, y=y_lin_predict,
+                                                  colour = "Lin")
+        ) +
+  ggplot2::geom_line(data = reg_data,
+                     mapping = ggplot2::aes(x = dilution, y=y_quad_predict,
+                                            colour = "Quad")
+  ) +
+  ggplot2::scale_colour_manual(values = c(reg_col_vec),
+                               labels = names(c(reg_col_vec)),
+                               guide = ggplot2::guide_legend(override.aes = list(
+                                 linetype = c(rep("solid", length(reg_col_vec))),
+                                 shape = c(rep(NA, length(reg_col_vec))),
+                                 colour = c(reg_col_vec)
+                               ))
+    ) +
+  ggplot2::theme(
+    legend.title = ggplot2::element_blank(),
+    legend.position = "top",
+    axis.title.y = ggplot2::element_text(angle = 0,
+                                         vjust = 1)
+  ) +
+  ggplot2::labs(title = "Linear",
+                x = "Concentration",
+                y = "Signal")
+
+linear_plot <- patchwork::wrap_plots(linear_plot, table, ncol = 2, nrow = 1)
+```
+
+```{r create saturation plot}
+#| echo: false
+
+# Get dilution summary
+statistical_summary <- DCVtestkit::summarise_dilution_data(
+  saturated_data, 
+  "conc_var", 
+  "signal_var")
+
+table <- DCVtestkit::plot_summary_table(statistical_summary)
+
+# Model the data
+linear_model <- DCVtestkit::create_linear_model(saturated_data, 
+                                                "conc_var", "signal_var")
+quad_model <- DCVtestkit::create_quad_model(saturated_data, 
+                                            "conc_var", "signal_var")
+
+dilution <- seq(min(saturated_data$conc_var, na.rm = TRUE),
+                max(saturated_data$conc_var, na.rm = TRUE),
+                length.out = 15)
+
+# Create the y values for the line
+y_lin_predict <- stats::predict(linear_model,
+                                tibble::tibble("conc_var" := dilution))
+y_quad_predict <- stats::predict(quad_model,
+                                 tibble::tibble("conc_var" := dilution))
+reg_data <- data.frame(
+  dilution = dilution,
+  y_lin_predict = y_lin_predict,
+  y_quad_predict = y_quad_predict
+)
+
+reg_col_vec <- c("Lin" = "black", "Quad" = "red")
+
+saturation_plot <- ggplot2::ggplot(saturated_data) +
+  ggplot2::aes(x = .data$conc_var,
+               y = .data$signal_var
+               ) +
+    ggplot2::geom_point(size = 5, colour = "#377eb8") +
+  ggplot2::geom_line(data = reg_data,
+                           mapping = ggplot2::aes(x = dilution, y=y_lin_predict,
+                                                  colour = "Lin")
+        ) +
+  ggplot2::geom_line(data = reg_data,
+                     mapping = ggplot2::aes(x = dilution, y=y_quad_predict,
+                                            colour = "Quad")
+  ) +
+  ggplot2::scale_colour_manual(values = c(reg_col_vec),
+                               labels = names(c(reg_col_vec)),
+                               guide = ggplot2::guide_legend(override.aes = list(
+                                 linetype = c(rep("solid", length(reg_col_vec))),
+                                 shape = c(rep(NA, length(reg_col_vec))),
+                                 colour = c(reg_col_vec)
+                               ))
+    ) +
+  ggplot2::theme(
+    legend.title = ggplot2::element_blank(),
+    legend.position = "top",
+    axis.title.y = ggplot2::element_text(angle = 0,
+                                         vjust = 1)
+  ) +
+  ggplot2::labs(title = "Saturation",
+                x = "Concentration",
+                y = "Signal")
+
+saturation_plot <- patchwork::wrap_plots(saturation_plot, table, ncol = 2, nrow = 1)
+```
+
+```{r create lod plot}
+#| echo: false
+
+# Get dilution summary
+statistical_summary <- DCVtestkit::summarise_dilution_data(
+  lod_data, 
+  "conc_var", 
+  "signal_var")
+
+table <- DCVtestkit::plot_summary_table(statistical_summary)
+
+# Model the data
+linear_model <- DCVtestkit::create_linear_model(lod_data, 
+                                                "conc_var", "signal_var")
+quad_model <- DCVtestkit::create_quad_model(lod_data, 
+                                            "conc_var", "signal_var")
+
+dilution <- seq(min(lod_data$conc_var, na.rm = TRUE),
+                max(lod_data$conc_var, na.rm = TRUE),
+                length.out = 15)
+
+# Create the y values for the line
+y_lin_predict <- stats::predict(linear_model,
+                                tibble::tibble("conc_var" := dilution))
+y_quad_predict <- stats::predict(quad_model,
+                                 tibble::tibble("conc_var" := dilution))
+reg_data <- data.frame(
+  dilution = dilution,
+  y_lin_predict = y_lin_predict,
+  y_quad_predict = y_quad_predict
+)
+
+reg_col_vec <- c("Lin" = "black", "Quad" = "red")
+
+lod_plot <- ggplot2::ggplot(lod_data) +
+  ggplot2::aes(x = .data$conc_var,
+               y = .data$signal_var
+               ) +
+    ggplot2::geom_point(size = 5, colour = "#4daf4a") +
+  ggplot2::geom_line(data = reg_data,
+                           mapping = ggplot2::aes(x = dilution, y=y_lin_predict,
+                                                  colour = "Lin")
+        ) +
+  ggplot2::geom_line(data = reg_data,
+                     mapping = ggplot2::aes(x = dilution, y=y_quad_predict,
+                                            colour = "Quad")
+  ) +
+  ggplot2::scale_colour_manual(values = c(reg_col_vec),
+                               labels = names(c(reg_col_vec)),
+                               guide = ggplot2::guide_legend(override.aes = list(
+                                 linetype = c(rep("solid", length(reg_col_vec))),
+                                 shape = c(rep(NA, length(reg_col_vec))),
+                                 colour = c(reg_col_vec)
+                               ))
+    ) +
+  ggplot2::theme(
+    legend.title = ggplot2::element_blank(),
+    legend.position = "top",
+    axis.title.y = ggplot2::element_text(angle = 0,
+                                         vjust = 1)
+  ) +
+  ggplot2::labs(title = "LOD",
+                x = "Concentration",
+                y = "Signal")
+
+lod_plot <- patchwork::wrap_plots(lod_plot, table, ncol = 2, nrow = 1)
+```
+
+```{r ViewMotivationData1}
+#| echo: false
+#| fig-height: 9
+#| fig-width: 13
+
+
+patchwork::wrap_plots(
+  concentration_table, 
+  linear_plot, 
+  saturation_plot, 
+  lod_plot, 
+  ncol = 2, 
+  nrow = 2
+)
+```
+
+*Supplementary Figure 1*: 
+
+Plots and statistical results of three curves: Linear curve, Saturated curve and a curve with Limit Of Detection (LOD)
+
+::: {layout-ncol="1"}
+![](images/README-LinearEvaluation.png)
+:::
+
+*Supplementary Figure 2*:
+
+Dilution Curve Grouping Workflows
+
+```{r Load Simulated Data Results}
+#| echo: false
+saturation_dilution_summary <-
+  readRDS(file = here::here(
+    "Quarto_Simulation",
+    "saturation_dilution_summary.rds")
+)
+
+lod_dilution_summary <-
+  readRDS(file = here::here(
+    "Quarto_Simulation",
+    "lod_dilution_summary.rds")
+)
+
+linear_dilution_summary <-
+  readRDS(file = here::here(
+    "Quarto_Simulation",
+    "linear_dilution_summary.rds")
+)
+```
+
+```{r Combine Simulated Data Results}
+#| echo: false
+saturation_dilution_summary <- saturation_dilution_summary |> 
+  dplyr::mutate(curve_group = "Saturated")
+
+lod_dilution_summary <- lod_dilution_summary |> 
+  dplyr::mutate(curve_group = "Limit of Detection")
+
+linear_dilution_summary <- linear_dilution_summary |> 
+  dplyr::mutate(curve_group = "Linear")
+
+combined_dilution_summary <-
+  dplyr::bind_rows(
+    saturation_dilution_summary,
+    lod_dilution_summary,
+    linear_dilution_summary
+  ) 
+```
+
+```{r Data Wrangling for Simulation Results}
+#| echo: false
+combined_dilution_summary <- 
+  combined_dilution_summary |> 
+  dplyr::mutate(
+    curve_group = factor(.data$curve_group,
+                         levels = c("Linear",
+                                    "Saturated",
+                                    "Limit of Detection")),
+    pearson_group = dplyr::case_when(
+      .data$r_corr >= 0.8 ~ "more than or\nequal to 0.8",
+      .data$r_corr < 0.8 ~ "less than 0.8",
+    ),
+    wf2_group = stringr::str_replace(
+      string = .data$wf2_group,
+      pattern = "LOD",
+      replacement = "Limit of Detection"
+    ),
+    wf2_group = factor(.data$wf2_group,
+                         levels = c("Good Linearity",
+                                    "Saturation",
+                                    "Limit of Detection",
+                                    "Poor Linearity"))
+  ) |> 
+  labelled::set_variable_labels(
+    ID = "Unique Curve Identifier",
+    curve_group = "Simulated Curve Group",
+    wf1_group = "Workflow 1 Grouping",
+    wf2_group = "Workflow 2 Grouping",
+    pearson_group = "Pearson Correlation\nCoefficient Grouping",
+    r_corr = "Pearson Correlation\nCoefficient",
+    pra_linear = "Percent Residual\nAccuracy",
+    mandel_p_val = "Mandel's Test p Value",
+    concavity = "Concavity Of Fitted Quadratic Model",
+    r2_linear = "Coefficient Of Determination",
+    r2_adj_linear = "Adjusted Coefficient Of Determination",
+    mandel_stats = "Test statistics from Mandel's Test"
+  )
+
+```
+
+```{r}
+#| echo: false
+#| output: false
+simulation_results <- combined_dilution_summary |> 
+  dplyr::select(c("curve_group", "wf2_group", 
+                  "pearson_group"
+                  # "r_corr", "pra_linear"
+                  )
+                ) |> 
+  dplyr::relocate(c("pearson_group")) |> 
+  gtsummary::tbl_summary(
+    by = "curve_group",
+    statistic = list(
+      pearson_group ~ "{n}/{N} ({p}%)",
+      wf2_group ~ "{n}/{N} ({p}%)"
+    ),
+    digits = list(
+      wf2_group ~ c(0, 0, 1),
+      pearson_group ~ c(0, 0, 1)
+      #r_corr ~ c(2),
+      #pra_linear ~ c(0)
+      )
+  ) |> 
+  gtsummary::modify_header(
+    gtsummary::all_stat_cols() ~ "**{level}**\nN = {n}"
+    ) |> 
+  gtsummary::modify_spanning_header(
+    gtsummary::all_stat_cols() ~ "**Simulated Curve Type**"
+    )
+
+
+simulation_results |> 
+  gtsummary::as_flex_table() |> 
+  flextable::set_table_properties(width = 1, layout = "autofit") |>
+  flextable::save_as_image(
+    path = here::here("Manuscript",
+                      "images",
+                      "simulation_results.png"), 
+    webshot = "webshot2")
+```
+
+::: {layout-ncol="1"}
+![](images/simulation_results.png)
+:::
+
+*Supplementary Figure 3*:
+
+Simulation Results
+
+::: {layout-ncol="1"}
+![](images/README-TrellisOutput.png)
+:::
+
+*Supplementary Figure 4*:
+
+Viewing Several Interactive Dilution Curves
