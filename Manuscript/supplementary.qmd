@@ -1,6 +1,12 @@
 ---
 title: "Supplementary for *DCVtestkit*: a R package for linearity assessment and analysis of quality control dilution curves"
+
+bibliography: bibliography.bib
+csl: bioinfo.csl
 format: docx
+
+crossref:
+  fig-title: Supplementary Figure
 ---
 
 ```{r R packages}
@@ -20,6 +26,8 @@ library(flextable)
 library(webshot2)
 library(DCVtestkit)
 ```
+
+![*DCVtestkit* Workflow](images/README-Workflow.png){#fig-DCVtestkit-Workflow}
 
 ```{r Motivation, echo = FALSE}
 #| echo: false
@@ -273,6 +281,8 @@ lod_plot <- patchwork::wrap_plots(lod_plot, table, ncol = 2, nrow = 1)
 
 ```{r ViewMotivationData1}
 #| echo: false
+#| label: fig-motivation
+#| fig-cap: "Plots and statistical results of three curves: Linear curve, Saturated curve and a curve with Limit Of Detection (LOD)."
 #| fig-height: 9
 #| fig-width: 13
 
@@ -286,18 +296,6 @@ patchwork::wrap_plots(
   nrow = 2
 )
 ```
-
-*Supplementary Figure 1*: 
-
-Plots and statistical results of three curves: Linear curve, Saturated curve and a curve with Limit Of Detection (LOD)
-
-::: {layout-ncol="1"}
-![](images/README-LinearEvaluation.png)
-:::
-
-*Supplementary Figure 2*:
-
-Dilution Curve Grouping Workflows
 
 ```{r Load Simulated Data Results}
 #| echo: false
@@ -421,18 +419,5 @@ simulation_results |>
     webshot = "webshot2")
 ```
 
-::: {layout-ncol="1"}
-![](images/simulation_results.png)
-:::
 
-*Supplementary Figure 3*:
-
-Simulation Results
-
-::: {layout-ncol="1"}
-![](images/README-TrellisOutput.png)
-:::
-
-*Supplementary Figure 4*:
-
-Viewing Several Interactive Dilution Curves
+![Simulation Results](images/simulation_results.png){#fig-Simulation}

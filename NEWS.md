@@ -2,6 +2,15 @@
 
 ## TODO
 
+### Done
+
+### Manuscript
+
+* Found a way to change figure title from Figure to Supplementary Figure in `supplementary.qmd`.
+* Change figure in `manscript.qmd` to a merged figure of the curve grouping workflow diagram and the interactive plot diagram.
+* Transfer *DCVtestkit* workflow diagram from `manscript.qmd` to `supplementary.qmd`.
+* Add relevant equations for Mandel's Fitting Test and Percent Residual Accuracy.  
+
 # DCVtestkit Output 0.0.3
 
 Version first send to teams on 1 Nov 2022.
