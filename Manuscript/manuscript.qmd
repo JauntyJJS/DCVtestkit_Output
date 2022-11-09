@@ -1,5 +1,5 @@
 ---
-title: "*DCVtestkit*: a R package for linearity assessment and analysis of quality control dilution curves"
+title: "*DCVtestkit*: a R package for linearity assessment and visualisation of multiple curves"
 
 bibliography: bibliography.bib
 csl: bioinfo.csl
@@ -62,24 +62,43 @@ R package, *DCVtestkit* addresses these issues by assisting analysts, to plot di
 
 Supplementary Figure 1 depicts the workflow of *DCVtestkit*. The workflow starts with two tables: Transition Signal Data, containing transition signals (y-axis for dilution curve) for each sample and Dilution Annotation, containing dilution curve related information, such as concentration (x-axis for dilution curve) and dilution batches. Using a common column Sample Name, the two tables can be merged into one table (Dilution Table) via `create_dilution_table`.
 
-Next, summary statistics are calculated via `summarise_dilution_table` for each dilution curve. Besides the Pearson Correlation Coefficient, one additional calculation is the Mandel's Fitting Test (@eq-mandel-test) from @andrade2013, in which $\mathrm S_{y/x,lin}^2$ and $\mathrm S_{y/x,quad}^2$ are the standard error of the regression divided by the regression's degrees of freedom for the linear model (@eq-s1) and quadratic model (@eq-s2) repsectively. A low $p$ value from the $F$ test gives sufficient evidence that a quadratic model fits better than a linear model, indicating the curve may not be linear.
+Next, summary statistics are calculated via `summarise_dilution_table` for each dilution curve. Besides the Pearson Correlation Coefficient, one additional calculation is the Mandel's Fitting Test ($F_{stats}$ in @eq-mandel-test) from @andrade2013. A low $p$ value from the $F$ test gives sufficient evidence that a quadratic model fits better than a linear model, indicating the curve may not be linear.
 
 $$
-\mathrm F_{test} = \frac{(\mathrm n-2) \ \mathrm S_{y/x,lin}^2 \ - \ (\mathrm n-3) \ \mathrm S_{y/x,quad}^2}{\mathrm S_{y/x,quad}^2}
+\begin{aligned}
+&F_{stats} = \frac{(n-2) \ \mathrm S_{lin}^2 \ - \ (n-3) \ \mathrm S_{quad}^2}{\mathrm S_{quad}^2} \sim \ F(1,n-3)
+\\
+\\
+&\text{where}
+\\
+&\mathrm S_{lin}^2 = \frac{1}{n-2} \sum_{i=1}^{n} ( y_{i,lin} - y_{i,true})^2 
+\\
+&\mathrm S_{quad}^2 = \frac{1}{n-3} \sum_{i=1}^{n} ( y_{i,quad} - y_{i,true})^2
+\\ 
+&y_{i,lin} \ \text{is the linear model predicted y-axis value.}
+\\ 
+&y_{i,quad} \ \text{is the quadratic model predicted y-axis value.}
+\\ 
+&y_{i,true} \ \text{is the true y-axis value.}
+\\ 
+&n \ \text{is the number of data points.}
+\end{aligned}
 $$ {#eq-mandel-test}
+Another one is Percent Residual Accuracy ($\%RA$ in @eq-pra) from @logue2018. Ranging from $-\infty$ to $100$, if the curve is linear, the value should be close to $100$.
 
 $$
-\mathrm S_{y/x,lin}^2 = \frac{1}{n-2} \sum_{i=1}^{n} ( y_{i,pred} - y_{i,true})^2
-$$ {#eq-s1}
-
-$$
-\mathrm S_{y/x,quad}^2 = \frac{1}{n-3} \sum_{i=1}^{n} ( y_{i,pred} - y_{i,true})^2
-$$ {#eq-s2}
-
-Another one is Percent Residual Accuracy (@eq-pra) from @logue2018 in which $x_{i,true}$ is the true x-axis value and $x_{i,calc}$ is the predicted x-axis value from the linear model. Ranging from $-\infty$ to $100$, if the curve is linear, the value should be close to $100$.
-
-$$
-\% \ RA = \frac{100\%}{n} \sum_{i=1}^{n}\left(1 - \bigg| \frac{x_{i,true}-x_{i,pred}}{x_{i,true}} \bigg|\right)
+\begin{aligned}
+&\%RA = \frac{100\%}{n} \sum_{i=1}^{n}\left(1 - \bigg| \frac{x_{i,true}-x_{i,lin}}{x_{i,true}} \bigg|\right)
+\\
+\\
+&\text{where}
+\\
+&x_{i,true} \ \text{is the true x-axis value.}
+\\ 
+&x_{i,lin} \ \text{is the linear model predicted x-axis value.}
+\\ 
+&n \ \text{is the number of data points.}
+\end{aligned}
 $$ {#eq-pra}
 
 The software also calculates the concavity of a fitted quadratic model to identify if the curve is dominantly non-linear at high (concavity $<0$) or low (concavity $>0$) concentrations.

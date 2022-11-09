@@ -1,5 +1,5 @@
 ---
-title: "Supplementary for *DCVtestkit*: a R package for linearity assessment and analysis of quality control dilution curves"
+title: "Supplementary for *DCVtestkit*: a R package for linearity assessment and visualisation of multiple curves"
 
 bibliography: bibliography.bib
 csl: bioinfo.csl
