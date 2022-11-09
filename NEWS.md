@@ -7,8 +7,9 @@
 ### Manuscript
 
 * Change title to "*DCVtestkit*: a R package for linearity assessment and visualisation of multiple curves"
+* Make manuscript content more generalised. Talking more about linearity assessment rather than dilution curves from metabolomic/lipidomic experiment. The dilution curves from metabolomic/lipidomic experiment will be used as a running example instead.
 * Found a way to change figure title from Figure to Supplementary Figure in `supplementary.qmd`.
-* Found a way to add page break `{{< pagebreak >}}` in the Quarto document.
+* Found a way to add page break `{{< pagebreak >}}` in the `manscript.qmd`.
 * Change figure in `manscript.qmd` to a merged figure of the curve grouping workflow diagram and the interactive plot diagram.
 * Transfer *DCVtestkit* workflow diagram from `manscript.qmd` to `supplementary.qmd`.
 * Add relevant equations for Mandel's Fitting Test and Percent Residual Accuracy. Thank you [njbart](https://github.com/quarto-dev/quarto-cli/discussions/3236) for the help.
