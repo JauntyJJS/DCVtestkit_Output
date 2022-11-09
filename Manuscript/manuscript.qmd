@@ -104,13 +104,17 @@ The software also calculates the concavity of a fitted quadratic model to identi
 
 Supplementary Figure 2 gives the summary statistics of three manually curated curves: A linear curve and curves with a plateau at higher concentrations (denoted as saturated curves) and lower concentrations (denoted as limit or detection or LOD curves) respectively. The corresponding Pearson Correlation Coefficient values (`r_corr`) are $\ge0.9$ ($0.99$, $0.95$ and $0.98$ respectively), even for the curves that are non-linear. However, both saturated and LOD curves give a much lower Mandel's Fitting Test $p$ values (`mandel_p_val`) ($1.66 * 10^{-4}$ and $2.56 * 10^{-3}$ respectively vs $0.38$). Likewise, the Percent Residual Accuracy values (`pra_linear`) are much lower in the saturated and LOD curves compared to the linear curve ($62.30$ and $74.69$ respectively vs $94.32$).
 
-::: {#fig-overview layout="[[50,-50], [60,-40]]"}
+{{< pagebreak >}}
+
+::: {#fig-overview layout="[[60,-40], [70,-30]]"}
 ![Curve Grouping Workflow](images/README-LinearEvaluation.png){#fig-linearity}
 
-![Interactive Trellis Plots](images/README-TrellisOutput.png){#fig-visualisation}
+![Interactive Visualisation](images/README-TrellisOutput.png){#fig-visualisation}
 
 *DCVtestkit*'s curve grouping workflow in @fig-linearity and interactive visualisation of curves in @fig-visualisation.
 :::
+
+{{< pagebreak >}}
 
 `evaluate_linearity` is used to group the curves according to the workflows proposed in @fig-linearity. Workflow 1 uses the Pearson Correlation Coefficient and Percent Residual Accuracy to determine if the curve is linear (labelled as Good Linearity) or not (labelled as Poor Linearity). Workflow 2 goes one step further, using the Mandel's Fitting Test and the fitted quadratic model's concavity to check if the non-linear curve plateaus at low (labeled as limit of detection) or high (labelled as saturation) concentrations. Non-linear curves that do not follow these trends are labelled as Poor Linearity.
 
