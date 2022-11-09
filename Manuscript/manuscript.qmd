@@ -232,9 +232,7 @@ Although *DCVtestkit* can export the results in Excel or pdf, they may be too co
 
 # Conclusion
 
-To verify if a quantitative analytical test method is reliable, it is important to check for linearity. A linear response in quality control dilution curves is required in metabolomics/lipidomics to assess the molecules' suitability for further analysis. However, there are few software that can analyse dilution curves efficiently.
-
-R package, *DCVtestkit*, rectifies this by plotting of many curves quickly by automation and reporting alternative statistics, other than the Pearson Correlation Coefficient, to better describe the shape of curves. It also provides an interactive trellis plot for exploratory data analysis. It is available on GitHub <https://github.com/SLINGhub/DCVtestkit> while the documentation and tutorials can be accessed from <https://slinghub.github.io/DCVtestkit>.
+To verify if an instrument or experimental method is reliable, it is important to check for linearity. However, there are few software that can to do efficiently at a high throughput setting. R package, *DCVtestkit*, rectifies this by plotting of many curves quickly by automation and reporting alternative statistics, other than the Pearson Correlation Coefficient, to better describe the shape of curves. It also provides an interactive trellis plot for exploratory data analysis. It is available on GitHub <https://github.com/SLINGhub/DCVtestkit> while the documentation and tutorials can be accessed from <https://slinghub.github.io/DCVtestkit>.
 
 # Acknowledgements
 
