@@ -1,5 +1,5 @@
 ---
-title: "*DCVtestkit*: a R package for linearity assessment and visualisation of multiple curves"
+title: "*lancer*: a R package for linearity assessment and visualisation of multiple curves"
 
 bibliography: bibliography.bib
 csl: bioinfo.csl
@@ -34,11 +34,11 @@ Application Note
 
 ## Summary
 
-Linearity assessment plays a significant role in the validation of instrumentation and experimental procedures. As technology progresses, many of these methods are becoming more high throughput, providing analysts with many measurements generated at a short time. Commonly used software, like Excel, only allow the analyst to repetitively plot, view and analyse the linearity of curves one at a time, a tedious and time-consuming process. In addition, summary statistics of these curves are limited to the Pearson Correlation Coefficient which is insufficient to fully understand the shape of the curves. *DCVtestkit* aims to provide additional summary statistics for assessing linearity of curves, taken from previous publications but which are not implemented in the current software tools. It also helps to reduce the analyst's workload by analysing many curves automatically, reporting the statistical results in Excel and recording the plots in a pdf file. In addition, it can also create an interactive trellis displayed as a HTML folder for more exploratory analysis.
+Linearity assessment plays a significant role in the validation of instrumentation and experimental procedures. As technology progresses, many of these methods are becoming more high throughput, providing analysts with many measurements generated at a short time. Commonly used software, like Excel, only allow the analyst to repetitively plot, view and analyse the linearity of curves one at a time, a tedious and time-consuming process. In addition, summary statistics of these curves are limited to the Pearson Correlation Coefficient which is insufficient to fully understand the shape of the curves. *lancer* aims to provide additional summary statistics for assessing linearity of curves, taken from previous publications but which are not implemented in the current software tools. It also helps to reduce the analyst's workload by analysing many curves automatically, reporting the statistical results in Excel and recording the plots in a pdf file. In addition, it can also create an interactive trellis displayed as a HTML folder for more exploratory analysis.
 
 ## Availability and implementation
 
-*DCVtestkit* is available on GitHub <https://github.com/SLINGhub/DCVtestkit>. The documentation and tutorials can be accessed from <https://slinghub.github.io/DCVtestkit/>
+*lancer* is available on GitHub <https://github.com/SLINGhub/lancer>. The documentation and tutorials can be accessed from <https://slinghub.github.io/lancer/>
 
 ## Supplementary information
 
@@ -56,11 +56,11 @@ Linearity assessment, as summarised by @paulson1995, is a standard protocol to v
 
 However, as instrument or experimental method are becoming more high throughput, many measurements can be done at a short time. Having the analyst to individually plot numerous curves to check for linearity is time-consuming. Furthermore, @sonnergaard2006 warns that the Pearson Correlation Coefficient is not an effective standalone numeric parameter to estimate linearity. While researchers have created other metrics for linearity evaluation, these metrics are rarely implemented in most general-purpose software.
 
-R package, *DCVtestkit* addresses these issues by assisting analysts, to plot curves from many experiments easily with additional metrics, other than the Pearson Correlation Coefficient, that better describe the curve's shape. It also provides an interactive viewer for analysts to group, filter and sort the plots, allowing them to look at problematic ones, such as saturated curves.
+R package, *lancer* addresses these issues by assisting analysts, to plot curves from many experiments easily with additional metrics, other than the Pearson Correlation Coefficient, that better describe the curve's shape. It also provides an interactive viewer for analysts to group, filter and sort the plots, allowing them to look at problematic ones, such as saturated curves.
 
 # Approach
 
-Using the analysis of dilution curves in meatbolomic/lipidomic study as a running example, Supplementary Figure 1 depicts the workflow of *DCVtestkit*. The workflow starts with two tables: Transition Signal Data, containing transition signals (y-axis for dilution curve) for each sample and Dilution Annotation, containing dilution curve related information, such as concentration (x-axis for dilution curve) and dilution batches. Using a common column Sample Name, the two tables can be merged into one table (Dilution Table) via `create_dilution_table`.
+Using the analysis of dilution curves in meatbolomic/lipidomic study as a running example, Supplementary Figure 1 depicts the workflow of *lancer*. The workflow starts with two tables: Transition Signal Data, containing transition signals (y-axis for dilution curve) for each sample and Dilution Annotation, containing dilution curve related information, such as concentration (x-axis for dilution curve) and dilution batches. Using a common column Sample Name, the two tables can be merged into one table (Dilution Table) via `create_dilution_table`.
 
 Next, summary statistics are calculated via `summarise_dilution_table` for each dilution curve. Besides the Pearson Correlation Coefficient, one additional calculation is the Mandel's Fitting Test ($F_{stats}$ in @eq-mandel-test) from @andrade2013. A low $p$ value from the $F$ test gives sufficient evidence that a quadratic model fits better than a linear model, indicating the curve may not be linear.
 
@@ -111,7 +111,7 @@ Supplementary Figure 2 gives the summary statistics of three manually curated cu
 
 ![Interactive Visualisation](images/README-TrellisOutput.png){#fig-visualisation}
 
-*DCVtestkit*'s curve grouping workflow in @fig-linearity and interactive visualisation of curves in @fig-visualisation.
+*lancer*'s curve grouping workflow in @fig-linearity and interactive visualisation of curves in @fig-visualisation.
 :::
 
 {{< pagebreak >}}
@@ -230,13 +230,13 @@ simulation_results <- combined_dilution_summary |>
     )
 ```
 
-A benchmark workflow using only Pearson Correlation Coefficient value of $0.8$ is compared with Workflow 2 on simulated data sets of `r nrow(linear_dilution_summary)` linear curves (labelled as Linear), curves that plateau at low (labelled as Limit of Detection) high (labelled as Saturated) concentrations each. Supplementary Figure 3 showed that Workflow 2 better identifies the saturated and limit of detection curves than the benchmark workflow. While it identifies less linear curves correctly than the benchmark workflow, its score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Linear")` is comparable. See <https://dcvtestkit-simulation.netlify.app> for report details. While the threshold values of Pearson Correlation Coefficient and Percent Residual Accuracy are based on the interpretation of @y.h.chan2003 and @logue2018, respectively, they remain subjective and arbitrary. Nevertheless, *DCVtestkit* allows optimization of these threshold values according to the analyst's determinants of linearity.
+A benchmark workflow using only Pearson Correlation Coefficient value of $0.8$ is compared with Workflow 2 on simulated data sets of `r nrow(linear_dilution_summary)` linear curves (labelled as Linear), curves that plateau at low (labelled as Limit of Detection) high (labelled as Saturated) concentrations each. Supplementary Figure 3 showed that Workflow 2 better identifies the saturated and limit of detection curves than the benchmark workflow. While it identifies less linear curves correctly than the benchmark workflow, its score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Linear")` is comparable. See <https://lancer-simulation.netlify.app> for report details. While the threshold values of Pearson Correlation Coefficient and Percent Residual Accuracy are based on the interpretation of @y.h.chan2003 and @logue2018, respectively, they remain subjective and arbitrary. Nevertheless, *lancer* allows optimization of these threshold values according to the analyst's determinants of linearity.
 
-Although *DCVtestkit* can export the results in Excel or pdf, they may be too complex for meaningful interpretation. @fig-visualisation shows a HTML folder, exported by *DCVtestkit*, such that clicking on the `index.html` file inside the folder will open an interactive trellis plots that analysts can be grouped, filtered and sorted. This allows room for exploratory data analysis, such as identifying molecules with linearity issues or finding out the effects of changing the Pearson Correlation Coefficient threshold to another value. Such information is hard to achieve with the Excel and pdf files. An example of an interactive viewer created by *DCVtestkit* can be viewed at <https://dcvtestkit-interactive-example.netlify.app>
+Although *lancer* can export the results in Excel or pdf, they may be too complex for meaningful interpretation. @fig-visualisation shows a HTML folder, exported by *lancer*, such that clicking on the `index.html` file inside the folder will open an interactive trellis plots that analysts can be grouped, filtered and sorted. This allows room for exploratory data analysis, such as identifying molecules with linearity issues or finding out the effects of changing the Pearson Correlation Coefficient threshold to another value. Such information is hard to achieve with the Excel and pdf files. An example of an interactive viewer created by *lancer* can be viewed at <https://lancer-interactive-example.netlify.app>
 
 # Conclusion
 
-To verify if an instrument or experimental method is reliable, it is important to check for linearity. However, there are few software that can do this efficiently at a high throughput setting. R package, *DCVtestkit*, rectifies this by plotting of many curves quickly by automation and reporting alternative statistics, other than the Pearson Correlation Coefficient, to better describe the shape of curves. It also provides an interactive trellis plot for exploratory data analysis. It is available on GitHub <https://github.com/SLINGhub/DCVtestkit> while the documentation and tutorials can be accessed from <https://slinghub.github.io/DCVtestkit>.
+To verify if an instrument or experimental method is reliable, it is important to check for linearity. However, there are few software that can do this efficiently at a high throughput setting. R package, *lancer*, rectifies this by plotting of many curves quickly by automation and reporting alternative statistics, other than the Pearson Correlation Coefficient, to better describe the shape of curves. It also provides an interactive trellis plot for exploratory data analysis. It is available on GitHub <https://github.com/SLINGhub/lancer> while the documentation and tutorials can be accessed from <https://slinghub.github.io/lancer>.
 
 # Acknowledgements
 

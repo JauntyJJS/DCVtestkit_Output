@@ -35,7 +35,7 @@ library(ggplot2)
 library(epifitter)
 library(reactable)
 library(deSolve)
-library(DCVtestkit)
+library(lancer)
 library(labelled)
 library(gtsummary)
 library(sessioninfo)
@@ -375,12 +375,12 @@ We now calculate the statistical summary for each dilution curve. In addition, w
 ```{r dilution statistical summary saturated}
 #| message: false
 saturation_dilution_summary <- 
-  DCVtestkit::summarise_dilution_table(
+  lancer::summarise_dilution_table(
     dilution_table = saturation_simulated_database,
     grouping_variable = c("ID"),
     conc_var = "x",
     signal_var = "y") |> 
-  DCVtestkit::evaluate_linearity(
+  lancer::evaluate_linearity(
     grouping_variable = c("ID")
   )
 ```
@@ -399,12 +399,12 @@ write.csv(x = saturation_dilution_summary,
 ```{r dilution statistical summary lod}
 #| message: false
 lod_dilution_summary <- 
-  DCVtestkit::summarise_dilution_table(
+  lancer::summarise_dilution_table(
     dilution_table = lod_simulated_database,
     grouping_variable = c("ID"),
     conc_var = "x",
     signal_var = "y") |> 
-  DCVtestkit::evaluate_linearity(
+  lancer::evaluate_linearity(
     grouping_variable = c("ID")
   )
 
@@ -424,12 +424,12 @@ write.csv(x = lod_dilution_summary,
 ```{r dilution statistical summary linear}
 #| message: false
 linear_dilution_summary <-
-  DCVtestkit::summarise_dilution_table(
+  lancer::summarise_dilution_table(
     dilution_table = linear_simulated_database,
     grouping_variable = c("ID"),
     conc_var = "x",
     signal_var = "y") |> 
-  DCVtestkit::evaluate_linearity(
+  lancer::evaluate_linearity(
     grouping_variable = c("ID")
   )
 
@@ -703,7 +703,7 @@ Results showed that Workflow $2$ is able to identify the saturated and limit of 
 ## Saturated Curve
 
 ```{r plots as pdf saturated}
-saturation_ggplot_table <- DCVtestkit::add_ggplot_panel(
+saturation_ggplot_table <- lancer::add_ggplot_panel(
   dilution_table = saturation_simulated_database,
   dilution_summary = saturation_dilution_summary,
   grouping_variable = c("ID"),
@@ -715,7 +715,7 @@ saturation_ggplot_table <- DCVtestkit::add_ggplot_panel(
 
 saturation_ggplot_list <- saturation_ggplot_table$panel
 
-DCVtestkit::view_ggplot_pdf(
+lancer::view_ggplot_pdf(
   ggplot_list = saturation_ggplot_list,
   filename = "dilution_plot_saturated.pdf",
   ncol_per_page = 2,
@@ -726,7 +726,7 @@ DCVtestkit::view_ggplot_pdf(
 ## Limit of Detection Curve
 
 ```{r plots as pdf lod}
-lod_ggplot_table <- DCVtestkit::add_ggplot_panel(
+lod_ggplot_table <- lancer::add_ggplot_panel(
   dilution_table = lod_simulated_database,
   dilution_summary = lod_dilution_summary,
   grouping_variable = c("ID"),
@@ -738,7 +738,7 @@ lod_ggplot_table <- DCVtestkit::add_ggplot_panel(
 
 lod_ggplot_list <- lod_ggplot_table$panel
 
-DCVtestkit::view_ggplot_pdf(
+lancer::view_ggplot_pdf(
   ggplot_list = lod_ggplot_list,
   filename = "dilution_plot_lod.pdf",
   ncol_per_page = 2,
@@ -749,7 +749,7 @@ DCVtestkit::view_ggplot_pdf(
 ## Linear Curve
 
 ```{r plots as pdf linear}
-linear_ggplot_table <- DCVtestkit::add_ggplot_panel(
+linear_ggplot_table <- lancer::add_ggplot_panel(
   dilution_table = linear_simulated_database,
   dilution_summary = linear_dilution_summary,
   grouping_variable = c("ID"),
@@ -761,7 +761,7 @@ linear_ggplot_table <- DCVtestkit::add_ggplot_panel(
 
 linear_ggplot_list <- linear_ggplot_table$panel
 
-DCVtestkit::view_ggplot_pdf(
+lancer::view_ggplot_pdf(
   ggplot_list = linear_ggplot_list,
   filename = "dilution_plot_linear.pdf",
   ncol_per_page = 2,
@@ -778,7 +778,7 @@ DCVtestkit::view_ggplot_pdf(
 ```{r plots as trellis saturated}
 #| column: screen-inset-right
 
-saturation_trellis_table <- DCVtestkit::add_plotly_panel(
+saturation_trellis_table <- lancer::add_plotly_panel(
   dilution_table = saturation_simulated_database,
   dilution_summary = saturation_dilution_summary,
   grouping_variable = c("ID"),
@@ -792,7 +792,7 @@ saturation_trellis_table <- DCVtestkit::add_plotly_panel(
   signal_var = "y",
   have_plot_title = FALSE
 ) |> 
-  DCVtestkit::convert_to_cog(
+  lancer::convert_to_cog(
     grouping_variable = "ID",
     panel_variable = "panel",
     col_name_vec = "col_name_vec",
@@ -800,7 +800,7 @@ saturation_trellis_table <- DCVtestkit::add_plotly_panel(
     type_vec = "type_vec"
   )
 
-DCVtestkit::view_trellis_html(
+lancer::view_trellis_html(
   trellis_table = saturation_trellis_table,
   grouping_variable = c("ID"),
   trellis_report_name = "Dilution_Plot_Saturated",
@@ -814,7 +814,7 @@ DCVtestkit::view_trellis_html(
 ```{r plots as trellis lod}
 #| column: screen-inset-right
 
-lod_trellis_table <- DCVtestkit::add_plotly_panel(
+lod_trellis_table <- lancer::add_plotly_panel(
   dilution_table = lod_simulated_database,
   dilution_summary = lod_dilution_summary,
   grouping_variable = c("ID"),
@@ -828,7 +828,7 @@ lod_trellis_table <- DCVtestkit::add_plotly_panel(
   signal_var = "y",
   have_plot_title = FALSE
 ) |> 
-  DCVtestkit::convert_to_cog(
+  lancer::convert_to_cog(
     grouping_variable = "ID",
     panel_variable = "panel",
     col_name_vec = "col_name_vec",
@@ -836,7 +836,7 @@ lod_trellis_table <- DCVtestkit::add_plotly_panel(
     type_vec = "type_vec"
   )
 
-DCVtestkit::view_trellis_html(
+lancer::view_trellis_html(
   trellis_table = lod_trellis_table,
   grouping_variable = c("ID"),
   trellis_report_name = "Dilution_Plot_LOD",
@@ -850,7 +850,7 @@ DCVtestkit::view_trellis_html(
 ```{r plots as trellis linear}
 #| column: screen-inset-right
  
-linear_trellis_table <- DCVtestkit::add_plotly_panel(
+linear_trellis_table <- lancer::add_plotly_panel(
   dilution_table = linear_simulated_database,
   dilution_summary = linear_dilution_summary,
   grouping_variable = c("ID"),
@@ -864,7 +864,7 @@ linear_trellis_table <- DCVtestkit::add_plotly_panel(
   signal_var = "y",
   have_plot_title = FALSE
 ) |> 
-  DCVtestkit::convert_to_cog(
+  lancer::convert_to_cog(
     grouping_variable = "ID",
     panel_variable = "panel",
     col_name_vec = "col_name_vec",
@@ -872,7 +872,7 @@ linear_trellis_table <- DCVtestkit::add_plotly_panel(
     type_vec = "type_vec"
   )
 
-DCVtestkit::view_trellis_html(
+lancer::view_trellis_html(
   trellis_table = linear_trellis_table,
   grouping_variable = c("ID"),
   trellis_report_name = "Dilution_Plot_Linear",

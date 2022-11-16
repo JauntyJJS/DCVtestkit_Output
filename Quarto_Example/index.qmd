@@ -1,5 +1,5 @@
 ---
-title: "DCVtestkit Example in Quarto"
+title: "`lancer` Example in Quarto"
 author: "Jeremy Selva"
 format:
   html:
@@ -22,7 +22,7 @@ format:
 # R Packages used
 
 ```{r R Packages used}
-library(DCVtestkit)
+library(lancer)
 library(tibble)
 library(reactable)
 library(patchwork)
@@ -165,7 +165,7 @@ lipid_data |>
 # Create dilution table
 
 ```{r Create dilution table}
-dilution_table <- DCVtestkit::create_dilution_table(
+dilution_table <- lancer::create_dilution_table(
   dilution_annot, lipid_data,
   common_column = "Sample_Name",
   signal_var = "Area",
@@ -189,14 +189,14 @@ dilution_table |>
 # Create dilution statistical summary
 
 ```{r Create dilution statistical summary}
-dilution_summary <- DCVtestkit::summarise_dilution_table(
+dilution_summary <- lancer::summarise_dilution_table(
   dilution_table,
   grouping_variable = c("Transition_Name",
                         "Dilution_Batch_Name"),
   conc_var = "Dilution_Percent",
   signal_var = "Area")
 
-dilution_classified <- DCVtestkit::evaluate_linearity(
+dilution_classified <- lancer::evaluate_linearity(
   dilution_summary,
   grouping_variable = c("Transition_Name",
                         "Dilution_Batch_Name"))
@@ -231,7 +231,7 @@ dilution_classified |>
 # Export results as Excel
 
 ```{r Export results as Excel}
-DCVtestkit::write_summary_excel(
+lancer::write_summary_excel(
   dilution_classified, 
   file_name = "dilution_summary.xlsx")
 ```
@@ -239,7 +239,7 @@ DCVtestkit::write_summary_excel(
 # Export results as pdf
 
 ```{r Export results as pdf}
-ggplot_table <- DCVtestkit::add_ggplot_panel(
+ggplot_table <- lancer::add_ggplot_panel(
   dilution_table,
   dilution_summary = dilution_classified,
   grouping_variable = c("Transition_Name",
@@ -250,7 +250,7 @@ ggplot_table <- DCVtestkit::add_ggplot_panel(
 # Get the list of ggplot list for each group
 ggplot_list <- ggplot_table$panel
 
-DCVtestkit::view_ggplot_pdf(
+lancer::view_ggplot_pdf(
   ggplot_list,
   filename = "dilution_plot.pdf",
   ncol_per_page = 2,
@@ -275,7 +275,7 @@ patchwork::wrap_plots(
 ```{r Export results as trellis table}
 #| column: screen-inset-right
 
-trellis_table <- DCVtestkit::add_plotly_panel(
+trellis_table <- lancer::add_plotly_panel(
   dilution_table,
   dilution_summary = dilution_classified,
   grouping_variable = c("Transition_Name",
@@ -290,7 +290,7 @@ trellis_table <- DCVtestkit::add_plotly_panel(
   signal_var = "Area",
   have_plot_title = FALSE)
 
-trellis_table <-  DCVtestkit::convert_to_cog(
+trellis_table <-  lancer::convert_to_cog(
   trellis_table,
   grouping_variable = c("Transition_Name",
                         "Dilution_Batch_Name"),
@@ -303,7 +303,7 @@ trellis_table <-  DCVtestkit::convert_to_cog(
 # Pressing Render button will not create the 
 # index.html file (Though it is not needed)
 # Call this function via console to create index.html file
-DCVtestkit::view_trellis_html(
+lancer::view_trellis_html(
   trellis_table,
   grouping_variable = c("Transition_Name",
                         "Dilution_Batch_Name"),

@@ -1,5 +1,5 @@
 ---
-title: "Supplementary for *DCVtestkit*: a R package for linearity assessment and visualisation of multiple curves"
+title: "Supplementary for *lancer*: a R package for linearity assessment and visualisation of multiple curves"
 
 bibliography: bibliography.bib
 csl: bioinfo.csl
@@ -24,10 +24,10 @@ library(labelled)
 library(gtsummary)
 library(flextable)
 library(webshot2)
-library(DCVtestkit)
+library(lancer)
 ```
 
-![*DCVtestkit* Workflow](images/README-Workflow.png){#fig-DCVtestkit-Workflow}
+![*lancer* Workflow](images/README-Workflow.png){#fig-lancer-Workflow}
 
 ```{r Motivation, echo = FALSE}
 #| echo: false
@@ -79,17 +79,17 @@ concentration_table <- gridExtra::tableGrob(
 #| echo: false
 
 # Get dilution summary
-statistical_summary <- DCVtestkit::summarise_dilution_data(
+statistical_summary <- lancer::summarise_dilution_data(
   linear_data, 
   "conc_var", 
   "signal_var")
 
-table <- DCVtestkit::plot_summary_table(statistical_summary)
+table <- lancer::plot_summary_table(statistical_summary)
 
 # Model the data
-linear_model <- DCVtestkit::create_linear_model(linear_data, 
+linear_model <- lancer::create_linear_model(linear_data, 
                                                 "conc_var", "signal_var")
-quad_model <- DCVtestkit::create_quad_model(linear_data, 
+quad_model <- lancer::create_quad_model(linear_data, 
                                             "conc_var", "signal_var")
 
 dilution <- seq(min(linear_data$conc_var, na.rm = TRUE),
@@ -147,17 +147,17 @@ linear_plot <- patchwork::wrap_plots(linear_plot, table, ncol = 2, nrow = 1)
 #| echo: false
 
 # Get dilution summary
-statistical_summary <- DCVtestkit::summarise_dilution_data(
+statistical_summary <- lancer::summarise_dilution_data(
   saturated_data, 
   "conc_var", 
   "signal_var")
 
-table <- DCVtestkit::plot_summary_table(statistical_summary)
+table <- lancer::plot_summary_table(statistical_summary)
 
 # Model the data
-linear_model <- DCVtestkit::create_linear_model(saturated_data, 
+linear_model <- lancer::create_linear_model(saturated_data, 
                                                 "conc_var", "signal_var")
-quad_model <- DCVtestkit::create_quad_model(saturated_data, 
+quad_model <- lancer::create_quad_model(saturated_data, 
                                             "conc_var", "signal_var")
 
 dilution <- seq(min(saturated_data$conc_var, na.rm = TRUE),
@@ -215,17 +215,17 @@ saturation_plot <- patchwork::wrap_plots(saturation_plot, table, ncol = 2, nrow 
 #| echo: false
 
 # Get dilution summary
-statistical_summary <- DCVtestkit::summarise_dilution_data(
+statistical_summary <- lancer::summarise_dilution_data(
   lod_data, 
   "conc_var", 
   "signal_var")
 
-table <- DCVtestkit::plot_summary_table(statistical_summary)
+table <- lancer::plot_summary_table(statistical_summary)
 
 # Model the data
-linear_model <- DCVtestkit::create_linear_model(lod_data, 
+linear_model <- lancer::create_linear_model(lod_data, 
                                                 "conc_var", "signal_var")
-quad_model <- DCVtestkit::create_quad_model(lod_data, 
+quad_model <- lancer::create_quad_model(lod_data, 
                                             "conc_var", "signal_var")
 
 dilution <- seq(min(lod_data$conc_var, na.rm = TRUE),
