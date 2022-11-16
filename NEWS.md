@@ -1,22 +1,22 @@
-# DCVtestkit Output 0.0.4.9000 (development version)
+# lancer output 0.0.4.9000 (development version)
 
 ## TODO
 
-# DCVtestkit Output 0.0.4
+# lancer output 0.0.4
 
 Version first send to teams on 9 Nov 2022.
 
 ### Manuscript
 
-* Change title to "*DCVtestkit*: a R package for linearity assessment and visualisation of multiple curves"
+* Change title to "*lancer*: a R package for linearity assessment and visualisation of multiple curves"
 * Make manuscript content more generalised. Talking more about linearity assessment rather than dilution curves from metabolomic/lipidomic experiment. The dilution curves from metabolomic/lipidomic experiment will be used as a running example instead.
 * Found a way to change figure title from Figure to Supplementary Figure in `supplementary.qmd`.
 * Found a way to add page break `{{< pagebreak >}}` in the `manscript.qmd`.
 * Change figure in `manscript.qmd` to a merged figure of the curve grouping workflow diagram and the interactive plot diagram.
-* Transfer *DCVtestkit* workflow diagram from `manscript.qmd` to `supplementary.qmd`.
+* Transfer *lancer* workflow diagram from `manscript.qmd` to `supplementary.qmd`.
 * Add relevant equations for Mandel's Fitting Test and Percent Residual Accuracy. Thank you [njbart](https://github.com/quarto-dev/quarto-cli/discussions/3236) for the help.
 
-# DCVtestkit Output 0.0.3
+# lancer output 0.0.3
 
 Version first send to teams on 1 Nov 2022.
 
@@ -25,14 +25,14 @@ Version first send to teams on 1 Nov 2022.
 * Reduce the number of words in the manuscript to less than a thousand words and one figure.
 * Add a Word file for supplementary figures.
 
-# DCVtestkit Output 0.0.2
+# lancer output 0.0.2
 
 Version first send to teams on 18 Oct 2022.
 
 ### Manuscript
 
 * Correct some sentence structure issue.
-* Change `DCVtestkit` to *DCVtestkit*.
+* Change `lancer` to *lancer*.
 * Make section Statistical Summary for Dilution Curves more clear.
 * Add figure labels in the image caption.
 * Add Simulation Results to test proposed workflow.
@@ -49,11 +49,11 @@ Version first send to teams on 18 Oct 2022.
 * Found a way to fill up the trellis plot.
 * Add R session info and R package citations
 
-# DCVtestkit Output 0.0.1
+# lancer output 0.0.1
 
 Version first send to via email on 8 Oct 2022.
 
 * Added a `NEWS.md` file to track changes to the package.
-* Create a folder `Quarto_Example` that contains some output from [`DCVtestkit`](https://github.com/SLINGhub/DCVtestkit) and scripts that generate the results.
-* Create a folder `Manuscript` that contains the manuscript for [`DCVtestkit`](https://github.com/SLINGhub/DCVtestkit).
-* Create a folder `Quarto_Simulation` that contains scripts to see how [`DCVtestkit`](https://github.com/SLINGhub/DCVtestkit) does on simulated dilution data.
+* Create a folder `Quarto_Example` that contains some output from [`lancer`](https://github.com/SLINGhub/lancer) and scripts that generate the results.
+* Create a folder `Manuscript` that contains the manuscript for [`lancer`](https://github.com/SLINGhub/lancer).
+* Create a folder `Quarto_Simulation` that contains scripts to see how [`lancer`](https://github.com/SLINGhub/lancer) does on simulated dilution data.
