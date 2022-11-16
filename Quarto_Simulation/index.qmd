@@ -18,7 +18,7 @@ format:
     self-contained: false
     smooth-scroll: true
 execute: 
-  cache: true
+  cache: false
 ---
 
 # R Packages used
@@ -75,7 +75,30 @@ r_package_table |>
 
 ```{r See session info}
 #| code-fold: true
+
+# Taken from https://github.com/r-lib/sessioninfo/issues/75
+get_quarto_version <- function() {
+  if (isNamespaceLoaded("quarto")) {
+    path <- quarto::quarto_path()
+    ver <- system("quarto -V", intern = TRUE)
+    if (is.null(path)) {
+      "NA (via quarto)"
+    } else {
+      paste0(ver, " @ ", path, "/ (via quarto)")
+    }
+  } else {
+    path <- Sys.which("quarto")
+    if (path == "") {
+      "NA"
+    } else {
+      ver <- system("quarto -V", intern = TRUE)
+      paste0(ver, " @ ", path)
+    }
+  }
+}
+
 r_platform_table <- sessioninfo::platform_info()
+r_platform_table[["quarto"]] <- get_quarto_version()[1]
 
 r_platform_table <- data.frame(
     setting = names(r_platform_table),

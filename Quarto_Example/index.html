@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.198">
+<meta name="generator" content="quarto-1.2.269">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Jeremy Selva">
 <title>lancer Example in Quarto</title>
@@ -174,13 +174,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
-<div id="htmlwidget-71026cdce0c758312f72" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-71026cdce0c758312f72">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"package":["lancer","patchwork","reactable","report","sessioninfo","tibble"],"version":["0.0.4.9000","1.1.2","0.3.0","0.5.5","1.2.2","3.1.8"],"date":["2022-11-16","2022-08-19","2022-05-26","2022-08-22","2021-12-06","2022-07-22"],"source":["Github (SLINGhub/lancer@94ff9be6915884c2784c88309b92fa8cd2011992)","CRAN (R 4.2.1)","CRAN (R 4.2.0)","CRAN (R 4.2.1)","CRAN (R 4.2.1)","CRAN (R 4.2.1)"]},"columns":[{"accessor":"package","name":"package","type":"character","sticky":"left","style":{"borderRight":"1px solid #eee"},"headerStyle":{"borderRight":"1px solid #eee"}},{"accessor":"version","name":"version","type":"character"},{"accessor":"date","name":"date","type":"character"},{"accessor":"source","name":"source","type":"character"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"1cdcaeb6da1e1d908940a9fb590781b1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e314d1aba4493467c799" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e314d1aba4493467c799">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"package":["lancer","patchwork","reactable","report","sessioninfo","tibble"],"version":["0.0.4.9000","1.1.2","0.3.0","0.5.5","1.2.2","3.1.8"],"date":["2022-11-16","2022-08-19","2022-05-26","2022-08-22","2021-12-06","2022-07-22"],"source":["Github (SLINGhub/lancer@5a3abc3472af92291887a6d77ff29e3cd32c6379)","CRAN (R 4.2.2)","CRAN (R 4.2.0)","CRAN (R 4.2.1)","CRAN (R 4.2.2)","CRAN (R 4.2.2)"]},"columns":[{"accessor":"package","name":"package","type":"character","sticky":"left","style":{"borderRight":"1px solid #eee"},"headerStyle":{"borderRight":"1px solid #eee"}},{"accessor":"version","name":"version","type":"character"},{"accessor":"date","name":"date","type":"character"},{"accessor":"source","name":"source","type":"character"}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"a32e479d83a1822637e8f616d9472bd4"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section><section id="r-platform-information" class="level1"><h1>R Platform Information</h1>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">r_platform_table</span> <span class="op">&lt;-</span> <span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/platform_info.html">platform_info</a></span><span class="op">(</span><span class="op">)</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Taken from https://github.com/r-lib/sessioninfo/issues/75</span></span>
+<span><span class="va">get_quarto_version</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">isNamespaceLoaded</a></span><span class="op">(</span><span class="st">"quarto"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu">quarto</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/quarto/man/quarto_path.html">quarto_path</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">ver</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"quarto -V"</span>, intern <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="st">"NA (via quarto)"</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">ver</span>, <span class="st">" @ "</span>, <span class="va">path</span>, <span class="st">"/ (via quarto)"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.which.html">Sys.which</a></span><span class="op">(</span><span class="st">"quarto"</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">path</span> <span class="op">==</span> <span class="st">""</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="st">"NA"</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>      <span class="va">ver</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"quarto -V"</span>, intern <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">ver</span>, <span class="st">" @ "</span>, <span class="va">path</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">r_platform_table</span> <span class="op">&lt;-</span> <span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/platform_info.html">platform_info</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">r_platform_table</span><span class="op">[[</span><span class="st">"quarto"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">get_quarto_version</span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span></span>
 <span><span class="va">r_platform_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>    setting <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">r_platform_table</span><span class="op">)</span>,</span>
@@ -195,8 +217,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
-<div id="htmlwidget-bd015ab7a5987f85f2ed" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-bd015ab7a5987f85f2ed">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"setting":["version","os","system","ui","language","collate","ctype","tz","date","pandoc"],"value":["R version 4.2.2 (2022-10-31 ucrt)","Windows 10 x64 (build 19045)","x86_64, mingw32","RTerm","(EN)","English_Singapore.utf8","English_Singapore.utf8","Asia/Kuala_Lumpur","2022-11-16","2.19.2 @ C:/Program Files/RStudio/bin/quarto/bin/tools/ (via rmarkdown)"]},"columns":[{"accessor":"setting","name":"setting","type":"character"},{"accessor":"value","name":"value","type":"character"}],"defaultPageSize":5,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"adec396a2194ea02f6629cb0387ae901"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8557a3c8fcf36ab22210" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-8557a3c8fcf36ab22210">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"setting":["version","os","system","ui","language","collate","ctype","tz","date","pandoc","quarto"],"value":["R version 4.2.2 (2022-10-31 ucrt)","Windows 10 x64 (build 19045)","x86_64, mingw32","RTerm","(EN)","English_Singapore.utf8","English_Singapore.utf8","Asia/Kuala_Lumpur","2022-11-16","2.19.2 @ C:/Program Files/RStudio/bin/quarto/bin/tools/ (via rmarkdown)","1.2.269 @ C:\\PROGRA~1\\Quarto\\bin\\quarto.exe"]},"columns":[{"accessor":"setting","name":"setting","type":"character"},{"accessor":"value","name":"value","type":"character"}],"defaultPageSize":5,"paginationType":"numbers","showPageInfo":true,"minRows":1,"dataKey":"d7c0f1eb9f00204dcce488a849e6e891"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section><section id="data-creation" class="level1"><h1>Data creation</h1>
@@ -272,8 +294,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
-<div id="htmlwidget-dbb5c3b57ca3cdb616fd" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-dbb5c3b57ca3cdb616fd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Sample_Name":["Sample_010a","Sample_020a","Sample_025a","Sample_040a","Sample_050a","Sample_060a","Sample_075a","Sample_080a","Sample_100a","Sample_125a","Sample_150a","Sample_010b","Sample_025b","Sample_040b","Sample_050b","Sample_060b","Sample_075b","Sample_080b","Sample_100b","Sample_125b","Sample_150b"],"Dilution_Batch_Name":["B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2"],"Dilution_Percent":[10,20,25,40,50,60,75,80,100,125,150,10,25,40,50,60,75,80,100,125,150]},"columns":[{"accessor":"Sample_Name","name":"Sample_Name","type":"character"},{"accessor":"Dilution_Batch_Name","name":"Dilution_Batch_Name","type":"character"},{"accessor":"Dilution_Percent","name":"Dilution_Percent","type":"numeric"}],"defaultPageSize":5,"paginationType":"jump","showPageInfo":true,"minRows":1,"highlight":true,"bordered":true,"dataKey":"1fb576a46985bf1f89f3da441df9b138"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c8c2becf3948b412228b" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c8c2becf3948b412228b">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Sample_Name":["Sample_010a","Sample_020a","Sample_025a","Sample_040a","Sample_050a","Sample_060a","Sample_075a","Sample_080a","Sample_100a","Sample_125a","Sample_150a","Sample_010b","Sample_025b","Sample_040b","Sample_050b","Sample_060b","Sample_075b","Sample_080b","Sample_100b","Sample_125b","Sample_150b"],"Dilution_Batch_Name":["B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2"],"Dilution_Percent":[10,20,25,40,50,60,75,80,100,125,150,10,25,40,50,60,75,80,100,125,150]},"columns":[{"accessor":"Sample_Name","name":"Sample_Name","type":"character"},{"accessor":"Dilution_Batch_Name","name":"Dilution_Batch_Name","type":"character"},{"accessor":"Dilution_Percent","name":"Dilution_Percent","type":"numeric"}],"defaultPageSize":5,"paginationType":"jump","showPageInfo":true,"minRows":1,"highlight":true,"bordered":true,"dataKey":"1fb576a46985bf1f89f3da441df9b138"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -286,8 +308,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
-<div id="htmlwidget-bd1e7d1755f486b75314" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-bd1e7d1755f486b75314">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Sample_Name":["Sample_010a","Sample_020a","Sample_025a","Sample_040a","Sample_050a","Sample_060a","Sample_075a","Sample_080a","Sample_100a","Sample_125a","Sample_150a","Sample_010b","Sample_025b","Sample_040b","Sample_050b","Sample_060b","Sample_075b","Sample_080b","Sample_100b","Sample_125b","Sample_150b"],"Lipid1":[5748124,16616414,21702718,36191617,49324541,55618266,66947588,74964771,75438063,91770737,94692060,5192648,16594991,32507833,46499896,55388856,62505210,62778078,72158161,78044338,86158414],"Lipid2":[31538,53709,69990,101977,146436,180960,232881,283780,298289,344519,430432,25463,63387,90624,131274,138069,205353,202407,260205,292257,367924],"Lipid3":[544,397,829,1437,1808,2231,3343,2915,5268,8031,11045,500,903,1267,2031,2100,3563,4500,5300,8500,10430],"Lipid4":[380519,485372,478770,474467,531640,576301,501068,550201,515110,499543,474745,197417,322846,478398,423174,418577,426089,413292,450190,415309,457618]},"columns":[{"accessor":"Sample_Name","name":"Sample_Name","type":"character"},{"accessor":"Lipid1","name":"Lipid1","type":"numeric"},{"accessor":"Lipid2","name":"Lipid2","type":"numeric"},{"accessor":"Lipid3","name":"Lipid3","type":"numeric"},{"accessor":"Lipid4","name":"Lipid4","type":"numeric"}],"defaultPageSize":5,"paginationType":"jump","showPageInfo":true,"minRows":1,"highlight":true,"bordered":true,"dataKey":"aea6ba9fb3ca0d5d742d39cf34fba30b"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c3fe2e1e28d9ef651a32" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c3fe2e1e28d9ef651a32">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Sample_Name":["Sample_010a","Sample_020a","Sample_025a","Sample_040a","Sample_050a","Sample_060a","Sample_075a","Sample_080a","Sample_100a","Sample_125a","Sample_150a","Sample_010b","Sample_025b","Sample_040b","Sample_050b","Sample_060b","Sample_075b","Sample_080b","Sample_100b","Sample_125b","Sample_150b"],"Lipid1":[5748124,16616414,21702718,36191617,49324541,55618266,66947588,74964771,75438063,91770737,94692060,5192648,16594991,32507833,46499896,55388856,62505210,62778078,72158161,78044338,86158414],"Lipid2":[31538,53709,69990,101977,146436,180960,232881,283780,298289,344519,430432,25463,63387,90624,131274,138069,205353,202407,260205,292257,367924],"Lipid3":[544,397,829,1437,1808,2231,3343,2915,5268,8031,11045,500,903,1267,2031,2100,3563,4500,5300,8500,10430],"Lipid4":[380519,485372,478770,474467,531640,576301,501068,550201,515110,499543,474745,197417,322846,478398,423174,418577,426089,413292,450190,415309,457618]},"columns":[{"accessor":"Sample_Name","name":"Sample_Name","type":"character"},{"accessor":"Lipid1","name":"Lipid1","type":"numeric"},{"accessor":"Lipid2","name":"Lipid2","type":"numeric"},{"accessor":"Lipid3","name":"Lipid3","type":"numeric"},{"accessor":"Lipid4","name":"Lipid4","type":"numeric"}],"defaultPageSize":5,"paginationType":"jump","showPageInfo":true,"minRows":1,"highlight":true,"bordered":true,"dataKey":"aea6ba9fb3ca0d5d742d39cf34fba30b"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section><section id="create-dilution-table" class="level1"><h1>Create dilution table</h1>
@@ -312,8 +334,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
-<div id="htmlwidget-e05f716e9c910146606c" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e05f716e9c910146606c">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Sample_Name":["Sample_010a","Sample_010a","Sample_010a","Sample_010a","Sample_020a","Sample_020a","Sample_020a","Sample_020a","Sample_025a","Sample_025a","Sample_025a","Sample_025a","Sample_040a","Sample_040a","Sample_040a","Sample_040a","Sample_050a","Sample_050a","Sample_050a","Sample_050a","Sample_060a","Sample_060a","Sample_060a","Sample_060a","Sample_075a","Sample_075a","Sample_075a","Sample_075a","Sample_080a","Sample_080a","Sample_080a","Sample_080a","Sample_100a","Sample_100a","Sample_100a","Sample_100a","Sample_125a","Sample_125a","Sample_125a","Sample_125a","Sample_150a","Sample_150a","Sample_150a","Sample_150a","Sample_010b","Sample_010b","Sample_010b","Sample_010b","Sample_025b","Sample_025b","Sample_025b","Sample_025b","Sample_040b","Sample_040b","Sample_040b","Sample_040b","Sample_050b","Sample_050b","Sample_050b","Sample_050b","Sample_060b","Sample_060b","Sample_060b","Sample_060b","Sample_075b","Sample_075b","Sample_075b","Sample_075b","Sample_080b","Sample_080b","Sample_080b","Sample_080b","Sample_100b","Sample_100b","Sample_100b","Sample_100b","Sample_125b","Sample_125b","Sample_125b","Sample_125b","Sample_150b","Sample_150b","Sample_150b","Sample_150b"],"Dilution_Batch_Name":["B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2"],"Dilution_Percent":[10,10,10,10,20,20,20,20,25,25,25,25,40,40,40,40,50,50,50,50,60,60,60,60,75,75,75,75,80,80,80,80,100,100,100,100,125,125,125,125,150,150,150,150,10,10,10,10,25,25,25,25,40,40,40,40,50,50,50,50,60,60,60,60,75,75,75,75,80,80,80,80,100,100,100,100,125,125,125,125,150,150,150,150],"Transition_Name":["Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4"],"Area":[5748124,31538,544,380519,16616414,53709,397,485372,21702718,69990,829,478770,36191617,101977,1437,474467,49324541,146436,1808,531640,55618266,180960,2231,576301,66947588,232881,3343,501068,74964771,283780,2915,550201,75438063,298289,5268,515110,91770737,344519,8031,499543,94692060,430432,11045,474745,5192648,25463,500,197417,16594991,63387,903,322846,32507833,90624,1267,478398,46499896,131274,2031,423174,55388856,138069,2100,418577,62505210,205353,3563,426089,62778078,202407,4500,413292,72158161,260205,5300,450190,78044338,292257,8500,415309,86158414,367924,10430,457618]},"columns":[{"accessor":"Sample_Name","name":"Sample_Name","type":"character","minWidth":200},{"accessor":"Dilution_Batch_Name","name":"Dilution_Batch_Name","type":"character","minWidth":200},{"accessor":"Dilution_Percent","name":"Dilution_Percent","type":"numeric","minWidth":200},{"accessor":"Transition_Name","name":"Transition_Name","type":"character","minWidth":200},{"accessor":"Area","name":"Area","type":"numeric","minWidth":200}],"defaultPageSize":5,"paginationType":"jump","showPageInfo":true,"minRows":1,"highlight":true,"bordered":true,"dataKey":"d74524061453581d870fb53a52a87e13"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5d8a1839292a274044cf" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-5d8a1839292a274044cf">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Sample_Name":["Sample_010a","Sample_010a","Sample_010a","Sample_010a","Sample_020a","Sample_020a","Sample_020a","Sample_020a","Sample_025a","Sample_025a","Sample_025a","Sample_025a","Sample_040a","Sample_040a","Sample_040a","Sample_040a","Sample_050a","Sample_050a","Sample_050a","Sample_050a","Sample_060a","Sample_060a","Sample_060a","Sample_060a","Sample_075a","Sample_075a","Sample_075a","Sample_075a","Sample_080a","Sample_080a","Sample_080a","Sample_080a","Sample_100a","Sample_100a","Sample_100a","Sample_100a","Sample_125a","Sample_125a","Sample_125a","Sample_125a","Sample_150a","Sample_150a","Sample_150a","Sample_150a","Sample_010b","Sample_010b","Sample_010b","Sample_010b","Sample_025b","Sample_025b","Sample_025b","Sample_025b","Sample_040b","Sample_040b","Sample_040b","Sample_040b","Sample_050b","Sample_050b","Sample_050b","Sample_050b","Sample_060b","Sample_060b","Sample_060b","Sample_060b","Sample_075b","Sample_075b","Sample_075b","Sample_075b","Sample_080b","Sample_080b","Sample_080b","Sample_080b","Sample_100b","Sample_100b","Sample_100b","Sample_100b","Sample_125b","Sample_125b","Sample_125b","Sample_125b","Sample_150b","Sample_150b","Sample_150b","Sample_150b"],"Dilution_Batch_Name":["B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B1","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2","B2"],"Dilution_Percent":[10,10,10,10,20,20,20,20,25,25,25,25,40,40,40,40,50,50,50,50,60,60,60,60,75,75,75,75,80,80,80,80,100,100,100,100,125,125,125,125,150,150,150,150,10,10,10,10,25,25,25,25,40,40,40,40,50,50,50,50,60,60,60,60,75,75,75,75,80,80,80,80,100,100,100,100,125,125,125,125,150,150,150,150],"Transition_Name":["Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4"],"Area":[5748124,31538,544,380519,16616414,53709,397,485372,21702718,69990,829,478770,36191617,101977,1437,474467,49324541,146436,1808,531640,55618266,180960,2231,576301,66947588,232881,3343,501068,74964771,283780,2915,550201,75438063,298289,5268,515110,91770737,344519,8031,499543,94692060,430432,11045,474745,5192648,25463,500,197417,16594991,63387,903,322846,32507833,90624,1267,478398,46499896,131274,2031,423174,55388856,138069,2100,418577,62505210,205353,3563,426089,62778078,202407,4500,413292,72158161,260205,5300,450190,78044338,292257,8500,415309,86158414,367924,10430,457618]},"columns":[{"accessor":"Sample_Name","name":"Sample_Name","type":"character","minWidth":200},{"accessor":"Dilution_Batch_Name","name":"Dilution_Batch_Name","type":"character","minWidth":200},{"accessor":"Dilution_Percent","name":"Dilution_Percent","type":"numeric","minWidth":200},{"accessor":"Transition_Name","name":"Transition_Name","type":"character","minWidth":200},{"accessor":"Area","name":"Area","type":"numeric","minWidth":200}],"defaultPageSize":5,"paginationType":"jump","showPageInfo":true,"minRows":1,"highlight":true,"bordered":true,"dataKey":"d74524061453581d870fb53a52a87e13"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section><section id="create-dilution-statistical-summary" class="level1"><h1>Create dilution statistical summary</h1>
@@ -343,8 +365,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
-<div id="htmlwidget-74754e5bef21f72498cd" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-74754e5bef21f72498cd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Transition_Name":["Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4"],"Dilution_Batch_Name":["B1","B1","B1","B1","B2","B2","B2","B2"],"r_corr":[0.963362,0.989903,0.964252,0.311458,0.950007,0.994815,0.977958,0.608365],"r2_linear":[0.928067,0.979908,0.929783,0.097006,0.902514,0.989657,0.956403,0.370108],"r2_adj_linear":[0.920074,0.977675,0.921981,-0.003327,0.890328,0.988364,0.950953,0.291371],"mandel_stats":[71.2051524704519,2.53355237854347,106.212174011867,13.2417850636196,52.9344641262029,0.868402254298005,20.9174655466064,5.38689240700015],"mandel_p_val":[2.96859942893022e-05,0.15011382714456,6.77507948130652e-06,0.00659920775271108,0.000166214861102321,0.382414486446342,0.00256326891544222,0.053318384739799],"pra_linear":[70.4941197744969,92.7545599216462,71.1837175187664,-251.44936808119,62.3035079396165,94.3204636566372,74.6945170484604,-73.1245054377056],"concavity":[-4174.13330607923,-4.90717851815952,0.46778274206258,-20.5225861852303,-4136.52547570087,-1.93814065737245,0.320601964162255,-22.870419447464]},"columns":[{"accessor":"Transition_Name","name":"Transition_Name","type":"character","minWidth":200},{"accessor":"Dilution_Batch_Name","name":"Dilution_Batch_Name","type":"character","minWidth":200},{"accessor":"r_corr","name":"r_corr","type":"numeric","minWidth":200},{"accessor":"r2_linear","name":"r2_linear","type":"numeric","minWidth":200},{"accessor":"r2_adj_linear","name":"r2_adj_linear","type":"numeric","minWidth":200},{"accessor":"mandel_stats","name":"mandel_stats","type":"numeric","minWidth":200},{"accessor":"mandel_p_val","name":"mandel_p_val","type":"numeric","minWidth":200},{"accessor":"pra_linear","name":"pra_linear","type":"numeric","minWidth":200},{"accessor":"concavity","name":"concavity","type":"numeric","minWidth":200}],"defaultPageSize":5,"paginationType":"jump","showPageInfo":true,"minRows":1,"highlight":true,"bordered":true,"dataKey":"54589d5b4c78e0a9497506dc04e38729"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-17321a04fa6e563da254" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-17321a04fa6e563da254">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Transition_Name":["Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4"],"Dilution_Batch_Name":["B1","B1","B1","B1","B2","B2","B2","B2"],"r_corr":[0.963362,0.989903,0.964252,0.311458,0.950007,0.994815,0.977958,0.608365],"r2_linear":[0.928067,0.979908,0.929783,0.097006,0.902514,0.989657,0.956403,0.370108],"r2_adj_linear":[0.920074,0.977675,0.921981,-0.003327,0.890328,0.988364,0.950953,0.291371],"mandel_stats":[71.2051524704519,2.53355237854347,106.212174011867,13.2417850636196,52.9344641262029,0.868402254298005,20.9174655466064,5.38689240700015],"mandel_p_val":[2.96859942893022e-05,0.15011382714456,6.77507948130652e-06,0.00659920775271108,0.000166214861102321,0.382414486446342,0.00256326891544222,0.053318384739799],"pra_linear":[70.4941197744969,92.7545599216462,71.1837175187664,-251.44936808119,62.3035079396165,94.3204636566372,74.6945170484604,-73.1245054377056],"concavity":[-4174.13330607923,-4.90717851815952,0.46778274206258,-20.5225861852303,-4136.52547570087,-1.93814065737245,0.320601964162255,-22.870419447464]},"columns":[{"accessor":"Transition_Name","name":"Transition_Name","type":"character","minWidth":200},{"accessor":"Dilution_Batch_Name","name":"Dilution_Batch_Name","type":"character","minWidth":200},{"accessor":"r_corr","name":"r_corr","type":"numeric","minWidth":200},{"accessor":"r2_linear","name":"r2_linear","type":"numeric","minWidth":200},{"accessor":"r2_adj_linear","name":"r2_adj_linear","type":"numeric","minWidth":200},{"accessor":"mandel_stats","name":"mandel_stats","type":"numeric","minWidth":200},{"accessor":"mandel_p_val","name":"mandel_p_val","type":"numeric","minWidth":200},{"accessor":"pra_linear","name":"pra_linear","type":"numeric","minWidth":200},{"accessor":"concavity","name":"concavity","type":"numeric","minWidth":200}],"defaultPageSize":5,"paginationType":"jump","showPageInfo":true,"minRows":1,"highlight":true,"bordered":true,"dataKey":"54589d5b4c78e0a9497506dc04e38729"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -359,8 +381,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
-<div id="htmlwidget-1140ce2e5d2eb24e20bf" class="reactable html-widget" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1140ce2e5d2eb24e20bf">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Transition_Name":["Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4"],"Dilution_Batch_Name":["B1","B1","B1","B1","B2","B2","B2","B2"],"wf1_group":["Poor Linearity","Good Linearity","Poor Linearity","Poor Linearity","Poor Linearity","Good Linearity","Poor Linearity","Poor Linearity"],"wf2_group":["Saturation","Good Linearity","LOD","Poor Linearity","Saturation","Good Linearity","LOD","Poor Linearity"],"r_corr":[0.963362,0.989903,0.964252,0.311458,0.950007,0.994815,0.977958,0.608365],"pra_linear":[70.4941197744969,92.7545599216462,71.1837175187664,-251.44936808119,62.3035079396165,94.3204636566372,74.6945170484604,-73.1245054377056],"mandel_p_val":[2.96859942893022e-05,0.15011382714456,6.77507948130652e-06,0.00659920775271108,0.000166214861102321,0.382414486446342,0.00256326891544222,0.053318384739799],"concavity":[-4174.13330607923,-4.90717851815952,0.46778274206258,-20.5225861852303,-4136.52547570087,-1.93814065737245,0.320601964162255,-22.870419447464],"r2_linear":[0.928067,0.979908,0.929783,0.097006,0.902514,0.989657,0.956403,0.370108],"r2_adj_linear":[0.920074,0.977675,0.921981,-0.003327,0.890328,0.988364,0.950953,0.291371],"mandel_stats":[71.2051524704519,2.53355237854347,106.212174011867,13.2417850636196,52.9344641262029,0.868402254298005,20.9174655466064,5.38689240700015]},"columns":[{"accessor":"Transition_Name","name":"Transition_Name","type":"character","minWidth":200},{"accessor":"Dilution_Batch_Name","name":"Dilution_Batch_Name","type":"character","minWidth":200},{"accessor":"wf1_group","name":"wf1_group","type":"character","minWidth":200},{"accessor":"wf2_group","name":"wf2_group","type":"character","minWidth":200},{"accessor":"r_corr","name":"r_corr","type":"numeric","minWidth":200},{"accessor":"pra_linear","name":"pra_linear","type":"numeric","minWidth":200},{"accessor":"mandel_p_val","name":"mandel_p_val","type":"numeric","minWidth":200},{"accessor":"concavity","name":"concavity","type":"numeric","minWidth":200},{"accessor":"r2_linear","name":"r2_linear","type":"numeric","minWidth":200},{"accessor":"r2_adj_linear","name":"r2_adj_linear","type":"numeric","minWidth":200},{"accessor":"mandel_stats","name":"mandel_stats","type":"numeric","minWidth":200}],"defaultPageSize":5,"paginationType":"jump","showPageInfo":true,"minRows":1,"highlight":true,"bordered":true,"dataKey":"077f0587a2d394cb5b691b2b2d641507"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c563424766c8ad87a179" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c563424766c8ad87a179">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Transition_Name":["Lipid1","Lipid2","Lipid3","Lipid4","Lipid1","Lipid2","Lipid3","Lipid4"],"Dilution_Batch_Name":["B1","B1","B1","B1","B2","B2","B2","B2"],"wf1_group":["Poor Linearity","Good Linearity","Poor Linearity","Poor Linearity","Poor Linearity","Good Linearity","Poor Linearity","Poor Linearity"],"wf2_group":["Saturation","Good Linearity","LOD","Poor Linearity","Saturation","Good Linearity","LOD","Poor Linearity"],"r_corr":[0.963362,0.989903,0.964252,0.311458,0.950007,0.994815,0.977958,0.608365],"pra_linear":[70.4941197744969,92.7545599216462,71.1837175187664,-251.44936808119,62.3035079396165,94.3204636566372,74.6945170484604,-73.1245054377056],"mandel_p_val":[2.96859942893022e-05,0.15011382714456,6.77507948130652e-06,0.00659920775271108,0.000166214861102321,0.382414486446342,0.00256326891544222,0.053318384739799],"concavity":[-4174.13330607923,-4.90717851815952,0.46778274206258,-20.5225861852303,-4136.52547570087,-1.93814065737245,0.320601964162255,-22.870419447464],"r2_linear":[0.928067,0.979908,0.929783,0.097006,0.902514,0.989657,0.956403,0.370108],"r2_adj_linear":[0.920074,0.977675,0.921981,-0.003327,0.890328,0.988364,0.950953,0.291371],"mandel_stats":[71.2051524704519,2.53355237854347,106.212174011867,13.2417850636196,52.9344641262029,0.868402254298005,20.9174655466064,5.38689240700015]},"columns":[{"accessor":"Transition_Name","name":"Transition_Name","type":"character","minWidth":200},{"accessor":"Dilution_Batch_Name","name":"Dilution_Batch_Name","type":"character","minWidth":200},{"accessor":"wf1_group","name":"wf1_group","type":"character","minWidth":200},{"accessor":"wf2_group","name":"wf2_group","type":"character","minWidth":200},{"accessor":"r_corr","name":"r_corr","type":"numeric","minWidth":200},{"accessor":"pra_linear","name":"pra_linear","type":"numeric","minWidth":200},{"accessor":"mandel_p_val","name":"mandel_p_val","type":"numeric","minWidth":200},{"accessor":"concavity","name":"concavity","type":"numeric","minWidth":200},{"accessor":"r2_linear","name":"r2_linear","type":"numeric","minWidth":200},{"accessor":"r2_adj_linear","name":"r2_adj_linear","type":"numeric","minWidth":200},{"accessor":"mandel_stats","name":"mandel_stats","type":"numeric","minWidth":200}],"defaultPageSize":5,"paginationType":"jump","showPageInfo":true,"minRows":1,"highlight":true,"bordered":true,"dataKey":"077f0587a2d394cb5b691b2b2d641507"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section><section id="export-results-as-excel" class="level1"><h1>Export results as Excel</h1>
@@ -437,8 +459,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>  trellis_report_name <span class="op">=</span> <span class="st">"Dilution_Plot"</span>,</span>
 <span>  trellis_report_folder <span class="op">=</span> <span class="st">"Dilution_Plot_Folder"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display column-screen-inset-right">
-<div id="htmlwidget-0d87bb23b92bbe757eca" style="width:900px;height:550px;" class="trelliscopejs_widget html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0d87bb23b92bbe757eca">{"x":{"id":"4ed7d07d","config_info":"'Dilution_Plot_Folder/appfiles/config.jsonp'","self_contained":false,"latest_display":{"name":"Dilution_Plot","group":"common"},"spa":false,"in_knitr":true,"in_shiny":false,"in_notebook":false},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-93ca834eba6150ae6aa3" style="width:900px;height:550px;" class="trelliscopejs_widget html-widget"></div>
+<script type="application/json" data-for="htmlwidget-93ca834eba6150ae6aa3">{"x":{"id":"4ed7d07d","config_info":"'Dilution_Plot_Folder/appfiles/config.jsonp'","self_contained":false,"latest_display":{"name":"Dilution_Plot","group":"common"},"spa":false,"in_knitr":true,"in_shiny":false,"in_notebook":false},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section><section id="r-package-reference" class="level1"><h1>R Package Reference</h1>
@@ -817,264 +839,287 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r See session info}</span></span>
 <span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a>r_platform_table <span class="ot">&lt;-</span> sessioninfo<span class="sc">::</span><span class="fu">platform_info</span>()</span>
-<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a>r_platform_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">setting =</span> <span class="fu">names</span>(r_platform_table),</span>
-<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">unlist</span>(r_platform_table,</span>
-<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a>                   <span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
-<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a>r_platform_table <span class="sc">|&gt;</span></span>
-<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>(</span>
-<span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultPageSize =</span> <span class="dv">5</span></span>
-<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data creation</span></span>
-<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Data creation}</span></span>
-<span id="cb17-84"><a href="#cb17-84" aria-hidden="true" tabindex="-1"></a>dilution_percent <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb17-85"><a href="#cb17-85" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>,</span>
-<span id="cb17-86"><a href="#cb17-86" aria-hidden="true" tabindex="-1"></a>  <span class="dv">75</span>, <span class="dv">80</span>, <span class="dv">100</span>, <span class="dv">125</span>, <span class="dv">150</span>,</span>
-<span id="cb17-87"><a href="#cb17-87" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>,</span>
-<span id="cb17-88"><a href="#cb17-88" aria-hidden="true" tabindex="-1"></a>  <span class="dv">75</span>, <span class="dv">80</span>, <span class="dv">100</span>, <span class="dv">125</span>, <span class="dv">150</span>)</span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Taken from https://github.com/r-lib/sessioninfo/issues/75</span></span>
+<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a>get_quarto_version <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">isNamespaceLoaded</span>(<span class="st">"quarto"</span>)) {</span>
+<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>    path <span class="ot">&lt;-</span> quarto<span class="sc">::</span><span class="fu">quarto_path</span>()</span>
+<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a>    ver <span class="ot">&lt;-</span> <span class="fu">system</span>(<span class="st">"quarto -V"</span>, <span class="at">intern =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(path)) {</span>
+<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a>      <span class="st">"NA (via quarto)"</span></span>
+<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(ver, <span class="st">" @ "</span>, path, <span class="st">"/ (via quarto)"</span>)</span>
+<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a>    path <span class="ot">&lt;-</span> <span class="fu">Sys.which</span>(<span class="st">"quarto"</span>)</span>
+<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (path <span class="sc">==</span> <span class="st">""</span>) {</span>
+<span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a>      <span class="st">"NA"</span></span>
+<span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a>      ver <span class="ot">&lt;-</span> <span class="fu">system</span>(<span class="st">"quarto -V"</span>, <span class="at">intern =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(ver, <span class="st">" @ "</span>, path)</span>
+<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb17-84"><a href="#cb17-84" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb17-85"><a href="#cb17-85" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-86"><a href="#cb17-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-87"><a href="#cb17-87" aria-hidden="true" tabindex="-1"></a>r_platform_table <span class="ot">&lt;-</span> sessioninfo<span class="sc">::</span><span class="fu">platform_info</span>()</span>
+<span id="cb17-88"><a href="#cb17-88" aria-hidden="true" tabindex="-1"></a>r_platform_table[[<span class="st">"quarto"</span>]] <span class="ot">&lt;-</span> <span class="fu">get_quarto_version</span>()[<span class="dv">1</span>]</span>
 <span id="cb17-89"><a href="#cb17-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-90"><a href="#cb17-90" aria-hidden="true" tabindex="-1"></a>dilution_batch_name <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb17-91"><a href="#cb17-91" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>,</span>
-<span id="cb17-92"><a href="#cb17-92" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>,</span>
-<span id="cb17-93"><a href="#cb17-93" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B2"</span>, <span class="st">"B2"</span>, <span class="st">"B2"</span>, <span class="st">"B2"</span>, <span class="st">"B2"</span>,</span>
-<span id="cb17-94"><a href="#cb17-94" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B2"</span>, <span class="st">"B2"</span>, <span class="st">"B2"</span>, <span class="st">"B2"</span>, <span class="st">"B2"</span>)</span>
-<span id="cb17-95"><a href="#cb17-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-96"><a href="#cb17-96" aria-hidden="true" tabindex="-1"></a>sample_name <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb17-97"><a href="#cb17-97" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_010a"</span>, <span class="st">"Sample_020a"</span>, <span class="st">"Sample_025a"</span>,</span>
-<span id="cb17-98"><a href="#cb17-98" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_040a"</span>, <span class="st">"Sample_050a"</span>, <span class="st">"Sample_060a"</span>,</span>
-<span id="cb17-99"><a href="#cb17-99" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_075a"</span>, <span class="st">"Sample_080a"</span>, <span class="st">"Sample_100a"</span>,</span>
-<span id="cb17-100"><a href="#cb17-100" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_125a"</span>, <span class="st">"Sample_150a"</span>,</span>
-<span id="cb17-101"><a href="#cb17-101" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_010b"</span>, <span class="st">"Sample_025b"</span>,</span>
-<span id="cb17-102"><a href="#cb17-102" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_040b"</span>, <span class="st">"Sample_050b"</span>, <span class="st">"Sample_060b"</span>,</span>
-<span id="cb17-103"><a href="#cb17-103" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_075b"</span>, <span class="st">"Sample_080b"</span>, <span class="st">"Sample_100b"</span>,</span>
-<span id="cb17-104"><a href="#cb17-104" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_125b"</span>, <span class="st">"Sample_150b"</span>)</span>
+<span id="cb17-90"><a href="#cb17-90" aria-hidden="true" tabindex="-1"></a>r_platform_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb17-91"><a href="#cb17-91" aria-hidden="true" tabindex="-1"></a>    <span class="at">setting =</span> <span class="fu">names</span>(r_platform_table),</span>
+<span id="cb17-92"><a href="#cb17-92" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">unlist</span>(r_platform_table,</span>
+<span id="cb17-93"><a href="#cb17-93" aria-hidden="true" tabindex="-1"></a>                   <span class="at">use.names =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb17-94"><a href="#cb17-94" aria-hidden="true" tabindex="-1"></a>    <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb17-95"><a href="#cb17-95" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-96"><a href="#cb17-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-97"><a href="#cb17-97" aria-hidden="true" tabindex="-1"></a>r_platform_table <span class="sc">|&gt;</span></span>
+<span id="cb17-98"><a href="#cb17-98" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>(</span>
+<span id="cb17-99"><a href="#cb17-99" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultPageSize =</span> <span class="dv">5</span></span>
+<span id="cb17-100"><a href="#cb17-100" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-101"><a href="#cb17-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-102"><a href="#cb17-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-103"><a href="#cb17-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-104"><a href="#cb17-104" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data creation</span></span>
 <span id="cb17-105"><a href="#cb17-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-106"><a href="#cb17-106" aria-hidden="true" tabindex="-1"></a>lipid1_area_saturated <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb17-107"><a href="#cb17-107" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5748124</span>, <span class="dv">16616414</span>, <span class="dv">21702718</span>, <span class="dv">36191617</span>,</span>
-<span id="cb17-108"><a href="#cb17-108" aria-hidden="true" tabindex="-1"></a>  <span class="dv">49324541</span>, <span class="dv">55618266</span>, <span class="dv">66947588</span>, <span class="dv">74964771</span>,</span>
-<span id="cb17-109"><a href="#cb17-109" aria-hidden="true" tabindex="-1"></a>  <span class="dv">75438063</span>, <span class="dv">91770737</span>, <span class="dv">94692060</span>,</span>
-<span id="cb17-110"><a href="#cb17-110" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5192648</span>, <span class="dv">16594991</span>, <span class="dv">32507833</span>, <span class="dv">46499896</span>,</span>
-<span id="cb17-111"><a href="#cb17-111" aria-hidden="true" tabindex="-1"></a>  <span class="dv">55388856</span>, <span class="dv">62505210</span>, <span class="dv">62778078</span>, <span class="dv">72158161</span>,</span>
-<span id="cb17-112"><a href="#cb17-112" aria-hidden="true" tabindex="-1"></a>  <span class="dv">78044338</span>, <span class="dv">86158414</span>)</span>
-<span id="cb17-113"><a href="#cb17-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-114"><a href="#cb17-114" aria-hidden="true" tabindex="-1"></a>lipid2_area_linear <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb17-115"><a href="#cb17-115" aria-hidden="true" tabindex="-1"></a>  <span class="dv">31538</span>, <span class="dv">53709</span>, <span class="dv">69990</span>, <span class="dv">101977</span>, <span class="dv">146436</span>, <span class="dv">180960</span>,</span>
-<span id="cb17-116"><a href="#cb17-116" aria-hidden="true" tabindex="-1"></a>  <span class="dv">232881</span>, <span class="dv">283780</span>, <span class="dv">298289</span>, <span class="dv">344519</span>, <span class="dv">430432</span>,</span>
-<span id="cb17-117"><a href="#cb17-117" aria-hidden="true" tabindex="-1"></a>  <span class="dv">25463</span>, <span class="dv">63387</span>, <span class="dv">90624</span>, <span class="dv">131274</span>, <span class="dv">138069</span>,</span>
-<span id="cb17-118"><a href="#cb17-118" aria-hidden="true" tabindex="-1"></a>  <span class="dv">205353</span>, <span class="dv">202407</span>, <span class="dv">260205</span>, <span class="dv">292257</span>, <span class="dv">367924</span>)</span>
-<span id="cb17-119"><a href="#cb17-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-120"><a href="#cb17-120" aria-hidden="true" tabindex="-1"></a>lipid3_area_lod <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb17-121"><a href="#cb17-121" aria-hidden="true" tabindex="-1"></a>  <span class="dv">544</span>, <span class="dv">397</span>, <span class="dv">829</span>, <span class="dv">1437</span>, <span class="dv">1808</span>, <span class="dv">2231</span>,</span>
-<span id="cb17-122"><a href="#cb17-122" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3343</span>, <span class="dv">2915</span>, <span class="dv">5268</span>, <span class="dv">8031</span>, <span class="dv">11045</span>,</span>
-<span id="cb17-123"><a href="#cb17-123" aria-hidden="true" tabindex="-1"></a>  <span class="dv">500</span>, <span class="dv">903</span>, <span class="dv">1267</span>, <span class="dv">2031</span>, <span class="dv">2100</span>,</span>
-<span id="cb17-124"><a href="#cb17-124" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3563</span>, <span class="dv">4500</span>, <span class="dv">5300</span>, <span class="dv">8500</span>, <span class="dv">10430</span>)</span>
-<span id="cb17-125"><a href="#cb17-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-126"><a href="#cb17-126" aria-hidden="true" tabindex="-1"></a>lipid4_area_nonlinear <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb17-127"><a href="#cb17-127" aria-hidden="true" tabindex="-1"></a>  <span class="dv">380519</span>, <span class="dv">485372</span>, <span class="dv">478770</span>, <span class="dv">474467</span>, <span class="dv">531640</span>, <span class="dv">576301</span>,</span>
-<span id="cb17-128"><a href="#cb17-128" aria-hidden="true" tabindex="-1"></a>  <span class="dv">501068</span>, <span class="dv">550201</span>, <span class="dv">515110</span>, <span class="dv">499543</span>, <span class="dv">474745</span>,</span>
-<span id="cb17-129"><a href="#cb17-129" aria-hidden="true" tabindex="-1"></a>  <span class="dv">197417</span>, <span class="dv">322846</span>, <span class="dv">478398</span>, <span class="dv">423174</span>, <span class="dv">418577</span>,</span>
-<span id="cb17-130"><a href="#cb17-130" aria-hidden="true" tabindex="-1"></a>  <span class="dv">426089</span>, <span class="dv">413292</span>, <span class="dv">450190</span>, <span class="dv">415309</span>, <span class="dv">457618</span>)</span>
-<span id="cb17-131"><a href="#cb17-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-132"><a href="#cb17-132" aria-hidden="true" tabindex="-1"></a>dilution_annot <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb17-133"><a href="#cb17-133" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample_Name =</span> sample_name,</span>
-<span id="cb17-134"><a href="#cb17-134" aria-hidden="true" tabindex="-1"></a>  <span class="at">Dilution_Batch_Name =</span> dilution_batch_name,</span>
-<span id="cb17-135"><a href="#cb17-135" aria-hidden="true" tabindex="-1"></a>  <span class="at">Dilution_Percent =</span> dilution_percent)</span>
+<span id="cb17-106"><a href="#cb17-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Data creation}</span></span>
+<span id="cb17-107"><a href="#cb17-107" aria-hidden="true" tabindex="-1"></a>dilution_percent <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb17-108"><a href="#cb17-108" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>,</span>
+<span id="cb17-109"><a href="#cb17-109" aria-hidden="true" tabindex="-1"></a>  <span class="dv">75</span>, <span class="dv">80</span>, <span class="dv">100</span>, <span class="dv">125</span>, <span class="dv">150</span>,</span>
+<span id="cb17-110"><a href="#cb17-110" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>,</span>
+<span id="cb17-111"><a href="#cb17-111" aria-hidden="true" tabindex="-1"></a>  <span class="dv">75</span>, <span class="dv">80</span>, <span class="dv">100</span>, <span class="dv">125</span>, <span class="dv">150</span>)</span>
+<span id="cb17-112"><a href="#cb17-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-113"><a href="#cb17-113" aria-hidden="true" tabindex="-1"></a>dilution_batch_name <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb17-114"><a href="#cb17-114" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>,</span>
+<span id="cb17-115"><a href="#cb17-115" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>, <span class="st">"B1"</span>,</span>
+<span id="cb17-116"><a href="#cb17-116" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B2"</span>, <span class="st">"B2"</span>, <span class="st">"B2"</span>, <span class="st">"B2"</span>, <span class="st">"B2"</span>,</span>
+<span id="cb17-117"><a href="#cb17-117" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B2"</span>, <span class="st">"B2"</span>, <span class="st">"B2"</span>, <span class="st">"B2"</span>, <span class="st">"B2"</span>)</span>
+<span id="cb17-118"><a href="#cb17-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-119"><a href="#cb17-119" aria-hidden="true" tabindex="-1"></a>sample_name <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb17-120"><a href="#cb17-120" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_010a"</span>, <span class="st">"Sample_020a"</span>, <span class="st">"Sample_025a"</span>,</span>
+<span id="cb17-121"><a href="#cb17-121" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_040a"</span>, <span class="st">"Sample_050a"</span>, <span class="st">"Sample_060a"</span>,</span>
+<span id="cb17-122"><a href="#cb17-122" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_075a"</span>, <span class="st">"Sample_080a"</span>, <span class="st">"Sample_100a"</span>,</span>
+<span id="cb17-123"><a href="#cb17-123" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_125a"</span>, <span class="st">"Sample_150a"</span>,</span>
+<span id="cb17-124"><a href="#cb17-124" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_010b"</span>, <span class="st">"Sample_025b"</span>,</span>
+<span id="cb17-125"><a href="#cb17-125" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_040b"</span>, <span class="st">"Sample_050b"</span>, <span class="st">"Sample_060b"</span>,</span>
+<span id="cb17-126"><a href="#cb17-126" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_075b"</span>, <span class="st">"Sample_080b"</span>, <span class="st">"Sample_100b"</span>,</span>
+<span id="cb17-127"><a href="#cb17-127" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Sample_125b"</span>, <span class="st">"Sample_150b"</span>)</span>
+<span id="cb17-128"><a href="#cb17-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-129"><a href="#cb17-129" aria-hidden="true" tabindex="-1"></a>lipid1_area_saturated <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb17-130"><a href="#cb17-130" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5748124</span>, <span class="dv">16616414</span>, <span class="dv">21702718</span>, <span class="dv">36191617</span>,</span>
+<span id="cb17-131"><a href="#cb17-131" aria-hidden="true" tabindex="-1"></a>  <span class="dv">49324541</span>, <span class="dv">55618266</span>, <span class="dv">66947588</span>, <span class="dv">74964771</span>,</span>
+<span id="cb17-132"><a href="#cb17-132" aria-hidden="true" tabindex="-1"></a>  <span class="dv">75438063</span>, <span class="dv">91770737</span>, <span class="dv">94692060</span>,</span>
+<span id="cb17-133"><a href="#cb17-133" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5192648</span>, <span class="dv">16594991</span>, <span class="dv">32507833</span>, <span class="dv">46499896</span>,</span>
+<span id="cb17-134"><a href="#cb17-134" aria-hidden="true" tabindex="-1"></a>  <span class="dv">55388856</span>, <span class="dv">62505210</span>, <span class="dv">62778078</span>, <span class="dv">72158161</span>,</span>
+<span id="cb17-135"><a href="#cb17-135" aria-hidden="true" tabindex="-1"></a>  <span class="dv">78044338</span>, <span class="dv">86158414</span>)</span>
 <span id="cb17-136"><a href="#cb17-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-137"><a href="#cb17-137" aria-hidden="true" tabindex="-1"></a>lipid_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb17-138"><a href="#cb17-138" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample_Name =</span> sample_name,</span>
-<span id="cb17-139"><a href="#cb17-139" aria-hidden="true" tabindex="-1"></a>  <span class="at">Lipid1 =</span> lipid1_area_saturated,</span>
-<span id="cb17-140"><a href="#cb17-140" aria-hidden="true" tabindex="-1"></a>  <span class="at">Lipid2 =</span> lipid2_area_linear,</span>
-<span id="cb17-141"><a href="#cb17-141" aria-hidden="true" tabindex="-1"></a>  <span class="at">Lipid3 =</span> lipid3_area_lod,</span>
-<span id="cb17-142"><a href="#cb17-142" aria-hidden="true" tabindex="-1"></a>  <span class="at">Lipid4 =</span> lipid4_area_nonlinear)</span>
-<span id="cb17-143"><a href="#cb17-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-144"><a href="#cb17-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-145"><a href="#cb17-145" aria-hidden="true" tabindex="-1"></a><span class="in">```{r View dilution_annot}</span></span>
-<span id="cb17-146"><a href="#cb17-146" aria-hidden="true" tabindex="-1"></a>dilution_annot <span class="sc">|&gt;</span> </span>
-<span id="cb17-147"><a href="#cb17-147" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>(</span>
-<span id="cb17-148"><a href="#cb17-148" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultPageSize =</span> <span class="dv">5</span>,</span>
-<span id="cb17-149"><a href="#cb17-149" aria-hidden="true" tabindex="-1"></a>    <span class="at">bordered =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-150"><a href="#cb17-150" aria-hidden="true" tabindex="-1"></a>    <span class="at">highlight =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-151"><a href="#cb17-151" aria-hidden="true" tabindex="-1"></a>    <span class="at">paginationType =</span> <span class="st">"jump"</span></span>
-<span id="cb17-152"><a href="#cb17-152" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb17-153"><a href="#cb17-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-137"><a href="#cb17-137" aria-hidden="true" tabindex="-1"></a>lipid2_area_linear <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb17-138"><a href="#cb17-138" aria-hidden="true" tabindex="-1"></a>  <span class="dv">31538</span>, <span class="dv">53709</span>, <span class="dv">69990</span>, <span class="dv">101977</span>, <span class="dv">146436</span>, <span class="dv">180960</span>,</span>
+<span id="cb17-139"><a href="#cb17-139" aria-hidden="true" tabindex="-1"></a>  <span class="dv">232881</span>, <span class="dv">283780</span>, <span class="dv">298289</span>, <span class="dv">344519</span>, <span class="dv">430432</span>,</span>
+<span id="cb17-140"><a href="#cb17-140" aria-hidden="true" tabindex="-1"></a>  <span class="dv">25463</span>, <span class="dv">63387</span>, <span class="dv">90624</span>, <span class="dv">131274</span>, <span class="dv">138069</span>,</span>
+<span id="cb17-141"><a href="#cb17-141" aria-hidden="true" tabindex="-1"></a>  <span class="dv">205353</span>, <span class="dv">202407</span>, <span class="dv">260205</span>, <span class="dv">292257</span>, <span class="dv">367924</span>)</span>
+<span id="cb17-142"><a href="#cb17-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-143"><a href="#cb17-143" aria-hidden="true" tabindex="-1"></a>lipid3_area_lod <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb17-144"><a href="#cb17-144" aria-hidden="true" tabindex="-1"></a>  <span class="dv">544</span>, <span class="dv">397</span>, <span class="dv">829</span>, <span class="dv">1437</span>, <span class="dv">1808</span>, <span class="dv">2231</span>,</span>
+<span id="cb17-145"><a href="#cb17-145" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3343</span>, <span class="dv">2915</span>, <span class="dv">5268</span>, <span class="dv">8031</span>, <span class="dv">11045</span>,</span>
+<span id="cb17-146"><a href="#cb17-146" aria-hidden="true" tabindex="-1"></a>  <span class="dv">500</span>, <span class="dv">903</span>, <span class="dv">1267</span>, <span class="dv">2031</span>, <span class="dv">2100</span>,</span>
+<span id="cb17-147"><a href="#cb17-147" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3563</span>, <span class="dv">4500</span>, <span class="dv">5300</span>, <span class="dv">8500</span>, <span class="dv">10430</span>)</span>
+<span id="cb17-148"><a href="#cb17-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-149"><a href="#cb17-149" aria-hidden="true" tabindex="-1"></a>lipid4_area_nonlinear <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb17-150"><a href="#cb17-150" aria-hidden="true" tabindex="-1"></a>  <span class="dv">380519</span>, <span class="dv">485372</span>, <span class="dv">478770</span>, <span class="dv">474467</span>, <span class="dv">531640</span>, <span class="dv">576301</span>,</span>
+<span id="cb17-151"><a href="#cb17-151" aria-hidden="true" tabindex="-1"></a>  <span class="dv">501068</span>, <span class="dv">550201</span>, <span class="dv">515110</span>, <span class="dv">499543</span>, <span class="dv">474745</span>,</span>
+<span id="cb17-152"><a href="#cb17-152" aria-hidden="true" tabindex="-1"></a>  <span class="dv">197417</span>, <span class="dv">322846</span>, <span class="dv">478398</span>, <span class="dv">423174</span>, <span class="dv">418577</span>,</span>
+<span id="cb17-153"><a href="#cb17-153" aria-hidden="true" tabindex="-1"></a>  <span class="dv">426089</span>, <span class="dv">413292</span>, <span class="dv">450190</span>, <span class="dv">415309</span>, <span class="dv">457618</span>)</span>
 <span id="cb17-154"><a href="#cb17-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-155"><a href="#cb17-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r View lipid_data}</span></span>
-<span id="cb17-156"><a href="#cb17-156" aria-hidden="true" tabindex="-1"></a>lipid_data <span class="sc">|&gt;</span> </span>
-<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>(</span>
-<span id="cb17-158"><a href="#cb17-158" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultPageSize =</span> <span class="dv">5</span>,</span>
-<span id="cb17-159"><a href="#cb17-159" aria-hidden="true" tabindex="-1"></a>    <span class="at">bordered =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-160"><a href="#cb17-160" aria-hidden="true" tabindex="-1"></a>    <span class="at">highlight =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-161"><a href="#cb17-161" aria-hidden="true" tabindex="-1"></a>    <span class="at">paginationType =</span> <span class="st">"jump"</span></span>
-<span id="cb17-162"><a href="#cb17-162" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb17-163"><a href="#cb17-163" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-164"><a href="#cb17-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-165"><a href="#cb17-165" aria-hidden="true" tabindex="-1"></a><span class="fu"># Create dilution table</span></span>
-<span id="cb17-166"><a href="#cb17-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-167"><a href="#cb17-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Create dilution table}</span></span>
-<span id="cb17-168"><a href="#cb17-168" aria-hidden="true" tabindex="-1"></a>dilution_table <span class="ot">&lt;-</span> lancer<span class="sc">::</span><span class="fu">create_dilution_table</span>(</span>
-<span id="cb17-169"><a href="#cb17-169" aria-hidden="true" tabindex="-1"></a>  dilution_annot, lipid_data,</span>
-<span id="cb17-170"><a href="#cb17-170" aria-hidden="true" tabindex="-1"></a>  <span class="at">common_column =</span> <span class="st">"Sample_Name"</span>,</span>
-<span id="cb17-171"><a href="#cb17-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"Area"</span>,</span>
-<span id="cb17-172"><a href="#cb17-172" aria-hidden="true" tabindex="-1"></a>  <span class="at">column_group =</span> <span class="st">"Transition_Name"</span></span>
-<span id="cb17-173"><a href="#cb17-173" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-174"><a href="#cb17-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-176"><a href="#cb17-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r View dilution table}</span></span>
-<span id="cb17-177"><a href="#cb17-177" aria-hidden="true" tabindex="-1"></a>dilution_table <span class="sc">|&gt;</span> </span>
-<span id="cb17-178"><a href="#cb17-178" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>(</span>
-<span id="cb17-179"><a href="#cb17-179" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultPageSize =</span> <span class="dv">5</span>,</span>
-<span id="cb17-180"><a href="#cb17-180" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultColDef =</span> reactable<span class="sc">::</span><span class="fu">colDef</span>(</span>
-<span id="cb17-181"><a href="#cb17-181" aria-hidden="true" tabindex="-1"></a>      <span class="at">minWidth =</span> <span class="dv">200</span>),</span>
+<span id="cb17-155"><a href="#cb17-155" aria-hidden="true" tabindex="-1"></a>dilution_annot <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb17-156"><a href="#cb17-156" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample_Name =</span> sample_name,</span>
+<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a>  <span class="at">Dilution_Batch_Name =</span> dilution_batch_name,</span>
+<span id="cb17-158"><a href="#cb17-158" aria-hidden="true" tabindex="-1"></a>  <span class="at">Dilution_Percent =</span> dilution_percent)</span>
+<span id="cb17-159"><a href="#cb17-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-160"><a href="#cb17-160" aria-hidden="true" tabindex="-1"></a>lipid_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb17-161"><a href="#cb17-161" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample_Name =</span> sample_name,</span>
+<span id="cb17-162"><a href="#cb17-162" aria-hidden="true" tabindex="-1"></a>  <span class="at">Lipid1 =</span> lipid1_area_saturated,</span>
+<span id="cb17-163"><a href="#cb17-163" aria-hidden="true" tabindex="-1"></a>  <span class="at">Lipid2 =</span> lipid2_area_linear,</span>
+<span id="cb17-164"><a href="#cb17-164" aria-hidden="true" tabindex="-1"></a>  <span class="at">Lipid3 =</span> lipid3_area_lod,</span>
+<span id="cb17-165"><a href="#cb17-165" aria-hidden="true" tabindex="-1"></a>  <span class="at">Lipid4 =</span> lipid4_area_nonlinear)</span>
+<span id="cb17-166"><a href="#cb17-166" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-167"><a href="#cb17-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-168"><a href="#cb17-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r View dilution_annot}</span></span>
+<span id="cb17-169"><a href="#cb17-169" aria-hidden="true" tabindex="-1"></a>dilution_annot <span class="sc">|&gt;</span> </span>
+<span id="cb17-170"><a href="#cb17-170" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>(</span>
+<span id="cb17-171"><a href="#cb17-171" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultPageSize =</span> <span class="dv">5</span>,</span>
+<span id="cb17-172"><a href="#cb17-172" aria-hidden="true" tabindex="-1"></a>    <span class="at">bordered =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-173"><a href="#cb17-173" aria-hidden="true" tabindex="-1"></a>    <span class="at">highlight =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-174"><a href="#cb17-174" aria-hidden="true" tabindex="-1"></a>    <span class="at">paginationType =</span> <span class="st">"jump"</span></span>
+<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-176"><a href="#cb17-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-177"><a href="#cb17-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-178"><a href="#cb17-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r View lipid_data}</span></span>
+<span id="cb17-179"><a href="#cb17-179" aria-hidden="true" tabindex="-1"></a>lipid_data <span class="sc">|&gt;</span> </span>
+<span id="cb17-180"><a href="#cb17-180" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>(</span>
+<span id="cb17-181"><a href="#cb17-181" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultPageSize =</span> <span class="dv">5</span>,</span>
 <span id="cb17-182"><a href="#cb17-182" aria-hidden="true" tabindex="-1"></a>    <span class="at">bordered =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb17-183"><a href="#cb17-183" aria-hidden="true" tabindex="-1"></a>    <span class="at">highlight =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb17-184"><a href="#cb17-184" aria-hidden="true" tabindex="-1"></a>    <span class="at">paginationType =</span> <span class="st">"jump"</span></span>
-<span id="cb17-185"><a href="#cb17-185" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-186"><a href="#cb17-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-187"><a href="#cb17-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-188"><a href="#cb17-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-189"><a href="#cb17-189" aria-hidden="true" tabindex="-1"></a><span class="fu"># Create dilution statistical summary</span></span>
-<span id="cb17-190"><a href="#cb17-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-191"><a href="#cb17-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Create dilution statistical summary}</span></span>
-<span id="cb17-192"><a href="#cb17-192" aria-hidden="true" tabindex="-1"></a>dilution_summary <span class="ot">&lt;-</span> lancer<span class="sc">::</span><span class="fu">summarise_dilution_table</span>(</span>
-<span id="cb17-193"><a href="#cb17-193" aria-hidden="true" tabindex="-1"></a>  dilution_table,</span>
-<span id="cb17-194"><a href="#cb17-194" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"Transition_Name"</span>,</span>
-<span id="cb17-195"><a href="#cb17-195" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Dilution_Batch_Name"</span>),</span>
-<span id="cb17-196"><a href="#cb17-196" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var =</span> <span class="st">"Dilution_Percent"</span>,</span>
-<span id="cb17-197"><a href="#cb17-197" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"Area"</span>)</span>
+<span id="cb17-185"><a href="#cb17-185" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-186"><a href="#cb17-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-187"><a href="#cb17-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-188"><a href="#cb17-188" aria-hidden="true" tabindex="-1"></a><span class="fu"># Create dilution table</span></span>
+<span id="cb17-189"><a href="#cb17-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-190"><a href="#cb17-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Create dilution table}</span></span>
+<span id="cb17-191"><a href="#cb17-191" aria-hidden="true" tabindex="-1"></a>dilution_table <span class="ot">&lt;-</span> lancer<span class="sc">::</span><span class="fu">create_dilution_table</span>(</span>
+<span id="cb17-192"><a href="#cb17-192" aria-hidden="true" tabindex="-1"></a>  dilution_annot, lipid_data,</span>
+<span id="cb17-193"><a href="#cb17-193" aria-hidden="true" tabindex="-1"></a>  <span class="at">common_column =</span> <span class="st">"Sample_Name"</span>,</span>
+<span id="cb17-194"><a href="#cb17-194" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"Area"</span>,</span>
+<span id="cb17-195"><a href="#cb17-195" aria-hidden="true" tabindex="-1"></a>  <span class="at">column_group =</span> <span class="st">"Transition_Name"</span></span>
+<span id="cb17-196"><a href="#cb17-196" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-197"><a href="#cb17-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb17-198"><a href="#cb17-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-199"><a href="#cb17-199" aria-hidden="true" tabindex="-1"></a>dilution_classified <span class="ot">&lt;-</span> lancer<span class="sc">::</span><span class="fu">evaluate_linearity</span>(</span>
-<span id="cb17-200"><a href="#cb17-200" aria-hidden="true" tabindex="-1"></a>  dilution_summary,</span>
-<span id="cb17-201"><a href="#cb17-201" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"Transition_Name"</span>,</span>
-<span id="cb17-202"><a href="#cb17-202" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Dilution_Batch_Name"</span>))</span>
-<span id="cb17-203"><a href="#cb17-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-204"><a href="#cb17-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-205"><a href="#cb17-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{r View dilution_summary}</span></span>
-<span id="cb17-206"><a href="#cb17-206" aria-hidden="true" tabindex="-1"></a>dilution_summary <span class="sc">|&gt;</span> </span>
-<span id="cb17-207"><a href="#cb17-207" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>(</span>
-<span id="cb17-208"><a href="#cb17-208" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultPageSize =</span> <span class="dv">5</span>,</span>
-<span id="cb17-209"><a href="#cb17-209" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultColDef =</span> reactable<span class="sc">::</span><span class="fu">colDef</span>(</span>
-<span id="cb17-210"><a href="#cb17-210" aria-hidden="true" tabindex="-1"></a>      <span class="at">minWidth =</span> <span class="dv">200</span>), </span>
-<span id="cb17-211"><a href="#cb17-211" aria-hidden="true" tabindex="-1"></a>    <span class="at">bordered =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-212"><a href="#cb17-212" aria-hidden="true" tabindex="-1"></a>    <span class="at">highlight =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-213"><a href="#cb17-213" aria-hidden="true" tabindex="-1"></a>    <span class="at">paginationType =</span> <span class="st">"jump"</span></span>
-<span id="cb17-214"><a href="#cb17-214" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-215"><a href="#cb17-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-216"><a href="#cb17-216" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-217"><a href="#cb17-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-218"><a href="#cb17-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{r View dilution_classified}</span></span>
-<span id="cb17-219"><a href="#cb17-219" aria-hidden="true" tabindex="-1"></a>dilution_classified <span class="sc">|&gt;</span> </span>
-<span id="cb17-220"><a href="#cb17-220" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>(</span>
-<span id="cb17-221"><a href="#cb17-221" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultPageSize =</span> <span class="dv">5</span>,</span>
-<span id="cb17-222"><a href="#cb17-222" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultColDef =</span> reactable<span class="sc">::</span><span class="fu">colDef</span>(</span>
-<span id="cb17-223"><a href="#cb17-223" aria-hidden="true" tabindex="-1"></a>      <span class="at">minWidth =</span> <span class="dv">200</span>),</span>
-<span id="cb17-224"><a href="#cb17-224" aria-hidden="true" tabindex="-1"></a>    <span class="at">bordered =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-225"><a href="#cb17-225" aria-hidden="true" tabindex="-1"></a>    <span class="at">highlight =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb17-226"><a href="#cb17-226" aria-hidden="true" tabindex="-1"></a>    <span class="at">paginationType =</span> <span class="st">"jump"</span></span>
-<span id="cb17-227"><a href="#cb17-227" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-228"><a href="#cb17-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-229"><a href="#cb17-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-230"><a href="#cb17-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-231"><a href="#cb17-231" aria-hidden="true" tabindex="-1"></a><span class="fu"># Export results as Excel</span></span>
-<span id="cb17-232"><a href="#cb17-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-233"><a href="#cb17-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Export results as Excel}</span></span>
-<span id="cb17-234"><a href="#cb17-234" aria-hidden="true" tabindex="-1"></a>lancer<span class="sc">::</span><span class="fu">write_summary_excel</span>(</span>
-<span id="cb17-235"><a href="#cb17-235" aria-hidden="true" tabindex="-1"></a>  dilution_classified, </span>
-<span id="cb17-236"><a href="#cb17-236" aria-hidden="true" tabindex="-1"></a>  <span class="at">file_name =</span> <span class="st">"dilution_summary.xlsx"</span>)</span>
-<span id="cb17-237"><a href="#cb17-237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-199"><a href="#cb17-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r View dilution table}</span></span>
+<span id="cb17-200"><a href="#cb17-200" aria-hidden="true" tabindex="-1"></a>dilution_table <span class="sc">|&gt;</span> </span>
+<span id="cb17-201"><a href="#cb17-201" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>(</span>
+<span id="cb17-202"><a href="#cb17-202" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultPageSize =</span> <span class="dv">5</span>,</span>
+<span id="cb17-203"><a href="#cb17-203" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultColDef =</span> reactable<span class="sc">::</span><span class="fu">colDef</span>(</span>
+<span id="cb17-204"><a href="#cb17-204" aria-hidden="true" tabindex="-1"></a>      <span class="at">minWidth =</span> <span class="dv">200</span>),</span>
+<span id="cb17-205"><a href="#cb17-205" aria-hidden="true" tabindex="-1"></a>    <span class="at">bordered =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-206"><a href="#cb17-206" aria-hidden="true" tabindex="-1"></a>    <span class="at">highlight =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-207"><a href="#cb17-207" aria-hidden="true" tabindex="-1"></a>    <span class="at">paginationType =</span> <span class="st">"jump"</span></span>
+<span id="cb17-208"><a href="#cb17-208" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-209"><a href="#cb17-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-210"><a href="#cb17-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-211"><a href="#cb17-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-212"><a href="#cb17-212" aria-hidden="true" tabindex="-1"></a><span class="fu"># Create dilution statistical summary</span></span>
+<span id="cb17-213"><a href="#cb17-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-214"><a href="#cb17-214" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Create dilution statistical summary}</span></span>
+<span id="cb17-215"><a href="#cb17-215" aria-hidden="true" tabindex="-1"></a>dilution_summary <span class="ot">&lt;-</span> lancer<span class="sc">::</span><span class="fu">summarise_dilution_table</span>(</span>
+<span id="cb17-216"><a href="#cb17-216" aria-hidden="true" tabindex="-1"></a>  dilution_table,</span>
+<span id="cb17-217"><a href="#cb17-217" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"Transition_Name"</span>,</span>
+<span id="cb17-218"><a href="#cb17-218" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Dilution_Batch_Name"</span>),</span>
+<span id="cb17-219"><a href="#cb17-219" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var =</span> <span class="st">"Dilution_Percent"</span>,</span>
+<span id="cb17-220"><a href="#cb17-220" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"Area"</span>)</span>
+<span id="cb17-221"><a href="#cb17-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-222"><a href="#cb17-222" aria-hidden="true" tabindex="-1"></a>dilution_classified <span class="ot">&lt;-</span> lancer<span class="sc">::</span><span class="fu">evaluate_linearity</span>(</span>
+<span id="cb17-223"><a href="#cb17-223" aria-hidden="true" tabindex="-1"></a>  dilution_summary,</span>
+<span id="cb17-224"><a href="#cb17-224" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"Transition_Name"</span>,</span>
+<span id="cb17-225"><a href="#cb17-225" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Dilution_Batch_Name"</span>))</span>
+<span id="cb17-226"><a href="#cb17-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-227"><a href="#cb17-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-228"><a href="#cb17-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{r View dilution_summary}</span></span>
+<span id="cb17-229"><a href="#cb17-229" aria-hidden="true" tabindex="-1"></a>dilution_summary <span class="sc">|&gt;</span> </span>
+<span id="cb17-230"><a href="#cb17-230" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>(</span>
+<span id="cb17-231"><a href="#cb17-231" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultPageSize =</span> <span class="dv">5</span>,</span>
+<span id="cb17-232"><a href="#cb17-232" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultColDef =</span> reactable<span class="sc">::</span><span class="fu">colDef</span>(</span>
+<span id="cb17-233"><a href="#cb17-233" aria-hidden="true" tabindex="-1"></a>      <span class="at">minWidth =</span> <span class="dv">200</span>), </span>
+<span id="cb17-234"><a href="#cb17-234" aria-hidden="true" tabindex="-1"></a>    <span class="at">bordered =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-235"><a href="#cb17-235" aria-hidden="true" tabindex="-1"></a>    <span class="at">highlight =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-236"><a href="#cb17-236" aria-hidden="true" tabindex="-1"></a>    <span class="at">paginationType =</span> <span class="st">"jump"</span></span>
+<span id="cb17-237"><a href="#cb17-237" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb17-238"><a href="#cb17-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-239"><a href="#cb17-239" aria-hidden="true" tabindex="-1"></a><span class="fu"># Export results as pdf</span></span>
+<span id="cb17-239"><a href="#cb17-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb17-240"><a href="#cb17-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-241"><a href="#cb17-241" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Export results as pdf}</span></span>
-<span id="cb17-242"><a href="#cb17-242" aria-hidden="true" tabindex="-1"></a>ggplot_table <span class="ot">&lt;-</span> lancer<span class="sc">::</span><span class="fu">add_ggplot_panel</span>(</span>
-<span id="cb17-243"><a href="#cb17-243" aria-hidden="true" tabindex="-1"></a>  dilution_table,</span>
-<span id="cb17-244"><a href="#cb17-244" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_summary =</span> dilution_classified,</span>
-<span id="cb17-245"><a href="#cb17-245" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"Transition_Name"</span>,</span>
-<span id="cb17-246"><a href="#cb17-246" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Dilution_Batch_Name"</span>),</span>
-<span id="cb17-247"><a href="#cb17-247" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var =</span> <span class="st">"Dilution_Percent"</span>,</span>
-<span id="cb17-248"><a href="#cb17-248" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"Area"</span>)</span>
-<span id="cb17-249"><a href="#cb17-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-250"><a href="#cb17-250" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the list of ggplot list for each group</span></span>
-<span id="cb17-251"><a href="#cb17-251" aria-hidden="true" tabindex="-1"></a>ggplot_list <span class="ot">&lt;-</span> ggplot_table<span class="sc">$</span>panel</span>
-<span id="cb17-252"><a href="#cb17-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-253"><a href="#cb17-253" aria-hidden="true" tabindex="-1"></a>lancer<span class="sc">::</span><span class="fu">view_ggplot_pdf</span>(</span>
-<span id="cb17-254"><a href="#cb17-254" aria-hidden="true" tabindex="-1"></a>  ggplot_list,</span>
-<span id="cb17-255"><a href="#cb17-255" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"dilution_plot.pdf"</span>,</span>
-<span id="cb17-256"><a href="#cb17-256" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol_per_page =</span> <span class="dv">2</span>,</span>
-<span id="cb17-257"><a href="#cb17-257" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow_per_page =</span> <span class="dv">2</span>)</span>
-<span id="cb17-258"><a href="#cb17-258" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-259"><a href="#cb17-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-260"><a href="#cb17-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r View ggplot_list}</span></span>
-<span id="cb17-261"><a href="#cb17-261" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 15</span></span>
-<span id="cb17-262"><a href="#cb17-262" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 20</span></span>
-<span id="cb17-263"><a href="#cb17-263" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-alt: "A display of dilution curves with summary statistics in ggplot."</span></span>
-<span id="cb17-264"><a href="#cb17-264" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: screen-inset-right</span></span>
-<span id="cb17-265"><a href="#cb17-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-266"><a href="#cb17-266" aria-hidden="true" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(</span>
-<span id="cb17-267"><a href="#cb17-267" aria-hidden="true" tabindex="-1"></a>  ggplot_list,</span>
-<span id="cb17-268"><a href="#cb17-268" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>,</span>
-<span id="cb17-269"><a href="#cb17-269" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">4</span></span>
-<span id="cb17-270"><a href="#cb17-270" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-271"><a href="#cb17-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-241"><a href="#cb17-241" aria-hidden="true" tabindex="-1"></a><span class="in">```{r View dilution_classified}</span></span>
+<span id="cb17-242"><a href="#cb17-242" aria-hidden="true" tabindex="-1"></a>dilution_classified <span class="sc">|&gt;</span> </span>
+<span id="cb17-243"><a href="#cb17-243" aria-hidden="true" tabindex="-1"></a>  reactable<span class="sc">::</span><span class="fu">reactable</span>(</span>
+<span id="cb17-244"><a href="#cb17-244" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultPageSize =</span> <span class="dv">5</span>,</span>
+<span id="cb17-245"><a href="#cb17-245" aria-hidden="true" tabindex="-1"></a>    <span class="at">defaultColDef =</span> reactable<span class="sc">::</span><span class="fu">colDef</span>(</span>
+<span id="cb17-246"><a href="#cb17-246" aria-hidden="true" tabindex="-1"></a>      <span class="at">minWidth =</span> <span class="dv">200</span>),</span>
+<span id="cb17-247"><a href="#cb17-247" aria-hidden="true" tabindex="-1"></a>    <span class="at">bordered =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-248"><a href="#cb17-248" aria-hidden="true" tabindex="-1"></a>    <span class="at">highlight =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-249"><a href="#cb17-249" aria-hidden="true" tabindex="-1"></a>    <span class="at">paginationType =</span> <span class="st">"jump"</span></span>
+<span id="cb17-250"><a href="#cb17-250" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-251"><a href="#cb17-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-252"><a href="#cb17-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-253"><a href="#cb17-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-254"><a href="#cb17-254" aria-hidden="true" tabindex="-1"></a><span class="fu"># Export results as Excel</span></span>
+<span id="cb17-255"><a href="#cb17-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-256"><a href="#cb17-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Export results as Excel}</span></span>
+<span id="cb17-257"><a href="#cb17-257" aria-hidden="true" tabindex="-1"></a>lancer<span class="sc">::</span><span class="fu">write_summary_excel</span>(</span>
+<span id="cb17-258"><a href="#cb17-258" aria-hidden="true" tabindex="-1"></a>  dilution_classified, </span>
+<span id="cb17-259"><a href="#cb17-259" aria-hidden="true" tabindex="-1"></a>  <span class="at">file_name =</span> <span class="st">"dilution_summary.xlsx"</span>)</span>
+<span id="cb17-260"><a href="#cb17-260" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-261"><a href="#cb17-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-262"><a href="#cb17-262" aria-hidden="true" tabindex="-1"></a><span class="fu"># Export results as pdf</span></span>
+<span id="cb17-263"><a href="#cb17-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-264"><a href="#cb17-264" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Export results as pdf}</span></span>
+<span id="cb17-265"><a href="#cb17-265" aria-hidden="true" tabindex="-1"></a>ggplot_table <span class="ot">&lt;-</span> lancer<span class="sc">::</span><span class="fu">add_ggplot_panel</span>(</span>
+<span id="cb17-266"><a href="#cb17-266" aria-hidden="true" tabindex="-1"></a>  dilution_table,</span>
+<span id="cb17-267"><a href="#cb17-267" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_summary =</span> dilution_classified,</span>
+<span id="cb17-268"><a href="#cb17-268" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"Transition_Name"</span>,</span>
+<span id="cb17-269"><a href="#cb17-269" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Dilution_Batch_Name"</span>),</span>
+<span id="cb17-270"><a href="#cb17-270" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var =</span> <span class="st">"Dilution_Percent"</span>,</span>
+<span id="cb17-271"><a href="#cb17-271" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"Area"</span>)</span>
 <span id="cb17-272"><a href="#cb17-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-273"><a href="#cb17-273" aria-hidden="true" tabindex="-1"></a><span class="fu"># Export results as trellis table</span></span>
-<span id="cb17-274"><a href="#cb17-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-275"><a href="#cb17-275" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Export results as trellis table}</span></span>
-<span id="cb17-276"><a href="#cb17-276" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: screen-inset-right</span></span>
-<span id="cb17-277"><a href="#cb17-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-278"><a href="#cb17-278" aria-hidden="true" tabindex="-1"></a>trellis_table <span class="ot">&lt;-</span> lancer<span class="sc">::</span><span class="fu">add_plotly_panel</span>(</span>
-<span id="cb17-279"><a href="#cb17-279" aria-hidden="true" tabindex="-1"></a>  dilution_table,</span>
-<span id="cb17-280"><a href="#cb17-280" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_summary =</span> dilution_classified,</span>
-<span id="cb17-281"><a href="#cb17-281" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"Transition_Name"</span>,</span>
-<span id="cb17-282"><a href="#cb17-282" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Dilution_Batch_Name"</span>),</span>
-<span id="cb17-283"><a href="#cb17-283" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_name_var =</span> <span class="st">"Sample_Name"</span>,</span>
-<span id="cb17-284"><a href="#cb17-284" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_var =</span> <span class="st">"Dilution_Batch_Name"</span>,</span>
-<span id="cb17-285"><a href="#cb17-285" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_col =</span> <span class="fu">c</span>(<span class="st">"#377eb8"</span>,</span>
-<span id="cb17-286"><a href="#cb17-286" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"#4daf4a"</span>),</span>
-<span id="cb17-287"><a href="#cb17-287" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var =</span> <span class="st">"Dilution_Percent"</span>,</span>
-<span id="cb17-288"><a href="#cb17-288" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_units =</span> <span class="st">"%"</span>,</span>
-<span id="cb17-289"><a href="#cb17-289" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_interval =</span> <span class="dv">50</span>,</span>
-<span id="cb17-290"><a href="#cb17-290" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"Area"</span>,</span>
-<span id="cb17-291"><a href="#cb17-291" aria-hidden="true" tabindex="-1"></a>  <span class="at">have_plot_title =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb17-292"><a href="#cb17-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-293"><a href="#cb17-293" aria-hidden="true" tabindex="-1"></a>trellis_table <span class="ot">&lt;-</span>  lancer<span class="sc">::</span><span class="fu">convert_to_cog</span>(</span>
-<span id="cb17-294"><a href="#cb17-294" aria-hidden="true" tabindex="-1"></a>  trellis_table,</span>
-<span id="cb17-295"><a href="#cb17-295" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"Transition_Name"</span>,</span>
-<span id="cb17-296"><a href="#cb17-296" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Dilution_Batch_Name"</span>),</span>
-<span id="cb17-297"><a href="#cb17-297" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel_variable =</span> <span class="st">"panel"</span>,</span>
-<span id="cb17-298"><a href="#cb17-298" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_name_vec =</span> <span class="st">"col_name_vec"</span>,</span>
-<span id="cb17-299"><a href="#cb17-299" aria-hidden="true" tabindex="-1"></a>  <span class="at">desc_vec =</span> <span class="st">"desc_vec"</span>,</span>
-<span id="cb17-300"><a href="#cb17-300" aria-hidden="true" tabindex="-1"></a>  <span class="at">type_vec =</span> <span class="st">"type_vec"</span></span>
-<span id="cb17-301"><a href="#cb17-301" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-302"><a href="#cb17-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-303"><a href="#cb17-303" aria-hidden="true" tabindex="-1"></a><span class="co"># Pressing Render button will not create the </span></span>
-<span id="cb17-304"><a href="#cb17-304" aria-hidden="true" tabindex="-1"></a><span class="co"># index.html file (Though it is not needed)</span></span>
-<span id="cb17-305"><a href="#cb17-305" aria-hidden="true" tabindex="-1"></a><span class="co"># Call this function via console to create index.html file</span></span>
-<span id="cb17-306"><a href="#cb17-306" aria-hidden="true" tabindex="-1"></a>lancer<span class="sc">::</span><span class="fu">view_trellis_html</span>(</span>
-<span id="cb17-307"><a href="#cb17-307" aria-hidden="true" tabindex="-1"></a>  trellis_table,</span>
-<span id="cb17-308"><a href="#cb17-308" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"Transition_Name"</span>,</span>
-<span id="cb17-309"><a href="#cb17-309" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Dilution_Batch_Name"</span>),</span>
-<span id="cb17-310"><a href="#cb17-310" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_name =</span> <span class="st">"Dilution_Plot"</span>,</span>
-<span id="cb17-311"><a href="#cb17-311" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_folder =</span> <span class="st">"Dilution_Plot_Folder"</span>)</span>
-<span id="cb17-312"><a href="#cb17-312" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb17-313"><a href="#cb17-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-314"><a href="#cb17-314" aria-hidden="true" tabindex="-1"></a><span class="fu"># R Package Reference</span></span>
+<span id="cb17-273"><a href="#cb17-273" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the list of ggplot list for each group</span></span>
+<span id="cb17-274"><a href="#cb17-274" aria-hidden="true" tabindex="-1"></a>ggplot_list <span class="ot">&lt;-</span> ggplot_table<span class="sc">$</span>panel</span>
+<span id="cb17-275"><a href="#cb17-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-276"><a href="#cb17-276" aria-hidden="true" tabindex="-1"></a>lancer<span class="sc">::</span><span class="fu">view_ggplot_pdf</span>(</span>
+<span id="cb17-277"><a href="#cb17-277" aria-hidden="true" tabindex="-1"></a>  ggplot_list,</span>
+<span id="cb17-278"><a href="#cb17-278" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"dilution_plot.pdf"</span>,</span>
+<span id="cb17-279"><a href="#cb17-279" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol_per_page =</span> <span class="dv">2</span>,</span>
+<span id="cb17-280"><a href="#cb17-280" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow_per_page =</span> <span class="dv">2</span>)</span>
+<span id="cb17-281"><a href="#cb17-281" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-282"><a href="#cb17-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-283"><a href="#cb17-283" aria-hidden="true" tabindex="-1"></a><span class="in">```{r View ggplot_list}</span></span>
+<span id="cb17-284"><a href="#cb17-284" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 15</span></span>
+<span id="cb17-285"><a href="#cb17-285" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 20</span></span>
+<span id="cb17-286"><a href="#cb17-286" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-alt: "A display of dilution curves with summary statistics in ggplot."</span></span>
+<span id="cb17-287"><a href="#cb17-287" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: screen-inset-right</span></span>
+<span id="cb17-288"><a href="#cb17-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-289"><a href="#cb17-289" aria-hidden="true" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(</span>
+<span id="cb17-290"><a href="#cb17-290" aria-hidden="true" tabindex="-1"></a>  ggplot_list,</span>
+<span id="cb17-291"><a href="#cb17-291" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">2</span>,</span>
+<span id="cb17-292"><a href="#cb17-292" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">4</span></span>
+<span id="cb17-293"><a href="#cb17-293" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-294"><a href="#cb17-294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-295"><a href="#cb17-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-296"><a href="#cb17-296" aria-hidden="true" tabindex="-1"></a><span class="fu"># Export results as trellis table</span></span>
+<span id="cb17-297"><a href="#cb17-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-298"><a href="#cb17-298" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Export results as trellis table}</span></span>
+<span id="cb17-299"><a href="#cb17-299" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: screen-inset-right</span></span>
+<span id="cb17-300"><a href="#cb17-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-301"><a href="#cb17-301" aria-hidden="true" tabindex="-1"></a>trellis_table <span class="ot">&lt;-</span> lancer<span class="sc">::</span><span class="fu">add_plotly_panel</span>(</span>
+<span id="cb17-302"><a href="#cb17-302" aria-hidden="true" tabindex="-1"></a>  dilution_table,</span>
+<span id="cb17-303"><a href="#cb17-303" aria-hidden="true" tabindex="-1"></a>  <span class="at">dilution_summary =</span> dilution_classified,</span>
+<span id="cb17-304"><a href="#cb17-304" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"Transition_Name"</span>,</span>
+<span id="cb17-305"><a href="#cb17-305" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Dilution_Batch_Name"</span>),</span>
+<span id="cb17-306"><a href="#cb17-306" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_name_var =</span> <span class="st">"Sample_Name"</span>,</span>
+<span id="cb17-307"><a href="#cb17-307" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_var =</span> <span class="st">"Dilution_Batch_Name"</span>,</span>
+<span id="cb17-308"><a href="#cb17-308" aria-hidden="true" tabindex="-1"></a>  <span class="at">dil_batch_col =</span> <span class="fu">c</span>(<span class="st">"#377eb8"</span>,</span>
+<span id="cb17-309"><a href="#cb17-309" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"#4daf4a"</span>),</span>
+<span id="cb17-310"><a href="#cb17-310" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var =</span> <span class="st">"Dilution_Percent"</span>,</span>
+<span id="cb17-311"><a href="#cb17-311" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_units =</span> <span class="st">"%"</span>,</span>
+<span id="cb17-312"><a href="#cb17-312" aria-hidden="true" tabindex="-1"></a>  <span class="at">conc_var_interval =</span> <span class="dv">50</span>,</span>
+<span id="cb17-313"><a href="#cb17-313" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal_var =</span> <span class="st">"Area"</span>,</span>
+<span id="cb17-314"><a href="#cb17-314" aria-hidden="true" tabindex="-1"></a>  <span class="at">have_plot_title =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb17-315"><a href="#cb17-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-316"><a href="#cb17-316" aria-hidden="true" tabindex="-1"></a><span class="in">```{r package references}</span></span>
-<span id="cb17-317"><a href="#cb17-317" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb17-318"><a href="#cb17-318" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
-<span id="cb17-319"><a href="#cb17-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-320"><a href="#cb17-320" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">cite_packages</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb17-321"><a href="#cb17-321" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressWarnings</span>()</span>
-<span id="cb17-322"><a href="#cb17-322" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-316"><a href="#cb17-316" aria-hidden="true" tabindex="-1"></a>trellis_table <span class="ot">&lt;-</span>  lancer<span class="sc">::</span><span class="fu">convert_to_cog</span>(</span>
+<span id="cb17-317"><a href="#cb17-317" aria-hidden="true" tabindex="-1"></a>  trellis_table,</span>
+<span id="cb17-318"><a href="#cb17-318" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"Transition_Name"</span>,</span>
+<span id="cb17-319"><a href="#cb17-319" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Dilution_Batch_Name"</span>),</span>
+<span id="cb17-320"><a href="#cb17-320" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel_variable =</span> <span class="st">"panel"</span>,</span>
+<span id="cb17-321"><a href="#cb17-321" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_name_vec =</span> <span class="st">"col_name_vec"</span>,</span>
+<span id="cb17-322"><a href="#cb17-322" aria-hidden="true" tabindex="-1"></a>  <span class="at">desc_vec =</span> <span class="st">"desc_vec"</span>,</span>
+<span id="cb17-323"><a href="#cb17-323" aria-hidden="true" tabindex="-1"></a>  <span class="at">type_vec =</span> <span class="st">"type_vec"</span></span>
+<span id="cb17-324"><a href="#cb17-324" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-325"><a href="#cb17-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-326"><a href="#cb17-326" aria-hidden="true" tabindex="-1"></a><span class="co"># Pressing Render button will not create the </span></span>
+<span id="cb17-327"><a href="#cb17-327" aria-hidden="true" tabindex="-1"></a><span class="co"># index.html file (Though it is not needed)</span></span>
+<span id="cb17-328"><a href="#cb17-328" aria-hidden="true" tabindex="-1"></a><span class="co"># Call this function via console to create index.html file</span></span>
+<span id="cb17-329"><a href="#cb17-329" aria-hidden="true" tabindex="-1"></a>lancer<span class="sc">::</span><span class="fu">view_trellis_html</span>(</span>
+<span id="cb17-330"><a href="#cb17-330" aria-hidden="true" tabindex="-1"></a>  trellis_table,</span>
+<span id="cb17-331"><a href="#cb17-331" aria-hidden="true" tabindex="-1"></a>  <span class="at">grouping_variable =</span> <span class="fu">c</span>(<span class="st">"Transition_Name"</span>,</span>
+<span id="cb17-332"><a href="#cb17-332" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Dilution_Batch_Name"</span>),</span>
+<span id="cb17-333"><a href="#cb17-333" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_name =</span> <span class="st">"Dilution_Plot"</span>,</span>
+<span id="cb17-334"><a href="#cb17-334" aria-hidden="true" tabindex="-1"></a>  <span class="at">trellis_report_folder =</span> <span class="st">"Dilution_Plot_Folder"</span>)</span>
+<span id="cb17-335"><a href="#cb17-335" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-336"><a href="#cb17-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-337"><a href="#cb17-337" aria-hidden="true" tabindex="-1"></a><span class="fu"># R Package Reference</span></span>
+<span id="cb17-338"><a href="#cb17-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-339"><a href="#cb17-339" aria-hidden="true" tabindex="-1"></a><span class="in">```{r package references}</span></span>
+<span id="cb17-340"><a href="#cb17-340" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb17-341"><a href="#cb17-341" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: asis</span></span>
+<span id="cb17-342"><a href="#cb17-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-343"><a href="#cb17-343" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">cite_packages</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb17-344"><a href="#cb17-344" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressWarnings</span>()</span>
+<span id="cb17-345"><a href="#cb17-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
