@@ -5,7 +5,7 @@ format: gfm
 
 # Introduction
 
-Here is where I store some output example of the R package [`lancer`](https://github.com/SLINGhub/lancer)
+Here is where I store some output example of the R package [`lancer`](https://github.com/SLINGhub/lancer).
 
 ## Excel Output Example
 

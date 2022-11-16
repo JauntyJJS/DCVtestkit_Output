@@ -4,7 +4,7 @@
 # Introduction
 
 Here is where I store some output example of the R package
-[`lancer`](https://github.com/SLINGhub/lancer)
+[`lancer`](https://github.com/SLINGhub/lancer).
 
 ## Excel Output Example
 
