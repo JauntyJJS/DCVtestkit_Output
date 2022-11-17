@@ -1,6 +1,11 @@
-# lancer output 0.0.4.9000 (development version)
+# lancer output 0.0.5.9000 (development version)
 
 ## TODO
+
+# lancer output 0.0.5
+
+Version first send to teams on 17 Nov 2022.
+Change *DCVteskit* to *lancer*.
 
 # lancer output 0.0.4
 
@@ -8,7 +13,7 @@ Version first send to teams on 9 Nov 2022.
 
 ### Manuscript
 
-* Change title to "*lancer*: a R package for linearity assessment and visualisation of multiple curves"
+* Change title to *lancer*: a R package for linearity assessment and visualisation of multiple curves"
 * Make manuscript content more generalised. Talking more about linearity assessment rather than dilution curves from metabolomic/lipidomic experiment. The dilution curves from metabolomic/lipidomic experiment will be used as a running example instead.
 * Found a way to change figure title from Figure to Supplementary Figure in `supplementary.qmd`.
 * Found a way to add page break `{{< pagebreak >}}` in the `manscript.qmd`.
