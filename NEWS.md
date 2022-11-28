@@ -2,10 +2,16 @@
 
 ## TODO
 
+### Manuscript
+
+Change the name of the tables in the *lancer* workflow.
+Change the curve classification name to something new.
+
 # lancer output 0.0.5
 
 Version first send to teams on 17 Nov 2022.
-Change *DCVteskit* to *lancer*.
+
+* Change *DCVteskit* to *lancer*.
 
 # lancer output 0.0.4
 
