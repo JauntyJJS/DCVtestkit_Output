@@ -1,0 +1,12 @@
+__loadDisplayList__233e2a6f([
+  {
+    "group": "common",
+    "name": "Curve_Plot_Noise_Regime",
+    "desc": "",
+    "n": 200,
+    "height": 500,
+    "width": 1000,
+    "updated": "2023-01-04 15:55:08",
+    "keySig": "196f3769370b51706ebf776fcdd4976d"
+  }
+])

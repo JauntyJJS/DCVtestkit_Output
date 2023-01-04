@@ -119,11 +119,11 @@ Here are the functions to simulate the different types of curves.
 
 ::: {.panel-tabset}
 
-## Saturated Curve
+## Saturation Regime Curve
 
-```{r Saturation Many Data}
+```{r Saturation Regime Curve Simulation Functions}
 
-simulate_saturation <- function(id) {
+simulate_saturation_regime <- function(id) {
   
   mono_model <- epifitter::sim_monomolecular(
   N = 200,     # total time units 
@@ -134,22 +134,22 @@ simulate_saturation <- function(id) {
   n = 1        # number of replicates
   )
 
-  saturation_simulation <- tibble::tibble(
+  saturation_regime_simulation <- tibble::tibble(
     x = mono_model$time,
     y = mono_model$random_y * sample(1:1000000, 1),
     `Sample Name` = as.character(mono_model$time))
   
-  return(saturation_simulation)
+  return(saturation_regime_simulation)
   
 }
 
 ```
 
-## Limit of Detection Curve
+## Noise Regime Curve
 
-```{r LOD Many Data}
+```{r Noise Regime Curve Simulation Functions}
 
-simulate_lod <- function(id) {
+simulate_noise_regime <- function(id) {
   
   exp_model <- epifitter::sim_exponential(
     N = 200,    # total time units 
@@ -160,12 +160,12 @@ simulate_lod <- function(id) {
     n = 1       # number of replicates
     )
 
-  lod_simulation <- tibble::tibble(
+  noise_regime_simulation <- tibble::tibble(
     x = exp_model$time,
     y = exp_model$random_y * sample(1:1000000, 1),
     `Sample Name` = as.character(exp_model$time))
   
-  return(lod_simulation)
+  return(noise_regime_simulation)
   
 }
 
@@ -173,10 +173,10 @@ simulate_lod <- function(id) {
 
 ## Linear Curve
 
-```{r Linear Many Data}
+```{r Linear Curve Simulation Functions}
 
 #diffeq model as function
-model.constant = function(times, y, parms) {
+model_constant = function(times, y, parms) {
   ## times = current times
   ## y = current state vector: in this case the 0th derivative, c(x)
   ## parms = vector of model parameters.
@@ -208,7 +208,7 @@ sim_linear <- function(
     InitCond <- c(y[k])
     steps <- seq(time[k], time[k + 1], by = dt)
     parms <- c(a = r[k])
-    ode_logi <- deSolve::ode(InitCond, steps, model.constant, parms)
+    ode_logi <- deSolve::ode(InitCond, steps, model_constant, parms)
     y[k + 1] <- ode_logi[length(ode_logi[, 2]), 2]
   }
   
@@ -259,44 +259,44 @@ simulate_linear <- function(id) {
 
 # Create Simulation Curve Data
 
-We simulate $200$ curves (saturated, limit of detection and linear) using $7$ points from $0$ to $200$ on the x-axis. A unique id is added for each simulated data.
+We simulate $200$ curves (saturation regime, noise regime and linear) using $7$ points from $0$ to $200$ on the x-axis. A unique id is added for each simulated data.
 
 ::: {.panel-tabset}
 
-## Saturated Curve
+## Saturation Regime Curve
 
-```{r Create Simulated Data Saturated}
+```{r Create Simulated Data Saturation Regime}
 
-nested_saturation_simulated_database <-
+nested_saturation_regime_simulated_database <-
   tibble::tibble(
-    ID = paste("Saturation", 
+    ID = paste("Saturation Regime", 
                stringr::str_pad(1:200, width = 3, pad = "0")),
-    `Dilution Batch Name` = "Saturation"
+    `Curve Batch Name` = "Saturation Regime"
     
   ) |> 
   dplyr::mutate(
-    dilution_data = purrr::map(
+    curve_data = purrr::map(
       .x = .data$ID,
-      .f = simulate_saturation
+      .f = simulate_saturation_regime
       )
   )
 ```
 
-## Limit of Detection Curve
+## Noise Regime Curve
 
-```{r Create Simulated Data LOD}
+```{r Create Simulated Data Noise Regime}
 
-nested_lod_simulated_database <-
+nested_noise_regime_simulated_database <-
   tibble::tibble(
-    ID = paste("Limit Of Detection", 
+    ID = paste("Noise Regime", 
                stringr::str_pad(1:200, width = 3, pad = "0")),
-    `Dilution Batch Name` = "Limit Of Detection"
+    `Curve Batch Name` = "Noise Regime"
     
   ) |> 
   dplyr::mutate(
-    dilution_data = purrr::map(
+    curve_data = purrr::map(
       .x = .data$ID,
-      .f = simulate_lod
+      .f = simulate_noise_regime
       )
   )
 ```
@@ -309,11 +309,11 @@ nested_linear_simulated_database <-
   tibble::tibble(
     ID = paste("Linear", 
                stringr::str_pad(1:200, width = 3, pad = "0")),
-    `Dilution Batch Name` = "Linear"
+    `Curve Batch Name` = "Linear"
     
   ) |> 
   dplyr::mutate(
-    dilution_data = purrr::map(
+    curve_data = purrr::map(
       .x = .data$ID,
       .f = simulate_linear
       )
@@ -322,24 +322,23 @@ nested_linear_simulated_database <-
 
 :::
 
-# Unnest Simulated Data
+# Unnest Simulated Curve Data
 
-While nested dilution (having a column of data frames) is easier to view with a human eye, it can be hard to be read and processed by a computer. We need flattened the data frames back into columns. To do this, we use [`tidyr::unnest`](https://tidyr.tidyverse.org/reference/nest.html)  
+While nested curve data (having a column of data frames) is easier to view with a human eye, it can be hard to be read and processed by a computer. We need flattened the data frames back into columns. To do this, we use [`tidyr::unnest`](https://tidyr.tidyverse.org/reference/nest.html)  
+## Saturation Regime Curve
 
-## Saturated Curve
-
-```{r Nest Simulated Data Saturated}
-saturation_simulated_database <-
-  nested_saturation_simulated_database |> 
-  tidyr::unnest("dilution_data")
+```{r Nest Simulated Data Saturation Regime}
+saturation_regime_simulated_database <-
+  nested_saturation_regime_simulated_database |> 
+  tidyr::unnest("curve_data")
 ```
 
-## Limit of Detection Curve
+## Noise Regime Curve
 
-```{r Nest Simulated Data LOD}
-lod_simulated_database <-
-  nested_lod_simulated_database |> 
-  tidyr::unnest("dilution_data")
+```{r Nest Simulated Data Noise Regime}
+noise_regime_simulated_database <-
+  nested_noise_regime_simulated_database |> 
+  tidyr::unnest("curve_data")
 ```
 
 ## Linear Curve
@@ -347,32 +346,32 @@ lod_simulated_database <-
 ```{r Nest Simulated Data Linear}
 linear_simulated_database <-
   nested_linear_simulated_database |> 
-  tidyr::unnest("dilution_data")
+  tidyr::unnest("curve_data")
 ```
 
 # Save Simulated Data
 
 We can now save the data as a csv and rds files.
 
-## Saturated Curve
+## Saturation Regime Curve
 
 ```{r Save Simulated Data Saturated}
-saveRDS(saturation_simulated_database, 
-        file = "saturation_simulated_database.rds")
+saveRDS(saturation_regime_simulated_database, 
+        file = "saturation_regime_simulated_database.rds")
 
-write.csv(x = saturation_simulated_database,
-          file = "saturation_simulated_database.csv", 
+write.csv(x = saturation_regime_simulated_database,
+          file = "saturation_regime_simulated_database.csv", 
           row.names = FALSE)
 ```
 
-## Limit of Detection Curve
+## Noise Regime Curve
 
-```{r Save Simulated Data LOD}
-saveRDS(lod_simulated_database, 
-        file = "lod_simulated_database.rds")
+```{r Save Simulated Data Noise Regime}
+saveRDS(noise_regime_simulated_database, 
+        file = "noise_regime_simulated_database.rds")
 
-write.csv(x = saturation_simulated_database,
-          file = "lod_simulated_database.csv", 
+write.csv(x = noise_regime_simulated_database,
+          file = "noise_regime_simulated_database.csv", 
           row.names = FALSE)
 ```
 
@@ -389,17 +388,17 @@ write.csv(x = linear_simulated_database,
 
 # Calculate Statistical Summary
 
-We now calculate the statistical summary for each dilution curve. In addition, we export statistical summary as a csv and rds files.
+We now calculate the statistical summary for each curve. In addition, we export statistical summary as a csv and rds files.
 
 ::: {.panel-tabset}
 
-## Saturated Curve
+## Saturation Regime Curve
 
-```{r dilution statistical summary saturated}
+```{r curve statistical summary saturation regime}
 #| message: false
-saturation_dilution_summary <- 
-  lancer::summarise_dilution_table(
-    dilution_table = saturation_simulated_database,
+saturation_regime_curve_summary <- 
+  lancer::summarise_curve_table(
+    curve_table = saturation_regime_simulated_database,
     grouping_variable = c("ID"),
     conc_var = "x",
     signal_var = "y") |> 
@@ -408,22 +407,22 @@ saturation_dilution_summary <-
   )
 ```
 
-```{r save dilution statistical summary saturated}
-saveRDS(saturation_dilution_summary, 
-        file = "saturation_dilution_summary.rds")
+```{r save curve statistical summary saturation regime}
+saveRDS(saturation_regime_curve_summary, 
+        file = "saturation_regime_curve_summary.rds")
 
-write.csv(x = saturation_dilution_summary,
-          file = "saturation_dilution_summary.csv", 
+write.csv(x = saturation_regime_curve_summary,
+          file = "saturation_regime_curve_summary.csv", 
           row.names = FALSE)
 ```
 
-## Limit of Detection Curve
+## Noise Regime Curve
 
-```{r dilution statistical summary lod}
+```{r curve statistical summary noise regime}
 #| message: false
-lod_dilution_summary <- 
-  lancer::summarise_dilution_table(
-    dilution_table = lod_simulated_database,
+noise_regime_curve_summary <- 
+  lancer::summarise_curve_table(
+    curve_table = noise_regime_simulated_database,
     grouping_variable = c("ID"),
     conc_var = "x",
     signal_var = "y") |> 
@@ -433,22 +432,22 @@ lod_dilution_summary <-
 
 ```
 
-```{r save dilution statistical summary lod}
-saveRDS(lod_dilution_summary, 
-        file = "lod_dilution_summary.rds")
+```{r save curve statistical summary lod}
+saveRDS(noise_regime_curve_summary, 
+        file = "noise_regime_curve_summary.rds")
 
-write.csv(x = lod_dilution_summary,
-          file = "lod_dilution_summary.csv", 
+write.csv(x = noise_regime_curve_summary,
+          file = "noise_regime_curve_summary.csv", 
           row.names = FALSE)
 ```
 
 ## Linear Curve
 
-```{r dilution statistical summary linear}
+```{r curve statistical summary linear}
 #| message: false
-linear_dilution_summary <-
-  lancer::summarise_dilution_table(
-    dilution_table = linear_simulated_database,
+linear_curve_summary <-
+  lancer::summarise_curve_table(
+    curve_table = linear_simulated_database,
     grouping_variable = c("ID"),
     conc_var = "x",
     signal_var = "y") |> 
@@ -458,12 +457,12 @@ linear_dilution_summary <-
 
 ```
 
-```{r save dilution statistical summary linear}
-saveRDS(linear_dilution_summary, 
-        file = "linear_dilution_summary.rds")
+```{r save curve statistical summary linear}
+saveRDS(linear_curve_summary, 
+        file = "linear_curve_summary.rds")
 
-write.csv(x = linear_dilution_summary,
-          file = "linear_dilution_summary.csv", 
+write.csv(x = linear_curve_summary,
+          file = "linear_curve_summary.csv", 
           row.names = FALSE)
 ```
 
@@ -473,12 +472,12 @@ write.csv(x = linear_dilution_summary,
 
 We use [`reactable::reactable`](https://glin.github.io/reactable/reference/reactable.html) to print the simulated data and statistical summary.
 
-## Saturated Curve
+## Saturation Regime Curve
 
-```{r Print Simulated Data Saturated}
+```{r Print Simulated Data Saturation Regime}
 #| layout-ncol: 1
 
-nested_saturation_simulated_database |> 
+nested_saturation_regime_simulated_database |> 
   reactable::reactable(
     defaultColDef = reactable::colDef(minWidth = 200),
     defaultPageSize = 5,
@@ -489,9 +488,9 @@ nested_saturation_simulated_database |>
         style = list(borderRight = "1px solid #eee"),
         headerStyle = list(borderRight = "1px solid #eee"),
         minWidth = 200),
-      dilution_data = reactable::colDef(
+      curve_data = reactable::colDef(
         details = function(index) {
-          filtered_data <- nested_saturation_simulated_database[["dilution_data"]][index][[1]]
+          filtered_data <- nested_saturation_regime_simulated_database[["curve_data"]][index][[1]]
           htmltools::div(style = "padding: 1rem",
                          reactable::reactable(
                            data = filtered_data,
@@ -506,7 +505,7 @@ nested_saturation_simulated_database |>
   )
 )
 
-saturation_dilution_summary |> 
+saturation_regime_curve_summary |> 
   reactable::reactable(
     defaultColDef = reactable::colDef(minWidth = 200),
     defaultPageSize = 5,
@@ -521,12 +520,12 @@ saturation_dilution_summary |>
 )
 ```
 
-## Limit of Detection Curve
+## Noise Regime Curve
 
-```{r Print Simulated Data LOD}
+```{r Print Simulated Data Noise Regime}
 #| layout-ncol: 1
 
-nested_lod_simulated_database |> 
+nested_noise_regime_simulated_database |> 
   reactable::reactable(
     defaultColDef = reactable::colDef(minWidth = 200),
     defaultPageSize = 5,
@@ -537,9 +536,9 @@ nested_lod_simulated_database |>
         style = list(borderRight = "1px solid #eee"),
         headerStyle = list(borderRight = "1px solid #eee"),
         minWidth = 200),
-      dilution_data = reactable::colDef(
+      curve_data = reactable::colDef(
         details = function(index) {
-          filtered_data <- nested_lod_simulated_database[["dilution_data"]][index][[1]]
+          filtered_data <- nested_noise_regime_simulated_database[["curve_data"]][index][[1]]
           htmltools::div(style = "padding: 1rem",
                          reactable::reactable(
                            data = filtered_data,
@@ -555,7 +554,7 @@ nested_lod_simulated_database |>
 
 )
 
-lod_dilution_summary |> 
+noise_regime_curve_summary |> 
   reactable::reactable(
     defaultColDef = reactable::colDef(minWidth = 200),
     defaultPageSize = 5,
@@ -586,9 +585,9 @@ nested_linear_simulated_database |>
         style = list(borderRight = "1px solid #eee"),
         headerStyle = list(borderRight = "1px solid #eee"),
         minWidth = 200),  
-      dilution_data = reactable::colDef(
+      curve_data = reactable::colDef(
         details = function(index) {
-          filtered_data <- nested_linear_simulated_database[["dilution_data"]][index][[1]]
+          filtered_data <- nested_linear_simulated_database[["curve_data"]][index][[1]]
           htmltools::div(style = "padding: 1rem",
                          reactable::reactable(
                            data = filtered_data,
@@ -604,7 +603,7 @@ nested_linear_simulated_database |>
 
 )
 
-linear_dilution_summary |> 
+linear_curve_summary |> 
   reactable::reactable(
     defaultColDef = reactable::colDef(minWidth = 200),
     defaultPageSize = 5,
@@ -625,20 +624,21 @@ We combined the three summary results together
 
 ```{r Combine Simulated Data Results}
 
-saturation_dilution_summary <- saturation_dilution_summary |> 
-  dplyr::mutate(curve_group = "Saturated")
+saturation_regime_curve_summary <- 
+  saturation_regime_curve_summary |> 
+  dplyr::mutate(curve_group = "Saturation Regime")
 
-lod_dilution_summary <- lod_dilution_summary |> 
-  dplyr::mutate(curve_group = "Limit of Detection")
+noise_regime_curve_summary <- noise_regime_curve_summary |> 
+  dplyr::mutate(curve_group = "Noise Regime")
 
-linear_dilution_summary <- linear_dilution_summary |> 
-  dplyr::mutate(curve_group = "Linear")
+linear_curve_summary <- linear_curve_summary |> 
+  dplyr::mutate(curve_group = "Good Linearity")
 
-combined_dilution_summary <-
+combined_curve_summary <-
   dplyr::bind_rows(
-    saturation_dilution_summary,
-    lod_dilution_summary,
-    linear_dilution_summary
+    saturation_regime_curve_summary,
+    noise_regime_curve_summary,
+    linear_curve_summary
   ) 
 ```
 
@@ -646,27 +646,27 @@ Perform some data wrangling to summarise the results later. A benchmark workflow
 
 ```{r Data Wrangling for Simulation Results}
 
-combined_dilution_summary <- 
-  combined_dilution_summary |> 
+combined_curve_summary <- 
+  combined_curve_summary |> 
   dplyr::mutate(
     curve_group = factor(.data$curve_group,
-                         levels = c("Linear",
-                                    "Saturated",
-                                    "Limit of Detection")),
+                         levels = c("Good Linearity",
+                                    "Saturation Regime",
+                                    "Noise Regime")),
     pearson_group = dplyr::case_when(
       .data$r_corr >= 0.8 ~ "more than or\nequal to 0.8",
       .data$r_corr < 0.8 ~ "less than 0.8",
     ),
-    wf2_group = stringr::str_replace(
-      string = .data$wf2_group,
-      pattern = "LOD",
-      replacement = "Limit of Detection"
-    ),
+    # wf2_group = stringr::str_replace(
+    #   string = .data$wf2_group,
+    #   pattern = "Noise Regime",
+    #   replacement = "Noise Regime"
+    # ),
     wf2_group = factor(.data$wf2_group,
-                         levels = c("Good Linearity",
-                                    "Saturation",
-                                    "Limit of Detection",
-                                    "Poor Linearity"))
+                       levels = c("Good Linearity",
+                                  "Saturation Regime",
+                                  "Noise Regime",
+                                  "Poor Linearity"))
   ) |> 
   labelled::set_variable_labels(
     ID = "Unique Curve Identifier",
@@ -687,7 +687,7 @@ combined_dilution_summary <-
 
 ```{r Worflow 2 vs Benchmark results}
 #| column: screen-inset-right
-simulation_results <- combined_dilution_summary |> 
+simulation_results <- combined_curve_summary |> 
   dplyr::select(c("curve_group", "wf2_group", 
                   "pearson_group"
                   # "r_corr", "pra_linear"
@@ -707,63 +707,64 @@ simulation_results <- combined_dilution_summary |>
       #pra_linear ~ c(0)
       )
   ) |> 
-  modify_header(
-    all_stat_cols() ~ "**{level}**\nN = {n}"
+  gtsummary::modify_header(
+    gtsummary::all_stat_cols() ~ "**{level}**\nN = {n}"
     ) |> 
   gtsummary::modify_spanning_header(
-    all_stat_cols() ~ "**Simulated Curve Type**"
+    gtsummary::all_stat_cols() ~ "**Simulated Curve Type**"
     )
 
 simulation_results
 ```
 
-Results showed that Workflow $2$ is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow $2$ is able to identify less linear curves than the benchmark workflow, it gives a comparable score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Linear")`
+Results showed that Workflow $2$ is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow $2$ is able to identify less linear curves than the benchmark workflow, it gives a comparable score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Good Linearity")`
 
 # Report Plots As pdf Files
 
 ::: {.panel-tabset}
 
-## Saturated Curve
+## Saturation Regime Curve
 
-```{r plots as pdf saturated}
-saturation_ggplot_table <- lancer::add_ggplot_panel(
-  dilution_table = saturation_simulated_database,
-  dilution_summary = saturation_dilution_summary,
+```{r plots as pdf saturation regime}
+saturation_regime_ggplot_table <- lancer::add_ggplot_panel(
+  curve_table = saturation_regime_simulated_database,
+  curve_summary = saturation_regime_curve_summary,
   grouping_variable = c("ID"),
-  dil_batch_var = "Dilution Batch Name",
+  curve_batch_var = "Curve Batch Name",
   conc_var = "x",
   signal_var = "y",
   conc_var_units = ""
   )
 
-saturation_ggplot_list <- saturation_ggplot_table$panel
+saturation_regime_ggplot_list <-
+  saturation_regime_ggplot_table$panel
 
 lancer::view_ggplot_pdf(
-  ggplot_list = saturation_ggplot_list,
-  filename = "dilution_plot_saturated.pdf",
+  ggplot_list = saturation_regime_ggplot_list,
+  filename = "curve_plot_saturation_regime.pdf",
   ncol_per_page = 2,
   nrow_per_page = 2)
 
 ```
 
-## Limit of Detection Curve
+## Noise Regime Curve
 
-```{r plots as pdf lod}
-lod_ggplot_table <- lancer::add_ggplot_panel(
-  dilution_table = lod_simulated_database,
-  dilution_summary = lod_dilution_summary,
+```{r plots as pdf noise regime}
+noise_regime_ggplot_table <- lancer::add_ggplot_panel(
+  curve_table = noise_regime_simulated_database,
+  curve_summary = noise_regime_curve_summary,
   grouping_variable = c("ID"),
-  dil_batch_var = "Dilution Batch Name",
+  curve_batch_var = "Curve Batch Name",
   conc_var = "x",
   signal_var = "y",
   conc_var_units = ""
   )
 
-lod_ggplot_list <- lod_ggplot_table$panel
+noise_regime_ggplot_list <- noise_regime_ggplot_table$panel
 
 lancer::view_ggplot_pdf(
-  ggplot_list = lod_ggplot_list,
-  filename = "dilution_plot_lod.pdf",
+  ggplot_list = noise_regime_ggplot_list,
+  filename = "curve_plot_noise_regime.pdf",
   ncol_per_page = 2,
   nrow_per_page = 2)
 
@@ -773,10 +774,10 @@ lancer::view_ggplot_pdf(
 
 ```{r plots as pdf linear}
 linear_ggplot_table <- lancer::add_ggplot_panel(
-  dilution_table = linear_simulated_database,
-  dilution_summary = linear_dilution_summary,
+  curve_table = linear_simulated_database,
+  curve_summary = linear_curve_summary,
   grouping_variable = c("ID"),
-  dil_batch_var = "Dilution Batch Name",
+  curve_batch_var = "Curve Batch Name",
   conc_var = "x",
   signal_var = "y",
   conc_var_units = ""
@@ -786,7 +787,7 @@ linear_ggplot_list <- linear_ggplot_table$panel
 
 lancer::view_ggplot_pdf(
   ggplot_list = linear_ggplot_list,
-  filename = "dilution_plot_linear.pdf",
+  filename = "curve_plot_linear.pdf",
   ncol_per_page = 2,
   nrow_per_page = 2)
 
@@ -796,18 +797,18 @@ lancer::view_ggplot_pdf(
 
 # Report plots as trellis
 
-## Saturated Curve
+## Saturation Regime Curve
 
-```{r plots as trellis saturated}
+```{r plots as trellis saturation regime}
 #| column: screen-inset-right
 
-saturation_trellis_table <- lancer::add_plotly_panel(
-  dilution_table = saturation_simulated_database,
-  dilution_summary = saturation_dilution_summary,
+saturation_regime_trellis_table <- lancer::add_plotly_panel(
+  curve_table = saturation_regime_simulated_database,
+  curve_summary = saturation_regime_curve_summary,
   grouping_variable = c("ID"),
   sample_name_var = "Sample Name",
-  dil_batch_var = "Dilution Batch Name",
-  dil_batch_col = c(
+  curve_batch_var = "Curve Batch Name",
+  curve_batch_col = c(
     "#377eb8"),
   conc_var = "x",
   conc_var_units = "",
@@ -824,26 +825,26 @@ saturation_trellis_table <- lancer::add_plotly_panel(
   )
 
 lancer::view_trellis_html(
-  trellis_table = saturation_trellis_table,
+  trellis_table = saturation_regime_trellis_table,
   grouping_variable = c("ID"),
-  trellis_report_name = "Dilution_Plot_Saturated",
-  trellis_report_folder = "Dilution_Saturated_Folder",
+  trellis_report_name = "Curve_Plot_Saturation_Regime",
+  trellis_report_folder = "Curve_Saturation_Regime_Folder",
   panel_variable = "panel"
 )
 ```
 
-## Limit of Detection Curve
+## Noise Regime Curve
 
 ```{r plots as trellis lod}
 #| column: screen-inset-right
 
-lod_trellis_table <- lancer::add_plotly_panel(
-  dilution_table = lod_simulated_database,
-  dilution_summary = lod_dilution_summary,
+noise_regime_trellis_table <- lancer::add_plotly_panel(
+  curve_table = noise_regime_simulated_database,
+  curve_summary = noise_regime_curve_summary,
   grouping_variable = c("ID"),
   sample_name_var = "Sample Name",
-  dil_batch_var = "Dilution Batch Name",
-  dil_batch_col = c(
+  curve_batch_var = "Curve Batch Name",
+  curve_batch_col = c(
     "#377eb8"),
   conc_var = "x",
   conc_var_units = "",
@@ -860,10 +861,10 @@ lod_trellis_table <- lancer::add_plotly_panel(
   )
 
 lancer::view_trellis_html(
-  trellis_table = lod_trellis_table,
+  trellis_table = noise_regime_trellis_table,
   grouping_variable = c("ID"),
-  trellis_report_name = "Dilution_Plot_LOD",
-  trellis_report_folder = "Dilution_LOD_Folder",
+  trellis_report_name = "Curve_Plot_Noise_Regime",
+  trellis_report_folder = "Curve_Noise_Regime_Folder",
   panel_variable = "panel"
 )
 ```
@@ -874,12 +875,12 @@ lancer::view_trellis_html(
 #| column: screen-inset-right
  
 linear_trellis_table <- lancer::add_plotly_panel(
-  dilution_table = linear_simulated_database,
-  dilution_summary = linear_dilution_summary,
+  curve_table = linear_simulated_database,
+  curve_summary = linear_curve_summary,
   grouping_variable = c("ID"),
   sample_name_var = "Sample Name",
-  dil_batch_var = "Dilution Batch Name",
-  dil_batch_col = c(
+  curve_batch_var = "Curve Batch Name",
+  curve_batch_col = c(
     "#377eb8"),
   conc_var = "x",
   conc_var_units = "",
@@ -898,8 +899,8 @@ linear_trellis_table <- lancer::add_plotly_panel(
 lancer::view_trellis_html(
   trellis_table = linear_trellis_table,
   grouping_variable = c("ID"),
-  trellis_report_name = "Dilution_Plot_Linear",
-  trellis_report_folder = "Dilution_Linear_Folder",
+  trellis_report_name = "Curve_Plot_Linear",
+  trellis_report_folder = "Curve_Linear_Folder",
   panel_variable = "panel"
 )
 ```

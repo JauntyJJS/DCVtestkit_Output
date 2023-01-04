@@ -1,4 +1,4 @@
-"ID","Dilution Batch Name","x","y","Sample Name"
+"ID","Curve Batch Name","x","y","Sample Name"
 "Linear 001","Linear",0,49415.4895822479,"0"
 "Linear 001","Linear",30,62025.7769074392,"30"
 "Linear 001","Linear",60,87120.2951560472,"60"

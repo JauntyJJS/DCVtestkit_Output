@@ -1,0 +1,12 @@
+__loadDisplayList__313a50ca([
+  {
+    "group": "common",
+    "name": "Curve_Plot_Saturation_Regime",
+    "desc": "",
+    "n": 200,
+    "height": 500,
+    "width": 1000,
+    "updated": "2023-01-04 15:54:56",
+    "keySig": "4fd3d866ce9e6f652510a6482ebf1d72"
+  }
+])
