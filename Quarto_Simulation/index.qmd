@@ -259,7 +259,7 @@ simulate_linear <- function(id) {
 
 # Create Simulation Curve Data
 
-We simulate $200$ curves (saturation regime, noise regime and linear) using $7$ points from $0$ to $200$ on the x-axis. A unique id is added for each simulated data.
+We simulate 200 curves (saturation regime, noise regime and linear) using 7 points from 0 to 200 on the x-axis. A unique id is added for each simulated data.
 
 ::: {.panel-tabset}
 
@@ -618,7 +618,7 @@ linear_curve_summary |>
 )
 ```
 
-# Report Workflow $2$ Results
+# Report Workflow 2 Results
 
 We combined the three summary results together
 
@@ -642,7 +642,7 @@ combined_curve_summary <-
   ) 
 ```
 
-Perform some data wrangling to summarise the results later. A benchmark workflow using only Pearson Correlation Coefficient with a cut off value of $0.8$ is used to compare with Workflow $2$.
+Perform some data wrangling to summarise the results later. A benchmark workflow using only Pearson Correlation Coefficient with a cut off value of 0.8 is used to compare with Workflow 2.
 
 ```{r Data Wrangling for Simulation Results}
 
@@ -717,7 +717,7 @@ simulation_results <- combined_curve_summary |>
 simulation_results
 ```
 
-Results showed that Workflow $2$ is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow $2$ is able to identify less linear curves than the benchmark workflow, it gives a comparable score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Good Linearity")`
+Results showed that Workflow 2 is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow 2 is able to identify less linear curves than the benchmark workflow, it gives a comparable score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Good Linearity")`
 
 # Report Plots As pdf Files
 

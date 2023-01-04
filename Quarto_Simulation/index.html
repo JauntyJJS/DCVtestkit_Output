@@ -96,7 +96,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="index_files/libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><style>html{ scroll-behavior: smooth; }</style>
 <script src="index_files/libs/core-js-2.5.3/shim.min.js"></script><script src="index_files/libs/react-17.0.0/react.min.js"></script><script src="index_files/libs/react-17.0.0/react-dom.min.js"></script><script src="index_files/libs/reactwidget-1.0.0/react-tools.js"></script><script src="index_files/libs/htmlwidgets-1.6.0/htmlwidgets.js"></script><link href="index_files/libs/reactable-0.4.1/reactable.css" rel="stylesheet">
-<script src="index_files/libs/reactable-binding-0.4.1/reactable.js"></script><script src="index_files/libs/trelliscopejs_widget-0.3.2/trelliscope.min.js"></script><script src="index_files/libs/trelliscopejs_widget-binding-0.2.6/trelliscopejs_widget.js"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+<script src="index_files/libs/reactable-binding-0.4.1/reactable.js"></script><script src="index_files/libs/trelliscopejs_widget-0.3.2/trelliscope.min.js"></script><script src="index_files/libs/trelliscopejs_widget-binding-0.2.6/trelliscopejs_widget.js"></script>
 </head>
 <body>
 
@@ -133,7 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#linear-curve-5" id="toc-linear-curve-5" class="nav-link" data-scroll-target="#linear-curve-5">Linear Curve</a></li>
   </ul>
 </li>
-  <li><a href="#report-workflow-2-results" id="toc-report-workflow-2-results" class="nav-link" data-scroll-target="#report-workflow-2-results">Report Workflow <span class="math inline">\(2\)</span> Results</a></li>
+  <li><a href="#report-workflow-2-results" id="toc-report-workflow-2-results" class="nav-link" data-scroll-target="#report-workflow-2-results">Report Workflow 2 Results</a></li>
   <li><a href="#report-plots-as-pdf-files" id="toc-report-plots-as-pdf-files" class="nav-link" data-scroll-target="#report-plots-as-pdf-files">Report Plots As pdf Files</a></li>
   <li>
 <a href="#report-plots-as-trellis" id="toc-report-plots-as-trellis" class="nav-link" data-scroll-target="#report-plots-as-trellis">Report plots as trellis</a>
@@ -403,7 +403,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section><section id="create-simulation-curve-data" class="level1"><h1>Create Simulation Curve Data</h1>
-<p>We simulate <span class="math inline">\(200\)</span> curves (saturation regime, noise regime and linear) using <span class="math inline">\(7\)</span> points from <span class="math inline">\(0\)</span> to <span class="math inline">\(200\)</span> on the x-axis. A unique id is added for each simulated data.</p>
+<p>We simulate 200 curves (saturation regime, noise regime and linear) using 7 points from 0 to 200 on the x-axis. A unique id is added for each simulated data.</p>
 <div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
 <li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Saturation Regime Curve</a></li>
@@ -783,7 +783,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-</section></section><section id="report-workflow-2-results" class="level1 page-columns page-full"><h1>Report Workflow <span class="math inline">\(2\)</span> Results</h1>
+</section></section><section id="report-workflow-2-results" class="level1 page-columns page-full"><h1>Report Workflow 2 Results</h1>
 <p>We combined the three summary results together</p>
 <div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">saturation_regime_curve_summary</span> <span class="op">&lt;-</span> </span>
@@ -804,7 +804,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>  <span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Perform some data wrangling to summarise the results later. A benchmark workflow using only Pearson Correlation Coefficient with a cut off value of <span class="math inline">\(0.8\)</span> is used to compare with Workflow <span class="math inline">\(2\)</span>.</p>
+<p>Perform some data wrangling to summarise the results later. A benchmark workflow using only Pearson Correlation Coefficient with a cut off value of 0.8 is used to compare with Workflow 2.</p>
 <div class="cell">
 <details open=""><summary>Code</summary><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">combined_curve_summary</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">combined_curve_summary</span> <span class="op">|&gt;</span> </span>
@@ -1372,7 +1372,7 @@ equal to 0.8</td>
 </div>
 </div>
 </div>
-<p>Results showed that Workflow <span class="math inline">\(2\)</span> is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow <span class="math inline">\(2\)</span> is able to identify less linear curves than the benchmark workflow, it gives a comparable score of 181/200 (90.5%)</p>
+<p>Results showed that Workflow 2 is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow 2 is able to identify less linear curves than the benchmark workflow, it gives a comparable score of 181/200 (90.5%)</p>
 </section><section id="report-plots-as-pdf-files" class="level1"><h1>Report Plots As pdf Files</h1>
 <div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
@@ -2140,7 +2140,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb35-259"><a href="#cb35-259" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-260"><a href="#cb35-260" aria-hidden="true" tabindex="-1"></a><span class="fu"># Create Simulation Curve Data</span></span>
 <span id="cb35-261"><a href="#cb35-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-262"><a href="#cb35-262" aria-hidden="true" tabindex="-1"></a>We simulate $200$ curves (saturation regime, noise regime and linear) using $7$ points from $0$ to $200$ on the x-axis. A unique id is added for each simulated data.</span>
+<span id="cb35-262"><a href="#cb35-262" aria-hidden="true" tabindex="-1"></a>We simulate 200 curves (saturation regime, noise regime and linear) using 7 points from 0 to 200 on the x-axis. A unique id is added for each simulated data.</span>
 <span id="cb35-263"><a href="#cb35-263" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-264"><a href="#cb35-264" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
 <span id="cb35-265"><a href="#cb35-265" aria-hidden="true" tabindex="-1"></a></span>
@@ -2499,7 +2499,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb35-618"><a href="#cb35-618" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb35-619"><a href="#cb35-619" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb35-620"><a href="#cb35-620" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-621"><a href="#cb35-621" aria-hidden="true" tabindex="-1"></a><span class="fu"># Report Workflow $2$ Results</span></span>
+<span id="cb35-621"><a href="#cb35-621" aria-hidden="true" tabindex="-1"></a><span class="fu"># Report Workflow 2 Results</span></span>
 <span id="cb35-622"><a href="#cb35-622" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-623"><a href="#cb35-623" aria-hidden="true" tabindex="-1"></a>We combined the three summary results together</span>
 <span id="cb35-624"><a href="#cb35-624" aria-hidden="true" tabindex="-1"></a></span>
@@ -2523,7 +2523,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb35-642"><a href="#cb35-642" aria-hidden="true" tabindex="-1"></a>  ) </span>
 <span id="cb35-643"><a href="#cb35-643" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb35-644"><a href="#cb35-644" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-645"><a href="#cb35-645" aria-hidden="true" tabindex="-1"></a>Perform some data wrangling to summarise the results later. A benchmark workflow using only Pearson Correlation Coefficient with a cut off value of $0.8$ is used to compare with Workflow $2$.</span>
+<span id="cb35-645"><a href="#cb35-645" aria-hidden="true" tabindex="-1"></a>Perform some data wrangling to summarise the results later. A benchmark workflow using only Pearson Correlation Coefficient with a cut off value of 0.8 is used to compare with Workflow 2.</span>
 <span id="cb35-646"><a href="#cb35-646" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-647"><a href="#cb35-647" aria-hidden="true" tabindex="-1"></a><span class="in">```{r Data Wrangling for Simulation Results}</span></span>
 <span id="cb35-648"><a href="#cb35-648" aria-hidden="true" tabindex="-1"></a></span>
@@ -2598,7 +2598,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb35-717"><a href="#cb35-717" aria-hidden="true" tabindex="-1"></a>simulation_results</span>
 <span id="cb35-718"><a href="#cb35-718" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb35-719"><a href="#cb35-719" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-720"><a href="#cb35-720" aria-hidden="true" tabindex="-1"></a>Results showed that Workflow $2$ is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow $2$ is able to identify less linear curves than the benchmark workflow, it gives a comparable score of <span class="in">`r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Good Linearity")`</span></span>
+<span id="cb35-720"><a href="#cb35-720" aria-hidden="true" tabindex="-1"></a>Results showed that Workflow 2 is able to identify the saturated and limit of detection curves better than the benchmark workflow. On the other hand, while Workflow 2 is able to identify less linear curves than the benchmark workflow, it gives a comparable score of <span class="in">`r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Good Linearity")`</span></span>
 <span id="cb35-721"><a href="#cb35-721" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-722"><a href="#cb35-722" aria-hidden="true" tabindex="-1"></a><span class="fu"># Report Plots As pdf Files</span></span>
 <span id="cb35-723"><a href="#cb35-723" aria-hidden="true" tabindex="-1"></a></span>
