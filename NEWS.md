@@ -13,6 +13,10 @@ Change the name of the tables in the *lancer* workflow.
 
 Replace dilution with curve in `index.qmd`.
 
+### Quarto_Simulation
+
+Replace dilution with curve in `index.qmd`.
+
 # lancer output 0.0.5
 
 Version first send to teams on 17 Nov 2022.
