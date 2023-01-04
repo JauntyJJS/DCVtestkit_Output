@@ -5,7 +5,9 @@
 ### Manuscript
 
 Change the name of the tables in the *lancer* workflow.
-Change the curve classification name to something new.
+
+* Change characterisation of LOD curves from LOD to Noise Regime.
+* Change characterisation of Saturation curves from Saturation to Saturation Regime.
 
 # lancer output 0.0.5
 

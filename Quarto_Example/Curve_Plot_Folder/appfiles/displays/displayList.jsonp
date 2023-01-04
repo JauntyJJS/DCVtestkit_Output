@@ -1,0 +1,12 @@
+__loadDisplayList__bed69c5b([
+  {
+    "group": "common",
+    "name": "Curve_Plot",
+    "desc": "",
+    "n": 8,
+    "height": 500,
+    "width": 1000,
+    "updated": "2023-01-04 13:57:28",
+    "keySig": "7369b1cd8a0b229123f485ac7a344f92"
+  }
+])

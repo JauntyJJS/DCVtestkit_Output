@@ -8,18 +8,18 @@ Here is where I store some output example of the R package
 
 ## Excel Output Example
 
-[`dilution_summary.xlsx`](https://raw.githubusercontent.com/JauntyJJS/lancer_output/main/dilution_summary.xlsx)
+[`curve_summary.xlsx`](https://raw.githubusercontent.com/JauntyJJS/lancer_output/main/curve_summary.xlsx)
 is the output in Excel.
 
 ## Pdf Output Example
 
-[`dilution_plot.pdf`](https://raw.githubusercontent.com/JauntyJJS/lancer_output/main/dilution_plot.pdf)
+[`curve_plot.pdf`](https://raw.githubusercontent.com/JauntyJJS/lancer_output/main/curve_plot.pdf)
 is the output in pdf.
 
 ## Trellis Output Example
 
 https://lancer-interactive-example.netlify.app is the output as an
-interactive trellis plot from the `Dilution_Plot_Folder` when the
+interactive trellis plot from the `Curve_Plot_Folder` when the
 `index.html` file is clicked.
 
 ## Quarto Output Example
