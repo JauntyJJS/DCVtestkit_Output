@@ -106,7 +106,7 @@ Supplementary Figure 2 gives the summary statistics of three manually curated cu
 
 {{< pagebreak >}}
 
-::: {#fig-overview layout="[[60,-40], [70,-30]]"}
+::: {#fig-overview layout="[[60,-40], [65,-35]]"}
 ![Curve Grouping Workflow](images/README-LinearEvaluation.png){#fig-linearity}
 
 ![Interactive Visualisation](images/README-TrellisOutput.png){#fig-visualisation}
@@ -120,61 +120,56 @@ Supplementary Figure 2 gives the summary statistics of three manually curated cu
 
 ```{r Load Simulated Data Results}
 #| echo: false
-saturation_dilution_summary <-
+saturation_regime_curve_summary <-
   readRDS(file = here::here(
     "Quarto_Simulation",
-    "saturation_dilution_summary.rds")
+    "saturation_regime_curve_summary.rds")
 )
 
-lod_dilution_summary <-
+noise_regime_curve_summary <-
   readRDS(file = here::here(
     "Quarto_Simulation",
-    "lod_dilution_summary.rds")
+    "noise_regime_curve_summary.rds")
 )
 
-linear_dilution_summary <-
+linear_curve_summary <-
   readRDS(file = here::here(
     "Quarto_Simulation",
-    "linear_dilution_summary.rds")
+    "linear_curve_summary.rds")
 )
 ```
 
 ```{r Combine Simulated Data Results}
 #| echo: false
-saturation_dilution_summary <- saturation_dilution_summary |> 
-  dplyr::mutate(curve_group = "Saturated")
+saturation_regime_curve_summary <- saturation_regime_curve_summary |> 
+  dplyr::mutate(curve_group = "Saturation Regime")
 
-lod_dilution_summary <- lod_dilution_summary |> 
-  dplyr::mutate(curve_group = "Limit of Detection")
+noise_regime_curve_summary <- noise_regime_curve_summary |> 
+  dplyr::mutate(curve_group = "Noise Regime")
 
-linear_dilution_summary <- linear_dilution_summary |> 
+linear_curve_summary <- linear_curve_summary |> 
   dplyr::mutate(curve_group = "Linear")
 
-combined_dilution_summary <-
+combined_curve_summary <-
   dplyr::bind_rows(
-    saturation_dilution_summary,
-    lod_dilution_summary,
-    linear_dilution_summary
+    saturation_regime_curve_summary,
+    noise_regime_curve_summary,
+    linear_curve_summary
   ) 
 ```
 
 ```{r Data Wrangling for Simulation Results}
 #| echo: false
-combined_dilution_summary <- 
-  combined_dilution_summary |> 
+combined_curve_summary <- 
+  combined_curve_summary |> 
   dplyr::mutate(
     curve_group = factor(.data$curve_group,
-                         levels = c("Linear",
-                                    "Saturated",
-                                    "Limit of Detection")),
+                         levels = c("Good Linearity",
+                                    "Saturation Regime",
+                                    "Noise Regime")),
     pearson_group = dplyr::case_when(
       .data$r_corr >= 0.8 ~ "more than or\nequal to 0.8",
       .data$r_corr < 0.8 ~ "less than 0.8",
-    ),
-    wf2_group = stringr::str_replace(
-      string = .data$wf2_group,
-      pattern = "LOD",
-      replacement = "Limit of Detection"
     ),
     wf2_group = factor(.data$wf2_group,
                          levels = c("Good Linearity",
@@ -202,7 +197,7 @@ combined_dilution_summary <-
 ```{r Simulation Results Table}
 #| echo: false
 #| output: false
-simulation_results <- combined_dilution_summary |> 
+simulation_results <- combined_curve_summary |> 
   dplyr::select(c("curve_group", "wf2_group", 
                   "pearson_group"
                   # "r_corr", "pra_linear"
@@ -230,7 +225,7 @@ simulation_results <- combined_dilution_summary |>
     )
 ```
 
-A benchmark workflow using only Pearson Correlation Coefficient value of $0.8$ is compared with Workflow 2 on simulated data sets of `r nrow(linear_dilution_summary)` linear curves (labelled as Linear), curves that plateau at low (labelled as Limit of Detection) high (labelled as Saturated) concentrations each. Supplementary Figure 3 showed that Workflow 2 better identifies the saturated and limit of detection curves than the benchmark workflow. While it identifies less linear curves correctly than the benchmark workflow, its score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Linear")` is comparable. See <https://lancer-simulation.netlify.app> for report details. While the threshold values of Pearson Correlation Coefficient and Percent Residual Accuracy are based on the interpretation of @y.h.chan2003 and @logue2018, respectively, they remain subjective and arbitrary. Nevertheless, *lancer* allows optimization of these threshold values according to the analyst's determinants of linearity.
+A benchmark workflow using only Pearson Correlation Coefficient value of $0.8$ is compared with Workflow 2 on simulated data sets of `r nrow(linear_curve_summary)` linear curves (labelled as Linear), curves that plateau at low (labelled as Limit of Detection) high (labelled as Saturated) concentrations each. Supplementary Figure 3 showed that Workflow 2 better identifies the saturated and limit of detection curves than the benchmark workflow. While it identifies less linear curves correctly than the benchmark workflow, its score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Good Linearity")` is comparable. See <https://lancer-simulation.netlify.app> for report details. While the threshold values of Pearson Correlation Coefficient and Percent Residual Accuracy are based on the interpretation of @y.h.chan2003 and @logue2018, respectively, they remain subjective and arbitrary. Nevertheless, *lancer* allows optimization of these threshold values according to the analyst's determinants of linearity.
 
 Although *lancer* can export the results in Excel or pdf, they may be too complex for meaningful interpretation. @fig-visualisation shows a HTML folder, exported by *lancer*, such that clicking on the `index.html` file inside the folder will open an interactive trellis plots that analysts can be grouped, filtered and sorted. This allows room for exploratory data analysis, such as identifying molecules with linearity issues or finding out the effects of changing the Pearson Correlation Coefficient threshold to another value. Such information is hard to achieve with the Excel and pdf files. An example of an interactive viewer created by *lancer* can be viewed at <https://lancer-interactive-example.netlify.app>
 
