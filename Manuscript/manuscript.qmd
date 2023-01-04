@@ -1,5 +1,5 @@
 ---
-title: "*lancer*: a R package for linearity assessment and visualisation of multiple curves"
+title: "*lancer*: an R package for linearity assessment and visualisation of multiple curves"
 
 bibliography: bibliography.bib
 csl: bioinfo.csl
@@ -34,7 +34,7 @@ Application Note
 
 ## Summary
 
-Linearity assessment plays a significant role in the validation of instrumentation and experimental procedures. As technology progresses, many of these methods are becoming more high throughput, providing analysts with many measurements generated at a short time. Commonly used software, like Excel, only allow the analyst to repetitively plot, view and analyse the linearity of curves one at a time, a tedious and time-consuming process. In addition, summary statistics of these curves are limited to the Pearson Correlation Coefficient which is insufficient to fully understand the shape of the curves. *lancer* aims to provide additional summary statistics for assessing linearity of curves, taken from previous publications but which are not implemented in the current software tools. It also helps to reduce the analyst's workload by analysing many curves automatically, reporting the statistical results in Excel and recording the plots in a pdf file. In addition, it can also create an interactive trellis displayed as a HTML folder for more exploratory analysis.
+Linearity assessment plays a significant role in the validation of instrumentation and experimental procedures. As technology progresses, methods are becoming more high throughput, providing analysts with many measurements generated in a short time. Commonly used software, like Excel, only allow the analyst to repetitively plot, view and analyse the linearity of curves one at a time, a tedious and time-consuming process. In addition, summary statistics of these curves are mostly limited to the Pearson Correlation Coefficient which is insufficient to fully clarify the shape of the curves. *lancer* aims to provide additional summary statistics for assessing linearity of curves, taken from previous publications but which are not implemented in the current software tools. It also helps to reduce the analyst's workload by analysing many curves automatically, reporting the statistical results in Excel and recording the plots in a pdf file. In addition, it can also create an interactive trellis displayed as a HTML folder for more exploratory analysis.
 
 ## Availability and implementation
 
@@ -52,17 +52,22 @@ Data and text mining
 
 # Introduction
 
-Linearity assessment, as summarised by @paulson1995, is a standard protocol to verify if an instrument or experimental method is in working condition, especially if the method is used to report quantitative results. It is applied in many fields in science such as calibration/dilution studies (@rodríguez1993 and @sands2021) and assay development (@ross2003 and @hsieh2008). During analysis, curves are plotted individually with a Pearson Correlation Coefficient value for each measurement using general-purpose software like Excel.
+Linearity assessment, as summarised by @paulson1995, is a standard protocol to verify if an instrument or experimental method is in working condition, especially if the method is used to report quantitative results. It is applied in many fields in science such as calibration/dilution studies (@rodríguez1993 and @sands2021) and assay development (@ross2003 and @hsieh2008). After analysis, curve points are plotted individually for each analyte of interest with a Pearson Correlation Coefficient value for each plotted curve points using general-purpose software like Excel.
 
-However, as instrument or experimental method are becoming more high throughput, many measurements can be done at a short time. Having the analyst to individually plot numerous curves to check for linearity is time-consuming. Furthermore, @sonnergaard2006 warns that the Pearson Correlation Coefficient is not an effective standalone numeric parameter to estimate linearity. While researchers have created other metrics for linearity evaluation, these metrics are rarely implemented in most general-purpose software.
+However, as instrument or experimental method are becoming more high throughput, many measurements can be done in a short time. Having the analyst to individually plot numerous curves to check for linearity is time-consuming. Furthermore, @sonnergaard2006 warns that the Pearson Correlation Coefficient is not an effective standalone numeric parameter to estimate linearity. While researchers have created other metrics for linearity evaluation, these metrics are rarely implemented in most of the general-purpose software.
 
-R package, *lancer* addresses these issues by assisting analysts, to plot curves from many experiments easily with additional metrics, other than the Pearson Correlation Coefficient, that better describe the curve's shape. It also provides an interactive viewer for analysts to group, filter and sort the plots, allowing them to look at problematic ones, such as saturated curves.
+The R package, *lancer* addresses these issues by assisting analysts, to plot curves from many experiments easily with additional metrics, other than the Pearson Correlation Coefficient, that better describe the curve's shape. It also provides an interactive viewer for analysts to group, filter and sort the plots, allowing them to examine problematic ones, such as saturated curves.
 
 # Approach
 
-Using the analysis of dilution curves in meatbolomic/lipidomic study as a running example, Supplementary Figure 1 depicts the workflow of *lancer*. The workflow starts with two tables: Transition Signal Data, containing transition signals (y-axis for dilution curve) for each sample and Dilution Annotation, containing dilution curve related information, such as concentration (x-axis for dilution curve) and dilution batches. Using a common column Sample Name, the two tables can be merged into one table (Dilution Table) via `create_dilution_table`.
+Using the analysis of response curves in metabolomic/lipidomic studies as an example, Supplementary Figure 1 depicts the workflow of *lancer*. The workflow starts with two tables: 
 
-Next, summary statistics are calculated via `summarise_dilution_table` for each dilution curve. Besides the Pearson Correlation Coefficient, one additional calculation is the Mandel's Fitting Test ($F_{stats}$ in @eq-mandel-test) from @andrade2013. A low $p$ value from the $F$ test gives sufficient evidence that a quadratic model fits better than a linear model, indicating the curve may not be linear.
+*    Curve Signal Data, containing response signals (y-axis for response curve) for each sample and curve. 
+*    Curve Batch Annotation, containing curve related information, such as concentration (x-axis for response curve) and response curve batches if any. 
+
+Using a common column Sample Name, the two tables can be merged into one table (Curve Table) via `create_curve_table`.
+
+Next, summary statistics are calculated via `summarise_curve_table` for each response curve. Besides the Pearson Correlation Coefficient, one additional calculation is the Mandel's Fitting Test ($F_{stats}$ in @eq-mandel-test) described by @andrade2013. A low $p$ value from the $F$ test gives sufficient evidence that a quadratic model fits better than a linear model, indicating the curve may not be linear.
 
 $$
 \begin{aligned}
@@ -83,7 +88,7 @@ $$
 \\ 
 &n \ \text{is the number of data points.}
 \end{aligned}
-$$ {#eq-mandel-test} Another one is Percent Residual Accuracy ($\%RA$ in @eq-pra) from @logue2018. Ranging from $-\infty$ to $100$, if the curve is linear, the value should be close to $100$.
+$$ {#eq-mandel-test} Another calculation is Percent Residual Accuracy ($\%RA$ in @eq-pra) from @logue2018. Ranging from $-\infty$ to $100$, if the curve is linear, the $\%RA$ value should be close to $100$.
 
 $$
 \begin{aligned}
@@ -102,7 +107,7 @@ $$ {#eq-pra}
 
 The software also calculates the concavity of a fitted quadratic model to identify if the curve is dominantly non-linear at high (concavity $<0$) or low (concavity $>0$) concentrations.
 
-Supplementary Figure 2 gives the summary statistics of three manually curated curves: A linear curve and curves with a plateau at higher concentrations (denoted as saturated curves) and lower concentrations (denoted as limit or detection or LOD curves) respectively. The corresponding Pearson Correlation Coefficient values (`r_corr`) are $\ge0.9$ ($0.99$, $0.95$ and $0.98$ respectively), even for the curves that are non-linear. However, both saturated and LOD curves give a much lower Mandel's Fitting Test $p$ values (`mandel_p_val`) ($1.66 * 10^{-4}$ and $2.56 * 10^{-3}$ respectively vs $0.38$). Likewise, the Percent Residual Accuracy values (`pra_linear`) are much lower in the saturated and LOD curves compared to the linear curve ($62.30$ and $74.69$ respectively vs $94.32$).
+Supplementary Figure 2 gives the summary statistics of three manually generated curves: A linear curve and two curves with a plateau at high concentrations (denoted as saturation regime curves) and low concentrations (denoted as noise regime curves) respectively. The corresponding Pearson Correlation Coefficient values (`r_corr`) are $\ge0.9$ ($0.99$, $0.95$ and $0.98$ respectively), even for the curves that are clearly non-linear. However, both non-linear curves give a much lower Mandel's Fitting Test $p$ values (`mandel_p_val`) ($1.66 * 10^{-4}$ and $2.56 * 10^{-3}$ respectively vs $0.38$). Likewise, the Percent Residual Accuracy values (`pra_linear`) are much lower in the non-linear curves compared to the linear curve ($62.30$ and $74.69$ respectively vs $94.32$).
 
 {{< pagebreak >}}
 
@@ -116,7 +121,7 @@ Supplementary Figure 2 gives the summary statistics of three manually curated cu
 
 {{< pagebreak >}}
 
-`evaluate_linearity` is used to group the curves according to the workflows proposed in @fig-linearity. Workflow 1 uses the Pearson Correlation Coefficient and Percent Residual Accuracy to determine if the curve is linear (labelled as Good Linearity) or not (labelled as Poor Linearity). Workflow 2 goes one step further, using the Mandel's Fitting Test and the fitted quadratic model's concavity to check if the non-linear curve plateaus at low (labeled as limit of detection) or high (labelled as saturation) concentrations. Non-linear curves that do not follow these trends are labelled as Poor Linearity.
+After calculating the summary statistics for each curve, *lancer* uses the function `evaluate_linearity` to group the curves according to the workflows proposed in @fig-linearity. Workflow 1 uses the Pearson Correlation Coefficient and Percent Residual Accuracy to determine if the curve is linear (labelled as Good Linearity) or not (labelled as Poor Linearity). Workflow 2 goes one step further, using the Mandel's Fitting Test and the fitted quadratic model's concavity to check if the non-linear curve plateaus at low (labeled as limit of detection) or high (labelled as saturation) concentrations. Non-linear curves that do not follow these trends are labelled as Poor Linearity.
 
 ```{r Load Simulated Data Results}
 #| echo: false
@@ -225,9 +230,9 @@ simulation_results <- combined_curve_summary |>
     )
 ```
 
-A benchmark workflow using only Pearson Correlation Coefficient value of $0.8$ is compared with Workflow 2 on simulated data sets of `r nrow(linear_curve_summary)` linear curves (labelled as Linear), curves that plateau at low (labelled as Limit of Detection) high (labelled as Saturated) concentrations each. Supplementary Figure 3 showed that Workflow 2 better identifies the saturated and limit of detection curves than the benchmark workflow. While it identifies less linear curves correctly than the benchmark workflow, its score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Good Linearity")` is comparable. See <https://lancer-simulation.netlify.app> for report details. While the threshold values of Pearson Correlation Coefficient and Percent Residual Accuracy are based on the interpretation of @y.h.chan2003 and @logue2018, respectively, they remain subjective and arbitrary. Nevertheless, *lancer* allows optimization of these threshold values according to the analyst's determinants of linearity.
+A benchmark workflow using only Pearson Correlation Coefficient value of $0.8$ is compared with Workflow 2 on simulated data sets of `r nrow(linear_curve_summary)` linear curves (labelled as Linear), curves that plateau at low (labelled as Limit of Detection) or high (labelled as Saturated) concentrations. Supplementary Figure 3 shows that Workflow 2 better identifies the saturated and limit of detection curves than the benchmark workflow. While it correctly classifies less linear curves than the benchmark workflow, its score of `r inline_text(simulation_results, variable = wf2_group, level = "Good Linearity", column = "Good Linearity")` is comparable. See <https://lancer-simulation.netlify.app> for report details. While the threshold values of Pearson Correlation Coefficient and Percent Residual Accuracy are based on the interpretation of @y.h.chan2003 and @logue2018, respectively, they remain subjective and arbitrary. Nevertheless, *lancer* allows optimization of these threshold values according to the analyst's preference of linearity.
 
-Although *lancer* can export the results in Excel or pdf, they may be too complex for meaningful interpretation. @fig-visualisation shows a HTML folder, exported by *lancer*, such that clicking on the `index.html` file inside the folder will open an interactive trellis plots that analysts can be grouped, filtered and sorted. This allows room for exploratory data analysis, such as identifying molecules with linearity issues or finding out the effects of changing the Pearson Correlation Coefficient threshold to another value. Such information is hard to achieve with the Excel and pdf files. An example of an interactive viewer created by *lancer* can be viewed at <https://lancer-interactive-example.netlify.app>
+Although *lancer* can export the results in Excel or pdf, they may be too complex for meaningful interpretation. @fig-visualisation shows a HTML folder, exported by *lancer*, such that clicking on the `index.html` file inside the folder will open an interactive trellis plot that can group, filter and sort cruves. This allows room for exploratory data analysis, such as identifying molecules with linearity issues or finding out the effects of changing the Pearson Correlation Coefficient threshold to another value. Such information is hard to achieve with the Excel and pdf files. An example of an interactive viewer created by *lancer* can be viewed at <https://lancer-interactive-example.netlify.app>
 
 # Conclusion
 
