@@ -9,6 +9,10 @@ Change the name of the tables in the *lancer* workflow.
 * Change characterisation of LOD curves from LOD to Noise Regime.
 * Change characterisation of Saturation curves from Saturation to Saturation Regime.
 
+### Quarto_Example
+
+Replace dilution with curve in `index.qmd`.
+
 # lancer output 0.0.5
 
 Version first send to teams on 17 Nov 2022.
