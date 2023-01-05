@@ -1,6 +1,10 @@
-# lancer output 0.0.5.9000 (development version)
+# lancer output 0.0.7.9000 (development version)
 
 ## TODO
+
+# lancer output 0.0.6.9000 (development version)
+
+Version first send to teams on 5 Jan 2023.
 
 ### Manuscript
 
