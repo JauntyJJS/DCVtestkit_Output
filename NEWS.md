@@ -2,6 +2,17 @@
 
 ## TODO
 
+### Manuscript
+
+* Swap statistical summary issue and plotting of many curves issue.
+* Remove the word "high throughput".
+* Changed "Microsoft Excel" to "spreadsheet software".
+* Indicate that R can be used to quickly plot curves and report curve statistics but hard to implement from scratch for a novice analyst and hence an R package is created.
+* Split Figure 1A and 1B to Figure 1 and Supplementary Figure 3.
+* Add reference of papers that give other metrics for linearity evaluation.
+* Add reference of papers creating response curves in metabolomic/lipidomic studies.
+* Add reference of one paper that describe curves that plateau at high and low concentration as saturation and noise regime.
+
 # lancer output 0.0.6.9000 (development version)
 
 Version first send to teams on 5 Jan 2023.

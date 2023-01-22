@@ -27,7 +27,7 @@ library(webshot2)
 library(lancer)
 ```
 
-![*lancer* Workflow](images/README-Workflow.png){#fig-lancer-Workflow}
+![*lancer* Workflow](images/README-Workflow.png){#fig-lancer-workflow}
 
 ```{r Motivation, echo = FALSE}
 #| echo: false
@@ -309,6 +309,8 @@ patchwork::wrap_plots(
 )
 ```
 
+![Curve Grouping Workflow](images/README-LinearEvaluation.png){#fig-linearity}
+
 ```{r Load Simulated Data Results}
 #| echo: false
 saturation_regime_curve_summary <-
@@ -427,4 +429,4 @@ simulation_results |>
 ```
 
 
-![Simulation Results](images/simulation_results.png){#fig-Simulation}
+![Simulation Results](images/simulation_results.png){#fig-simulation}
