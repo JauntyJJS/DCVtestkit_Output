@@ -4,6 +4,8 @@
 
 # lancer output 0.0.8
 
+Version first send to teams on 28 Jan 2023.
+
 * Update README with details on how to reproduce the figures in the manuscript, simulation results and other examples.
 
 ### Manuscript
