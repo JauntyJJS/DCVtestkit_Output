@@ -2,6 +2,8 @@
 
 ## TODO
 
+# lancer output 0.0.7
+
 ### Manuscript
 
 * Swap statistical summary issue and plotting of many curves issue.
@@ -13,7 +15,7 @@
 * Add reference of papers creating response curves in metabolomic/lipidomic studies.
 * Add reference of one paper that describe curves that plateau at high and low concentration as saturation and noise regime.
 
-# lancer output 0.0.6.9000 (development version)
+# lancer output 0.0.6
 
 Version first send to teams on 5 Jan 2023.
 
