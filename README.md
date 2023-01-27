@@ -92,10 +92,18 @@ install.packages("rlang", dependencies = TRUE)
 install.packages("devtools", dependencies = TRUE)
 ```
 
-Type the following command to install R packages `lancer` version 0.1.0.
+Install these R packages to ensure rendering of Quarto documents is
+possible.
 
 ``` r
-devtools::install_github("SLINGhub/lancer", ref = "0.1.0")
+install.packages("rmarkdown", dependencies = TRUE)
+install.packages("markdown", dependencies = TRUE)
+```
+
+Type the following command to install R packages `lancer` version 0.1.1.
+
+``` r
+devtools::install_github("SLINGhub/lancer", ref = "0.1.1")
 ```
 
 Next, type the following command to install the other R packages
