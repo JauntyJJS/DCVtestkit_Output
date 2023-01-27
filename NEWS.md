@@ -1,6 +1,14 @@
-# lancer output 0.0.7.9000 (development version)
+# lancer output 0.0.8.9000 (development version)
 
 ## TODO
+
+# lancer output 0.0.8
+
+* Update README with details on how to reproduce the figures in the manuscript, simulation results and other examples.
+
+### Manuscript
+
+* Add figshare links for this repository and the `lancer` package itself.
 
 # lancer output 0.0.7
 

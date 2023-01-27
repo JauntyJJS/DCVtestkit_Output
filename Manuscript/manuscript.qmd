@@ -38,7 +38,9 @@ Linearity assessment plays a significant role in the validation of instrumentati
 
 ## Availability and implementation
 
-*lancer* is available on GitHub <https://github.com/SLINGhub/lancer>. The documentation and tutorials can be accessed from <https://slinghub.github.io/lancer/>
+*lancer* is available on GitHub <https://github.com/SLINGhub/lancer> and figshare <https://doi.org/10.6084/m9.figshare.21966896>. The documentation and tutorials can be accessed from <https://slinghub.github.io/lancer/>. 
+
+The Quarto scripts for the web links underlying this article are available on figshare at <https://doi.org/10.6084/m9.figshare.21965324>.
 
 ## Supplementary information
 
@@ -226,7 +228,7 @@ Although *lancer* can export the results in Excel or pdf, an interactive interfa
 
 # Conclusion
 
-Linearity is one of the most important parameter of an analytical method to be evaluated. Our R package, *lancer*, can access linearity efficiently using functions that quickly plot and report curve summary statistics, which better describe the shape of the curve. It also provides an interactive plot for exploratory data analysis. *lancer* is available on GitHub <https://github.com/SLINGhub/lancer> while the documentation and tutorials can be accessed from <https://slinghub.github.io/lancer>.
+Linearity is one of the most important parameter of an analytical method to be evaluated. Our R package, *lancer*, can access linearity efficiently using functions that quickly plot and report curve summary statistics, which better describe the shape of the curve. It also provides an interactive plot for exploratory data analysis. *lancer* is available on GitHub <https://github.com/SLINGhub/lancer> and figshare <https://doi.org/10.6084/m9.figshare.21966896> while the documentation and tutorials can be accessed from <https://slinghub.github.io/lancer>. The Quarto scripts for the web links underlying this article are available on figshare at <https://doi.org/10.6084/m9.figshare.21965324>.
 
 # Acknowledgements
 
